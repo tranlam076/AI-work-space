@@ -1,0 +1,21 @@
+package connectToServer;
+
+import java.io.DataOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Date;
+
+public class DateTimeServer {
+	public static void main (String [] args) {
+		try {
+			ServerSocket server = new ServerSocket(2000);
+			System.out.println("created server");
+			Socket soc = server.accept();
+			DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
+			dos.writeUTF(new Date().toString());
+			System.out.println("connection");
+		} catch (Exception e) {
+
+		}
+	}
+}

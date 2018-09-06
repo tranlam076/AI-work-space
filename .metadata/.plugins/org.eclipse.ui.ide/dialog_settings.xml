@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="C:\Users\tranl\eclipse-workspace\AI"/>
+		<item value="C:\Users\tranl\eclipse-workspace\DiahiIp"/>
+		<item value="C:\Users\tranl\eclipse-workspace"/>
+		<item value="C:\Users\tranl\Desktop\DUAXE AI\RacingAICoding_V1.03\RacingAICoding_V1.03\CarRacingClient11111_V1.03"/>
+		<item value="D:\DUAXE AI\CarRacingClient_V1.03\CarRacingClient_V1.03"/>
+		<item value="D:\RacingAICoding_V1.03\RacingAICoding_V1.03\CarRacingClient_V1.03"/>
+		<item value="E:\bkdn_learning\bkdn kỳ 7\tl xin\4.2 DO AN CO SO NGANH MANG\VOTRANQUY\DOANCOSONGANHMANG"/>
+	</list>
+	<section name="NewWizardAction">
+		<item value="org.eclipse.jdt.ui.wizards.JavaProjectWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+		</list>
+	</section>
+</section>

@@ -1,0 +1,11 @@
+package connectToServer;
+
+public class ServerSocket {
+	public static void main (String [] args) {
+		try {
+			ServerSocket = 
+		} catch (Exception e) {
+
+		}
+	}
+}
