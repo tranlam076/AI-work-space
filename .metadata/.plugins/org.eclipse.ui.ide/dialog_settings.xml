@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="C:\Users\tranl\eclipse-workspace\bnews"/>
+		<item value="C:\Users\tranl\Desktop\bnews"/>
+		<item value="C:\Users\tranl\Desktop\mvc-pattern-java-master\MVC-Project"/>
+		<item value="C:\Users\tranl\Desktop\DOANCOSONGANHMANG"/>
+		<item value="D:\JSP-SERVLET study\jspd7\jspd7"/>
+		<item value="E:\RacingAICoding_V1.03\RacingAICoding_V1.03\CarRacingClient11111_V1.03"/>
 		<item value="C:\Users\tranl\eclipse-workspace\AI"/>
 		<item value="C:\Users\tranl\eclipse-workspace\DiahiIp"/>
 		<item value="C:\Users\tranl\eclipse-workspace"/>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+
+<!-- El config -->
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<el-ignored>false</el-ignored>
+		</jsp-property-group>
+	</jsp-config>
+
+
+
+	<listener>
+		<listener-class>tranlam.listeners.WebsiteSession</listener-class>
+	</listener>
+
+
+	<session-config>
+		<session-timeout>15</session-timeout>
+	</session-config>
+
+	<context-param>
+		<param-name>account</param-name>
+		<param-value>tranlam</param-value>
+	</context-param>
+	<context-param>
+		<param-name>password</param-name>
+		<param-value>123</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>Hello World</servlet-name>
+		<servlet-class>myServlet.HelloWorld</servlet-class>
+		<init-param>
+			<param-name>song</param-name>
+			<param-value>Hello - Adele</param-value>
+		</init-param>
+		<init-param>
+			<param-name>song1</param-name>
+			<param-value>Hello - Adele</param-value>
+		</init-param>
+		<init-param>
+			<param-name>song3</param-name>
+			<param-value>Hello - Adele</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Hello World</servlet-name>
+		<url-pattern>/hello</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Authentication</servlet-name>
+		<servlet-class>myServlet.Authentication</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Authentication</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Index JSP</servlet-name>
+		<jsp-file>/index.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Index JSP</servlet-name>
+		<url-pattern>/index</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Sample</servlet-name>
+		<jsp-file>/process/sample2.jsp</jsp-file>
+		<init-param>
+			<param-name>blog</param-name>
+			<param-value>Study And Share</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Sample</servlet-name>
+		<url-pattern>/sample</url-pattern>
+	</servlet-mapping>
+
+</web-app>

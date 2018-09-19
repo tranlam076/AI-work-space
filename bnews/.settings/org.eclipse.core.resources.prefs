@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//WebContent/templates/public/inc/header.jsp=UTF-8
+encoding//src/controller/AddNewsAdminController.java=UTF-8
+encoding//src/controller/EditNewsAdminController.java=UTF-8
+encoding//src/controller/IndexCatAdminController.java=UTF-8
+encoding//src/controller/IndexNewsAdminController.java=UTF-8
