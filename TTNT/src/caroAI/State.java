@@ -6,15 +6,17 @@ public class State {
 	int value = 1;
 
 	void Print() {
-		for (int i = 0; i < N; i++)
-			for (int j = 0; i < N; i++) {
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
 				if (a[i][j] == 0)
-					System.out.println("_");
+					System.out.print("_");
 				if (a[i][j] == 1)
-					System.out.println("o");
+					System.out.print("o");
 				if (a[i][j] == 2)
-					System.out.println("x");
+					System.out.print("x");
 			}
+			System.out.println();
+		}
 		System.out.println("--------------------------");
 	}
 

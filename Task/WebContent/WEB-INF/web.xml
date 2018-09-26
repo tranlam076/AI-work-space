@@ -1,25 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	id="WebApp_ID" version="3.0">
-	<display-name>Task</display-name>
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
-	</welcome-file-list>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>Task</display-name>
+<!--   <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list> -->
 
-	<servlet>
-		<servlet-name>Admin</servlet-name>
-		<servlet-class>controller.Admin</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Admin</servlet-name>
-		<url-pattern>/admin</url-pattern>
-	</servlet-mapping>
+  <servlet>
+    <servlet-name>AddAdmin</servlet-name>
+    <servlet-class>controller.AddNewAdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddAdmin</servlet-name>
+    <url-pattern>/add-admin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>IndexAdmin</servlet-name>
+    <servlet-class>controller.IndexAdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IndexAdmin</servlet-name>
+    <url-pattern>/admin/index</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LoginAdmin</servlet-name>
+    <servlet-class>controller.LoginAdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginAdmin</servlet-name>
+    <url-pattern>/admin/login</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ShowLoginAdmin</servlet-name>
+    <jsp-file>/admin/login.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowLoginAdmin</servlet-name>
+    <url-pattern>/admin/show-login</url-pattern>
+  </servlet-mapping>
+  
+ <servlet>
+    <servlet-name>AddNewsAdmin</servlet-name>
+    <servlet-class>controller.AddNewsAdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddNewsAdmin</servlet-name>
+    <url-pattern>/admin/add-news</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AddCatAdmin</servlet-name>
+    <servlet-class>controller.AddCatAdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddCatAdmin</servlet-name>
+    <url-pattern>/admin/add-cat</url-pattern>
+  </servlet-mapping>
 
+  <servlet>
+    <servlet-name>EditCatAdmin</servlet-name>
+    <servlet-class>controller.EditCatAdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditCatAdmin</servlet-name>
+    <url-pattern>/admin/edit-cat</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>EditNewsAdmin</servlet-name>
+    <servlet-class>controller.EditNewsAdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditNewsAdmin</servlet-name>
+    <url-pattern>/admin/edit-news</url-pattern>
+  </servlet-mapping> 
+  
+  <servlet>
+    <servlet-name>ShowIndex</servlet-name>
+    <servlet-class>controller.IndexPublicController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowIndex</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping> 
+  
 </web-app>

@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.net.InetAddress"/>
-<fullyQualifiedTypeName name="BaiToan8So.Operator"/>
-<fullyQualifiedTypeName name="javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction"/>
-<fullyQualifiedTypeName name="javax.print.attribute.standard.DateTimeAtCompleted"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.io.BufferedReader"/>
 <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
@@ -51,4 +47,17 @@
 <fullyQualifiedTypeName name="BanMayBay.ServerAircraft"/>
 <fullyQualifiedTypeName name="java.awt.Point"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="javax.crypto.spec.OAEPParameterSpec"/>
+<fullyQualifiedTypeName name="tamso.Operator"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="EvolutionaryComputation.BTSieuThi"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="library.ConnectDBLibrary"/>
+<fullyQualifiedTypeName name="model.bean.User"/>
+<fullyQualifiedTypeName name="model.dao.UsersDAO"/>
+<fullyQualifiedTypeName name="model.dao.CatDAO"/>
+<fullyQualifiedTypeName name="controller.AddNewsAdminController"/>
+<fullyQualifiedTypeName name="model.dao.NewsDAO"/>
+<fullyQualifiedTypeName name="model.bean.Category"/>
+<fullyQualifiedTypeName name="Aircraft.ServerAircraft"/>
 </qualifiedTypeNameHistroy>

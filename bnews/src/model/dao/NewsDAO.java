@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import library.ConnectDBLibrary;
-import model.bean.Category;
 import model.bean.News;
 
 public class NewsDAO {

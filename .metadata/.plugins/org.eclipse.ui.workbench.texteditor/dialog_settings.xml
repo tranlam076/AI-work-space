@@ -6,12 +6,20 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="out" key="selection"/>
-		<item value="false" key="casesensitive"/>
+		<item value="correct" key="selection"/>
+		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="goal"/>
+			<item value="reset"/>
+			<item value="reser"/>
+			<item value="out."/>
+			<item value="&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=ISO-8859-1&quot;"/>
+			<item value="categ"/>
+			<item value="cater"/>
+			<item value="Print"/>
 			<item value="out"/>
 			<item value="check"/>
 			<item value="caroAI"/>
@@ -21,6 +29,8 @@
 			<item value="ok"/>
 		</list>
 		<list key="replacehistory">
+			<item value="correct"/>
+			<item value=""/>
 			<item value="caroAI"/>
 			<item value="6"/>
 			<item value="5"/>
@@ -30,7 +40,7 @@
 		<item value="284" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="391" key="DIALOG_HEIGHT"/>
-		<item value="615" key="DIALOG_X_ORIGIN"/>
-		<item value="126" key="DIALOG_Y_ORIGIN"/>
+		<item value="936" key="DIALOG_X_ORIGIN"/>
+		<item value="134" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

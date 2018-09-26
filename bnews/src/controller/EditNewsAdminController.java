@@ -7,13 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,13 +18,8 @@ import javax.servlet.http.Part;
 
 import library.CheckLoginLibrary;
 import library.FilenameLibrary;
-import library.StringLibrary;
-import model.bean.Category;
 import model.bean.News;
-import model.bean.User;
-import model.dao.CatDAO;
 import model.dao.NewsDAO;
-import model.dao.UsersDAO;
 
 /**
  * Servlet implementation class EditCatAdminController
@@ -51,9 +43,6 @@ public class EditNewsAdminController extends HttpServlet {
 		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!CheckLoginLibrary.checkLogin(request, response)){
 			return;
@@ -129,7 +118,5 @@ public class EditNewsAdminController extends HttpServlet {
 			response.sendRedirect(request.getContextPath()+"/admin/indexNews?msg=0");
 			return;
 		}
-		
 	}
-
 }
