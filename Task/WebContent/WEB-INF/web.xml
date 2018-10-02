@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>Task</display-name>
-<!--   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list> -->
-
   <servlet>
     <servlet-name>AddAdmin</servlet-name>
     <servlet-class>controller.AddNewAdminController</servlet-class>
@@ -42,8 +33,7 @@
     <servlet-name>ShowLoginAdmin</servlet-name>
     <url-pattern>/admin/show-login</url-pattern>
   </servlet-mapping>
-  
- <servlet>
+  <servlet>
     <servlet-name>AddNewsAdmin</servlet-name>
     <servlet-class>controller.AddNewsAdminController</servlet-class>
   </servlet>
@@ -51,7 +41,22 @@
     <servlet-name>AddNewsAdmin</servlet-name>
     <url-pattern>/admin/add-news</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <servlet-name>DeleteNewsAdmin</servlet-name>
+    <servlet-class>controller.DeleteNewsAdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteNewsAdmin</servlet-name>
+    <url-pattern>/admin/delete-news</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DeleteCatAdmin</servlet-name>
+    <servlet-class>controller.DeleteCatAdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteCatAdmin</servlet-name>
+    <url-pattern>/admin/delete-cat</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>AddCatAdmin</servlet-name>
     <servlet-class>controller.AddCatAdminController</servlet-class>
@@ -60,7 +65,6 @@
     <servlet-name>AddCatAdmin</servlet-name>
     <url-pattern>/admin/add-cat</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>EditCatAdmin</servlet-name>
     <servlet-class>controller.EditCatAdminController</servlet-class>
@@ -76,8 +80,23 @@
   <servlet-mapping>
     <servlet-name>EditNewsAdmin</servlet-name>
     <url-pattern>/admin/edit-news</url-pattern>
-  </servlet-mapping> 
-  
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>FileUpload</servlet-name>
+    <servlet-class>controller.FileUploadController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileUpload</servlet-name>
+    <url-pattern>/file-upload</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ShowFileUpload</servlet-name>
+    <jsp-file>/show-file-upload.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowFileUpload</servlet-name>
+    <url-pattern>/show-file-upload</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>ShowIndex</servlet-name>
     <servlet-class>controller.IndexPublicController</servlet-class>
@@ -85,6 +104,5 @@
   <servlet-mapping>
     <servlet-name>ShowIndex</servlet-name>
     <url-pattern>/</url-pattern>
-  </servlet-mapping> 
-  
+  </servlet-mapping>
 </web-app>

@@ -8,21 +8,20 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ISAT</title>
-<link rel="stylesheet" type="text/css"
-	href="resources/Library/Bootstrap/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="resources/CSS/style.css">
+<style>
+<%@include file="templates/Library/Bootstrap/css/bootstrap.css"%>
+<%@include file ="templates/CSS/style.css"%>
+</style>
 </head>
 <body>
-
 	<div class="container-max">
 		<div id="header">
-
 			<div class="header-title">
 				<h4>The 16th International Symposium on Advanced Technology
 					(ISAT-16)</h4>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-				<p>Aut, facilis eveniet temporibus rem</p>
-				<p>Aut, facilis eveniet temporibus rem</p>
+				<p>Advanced Technologies to Open a New Era</p>
+				<p>November 1st-2nd, 2017</p>
+				<p>Hachioji, Tokyo, Japan</p>
 			</div>
 			<div class="header-image">
 				<a href="#"><img
@@ -44,7 +43,6 @@
 								<li class="main-menu3-sub-2"><a href="">Format Download</a></li>
 								<li class="main-menu3-sub-3"><a href="">Presentation
 										Guidelines</a></li>
-
 							</ul>
 						</li>
 						<li class="main-menu-4"><a href="" target="_blank">Program</a></li>
@@ -56,9 +54,10 @@
 										Information</a></li>
 							</ul>
 						</li>
-						<li class="main-menu7"><a href="">Contact us</a></li>
-						<li class="main-menu8"><a href="">General Infomation </a></li>
-						<li class="main-menu8"><a
+						<li class="main-menu-7"><a href="">Contact us</a></li>
+						<li class="main-menu-8"><a href="">General Infomation </a></li>
+						<li class="main-menu-9"><a href="<%=request.getContextPath()%>/show-file-upload">File Upload</a></li>
+						<li class="main-menu-10"><a
 							href="<%=request.getContextPath()%>/admin/show-login">Login</a></li>
 					</ul>
 					<div class="sub-menu"></div>
@@ -75,7 +74,7 @@
 							<c:out value="${cat.name}"></c:out>
 						</h5>
 						<c:forEach items="${listNews}" var="news">
-							<c:if test="${news.nameCat == cat.name}">
+							<c:if test="${news.id_cat == cat.id_cat}">
 								<dl>
 									<dt>
 										<c:out value="${news.title}"></c:out>
@@ -116,10 +115,13 @@
 		</div>
 	</div>
 
-	<script type="text/javascript"
-		src="resources/Library/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript"
-		src="resources/Library/Bootstrap/js/bootstrap.js"></script>
-	<script type="text/javascript" src="resources/JavaScript/script.js"></script>
+	<script>
+	<%@ include file="templates/Library/jquery-3.2.1.min.js"%>
+	</script>
+	<script>
+	<%@ include file="templates/Library/Bootstrap/js/bootstrap.js"%></script>
+	<script>
+	<%@ include file="templates/JavaScript/script.js"%>
+	</script>
 </body>
 </html>

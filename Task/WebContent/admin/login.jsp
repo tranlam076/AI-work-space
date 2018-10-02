@@ -8,54 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ISAT</title>       
   <style>
-    .login-form {
-  background: #fff;
-  margin-left: auto;
-  margin-right: auto;
-  width: 300px;
-  box-shadow: 0 0 20px #222;
-  color: #376EC0;
-  padding: 30px;
-  margin-top: 40px;
-}
-.login-form form{
-  padding: 40px 30px;
-}
-.login-form form span{
-  display: block;
-  font-size: 25px;
-  font-weight: 400;
-  margin-bottom: 60px;
-}
-.login-form form input[type="email"],
-.login-form form input[type="password"],
-.login-form form input[type="submit"]{
-  display: block;
-  font-size: 14px;
-  margin: 20px 0 0 0;
-  height: 44px;
-  border-radius: 40px;
-  line-height: 30px;
-  padding: 0px 25px;
-  margin-left: -30px;
-  border: 1px solid #376EC0;
-  color: #376EC0;
-  width: 100%;
-}
-.login-form form input[type="submit"]{
-  border: none;
-  line-height: 46px;
-  height: 46px;
-  padding: 0 25px;
-  background: #376EC0;
-  color: #fff;
-  cursor: pointer;
-}
-.login-form a{
-  text-decoration: none;
-  font-size: 14px;
-  color: #376EC0;
-}
+  <%@include file ="/templates/admin/CSS/style.css"%>
   </style>
 </head>
 <body>

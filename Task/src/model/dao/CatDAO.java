@@ -72,13 +72,13 @@ public class CatDAO {
 		return result;
 		
 	}
-	public Category getItem(int idCat) {
+	public Category getItem(String id_Cat) {
 		conn = connectDBLibrary.getConnectMySQL();
 		String sql = "SELECT * FROM " + table + " WHERE id_cat = ?";
 		Category objCat = null;
 		try {
 			pst = conn.prepareStatement(sql);
-			pst.setInt(1, idCat);
+			pst.setString(1, id_Cat);
 			rs = pst.executeQuery();
 			while(rs.next()){
 				objCat = new Category(rs.getString("id_cat"), rs.getString("name"));
@@ -124,13 +124,13 @@ public class CatDAO {
 		}
 		return result;
 	}
-	public int delItem(int idCat) {
+	public int delItem(String id_cat) {
 		int result = 0;
 		conn = connectDBLibrary.getConnectMySQL();
 		String sql = "DELETE FROM " + table + " WHERE id_cat = ?";
 		try {
 			pst = conn.prepareStatement(sql);
-			pst.setInt(1, idCat);
+			pst.setString(1, id_cat);
 			pst.executeUpdate();
 			result = 3;
 		} catch (SQLException e) {
@@ -140,7 +140,6 @@ public class CatDAO {
 			try {
 				pst.close();
 				conn.close();
-				rs.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

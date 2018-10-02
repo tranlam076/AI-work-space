@@ -41,14 +41,13 @@ public class TicTacToe {
 				State minChild = null;
 				for (int i =0; i<s.N; i++) {
 					for (int j =0; j<s.N; j++) {
-						State child = new Operator(i, j).Move(s;
+						State child = new Operator(i, j).Move(s);
 						if (child == null) {
 							continue;
 						}
-						int tmp = MiniMax(s, d, false)
+						int tmp = MiniMax(child, d, false);
 					}
 				}
-				s = MiniMax(s, d);
 			}
 			s.Print();
 			turn++;
@@ -60,16 +59,15 @@ public class TicTacToe {
 		return false;
 	}
 
-	private State MiniMax(State s, int d, boolean MP) {
+	private int MiniMax(State s, int d, boolean MP) {
 		return AlphaBeta(s, d, Integer.MIN_VALUE, Integer.MAX_VALUE, MP);
 	}
 
-	private State AlphaBeta(State s, int d, int a, int b, boolean MP) {
+	private int AlphaBeta(State s, int d, int a, int b, boolean MP) {
 		if (isEndNode(s) || d == 0) {
 			return Value(s);
 		}
 
-		State minState = null;
 lb:		for (int i = 0; i < s.N; i++)
 			for (int j = 0; j < s.N; j++) {
 				State child = new Operator(i, j).Move(s);
@@ -88,12 +86,11 @@ lb:		for (int i = 0; i < s.N; i++)
 					if (b>tmp) b =tmp;
 				}
 				
-				
 				if (a>b)
 					break lb;
-				
 			}
-		return minState;
+		if (MP) return  a;
+		else return b;
 	}
 
 	private int Value(State s) {
@@ -111,6 +108,7 @@ lb:		for (int i = 0; i < s.N; i++)
 				if (s.a[i][j]==0) count ++;
 			}
 		}
+		if (count %2 == 0) return true;
 		return false;
 	}
 

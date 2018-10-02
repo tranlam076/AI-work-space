@@ -45,7 +45,7 @@ public class AddCatAdminController extends HttpServlet {
 			if(rs>0) {
 				writer.println("success");
 			}
-			response.sendRedirect(request.getContextPath()+"/admin/index?msg=1");
+			response.sendRedirect(request.getContextPath()+"/admin/index");
 			return;
 		} catch (Exception e) {
 			response.sendRedirect(request.getContextPath()+"/admin/index?msg=0");

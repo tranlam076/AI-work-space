@@ -124,13 +124,13 @@ public class NewsDAO {
 		}
 		return result;
 	}
-	public int delItem(int idNews) {
+	public int delItem(String id_news) {
 		int result = 0;
 		conn = connectDBLibrary.getConnectMySQL();
 		String sql = "DELETE FROM news WHERE id_news = ?";
 		try {
 			pst = conn.prepareStatement(sql);
-			pst.setInt(1, idNews);
+			pst.setString(1, id_news);
 			result = pst.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

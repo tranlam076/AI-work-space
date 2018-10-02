@@ -18,6 +18,8 @@ public class Server2 {
 	DataInputStream disS;
 	public static SocketThread2 thread2;
 	public static ArrayList<Person> listPersonMZ = new ArrayList<>();
+	public static ArrayList<Person> listPersonAL = new ArrayList<>();
+
 	public Server2() throws IOException {
 		listPersonMZ.add(new Person("M", 13));
 		listPersonMZ.add(new Person("N", 15));

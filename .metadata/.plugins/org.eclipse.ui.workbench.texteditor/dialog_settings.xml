@@ -6,12 +6,15 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="correct" key="selection"/>
+		<item value="getI" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="getI"/>
+			<item value="resources"/>
+			<item value="resource"/>
 			<item value="goal"/>
 			<item value="reset"/>
 			<item value="reser"/>
@@ -24,11 +27,9 @@
 			<item value="check"/>
 			<item value="caroAI"/>
 			<item value="CoCaro"/>
-			<item value="5"/>
-			<item value="4"/>
-			<item value="ok"/>
 		</list>
 		<list key="replacehistory">
+			<item value="templates"/>
 			<item value="correct"/>
 			<item value=""/>
 			<item value="caroAI"/>

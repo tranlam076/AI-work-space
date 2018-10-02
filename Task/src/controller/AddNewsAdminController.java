@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.bean.Category;
 import model.bean.News;
+import model.dao.CatDAO;
 import model.dao.NewsDAO;
 
 /**
@@ -44,10 +46,16 @@ public class AddNewsAdminController extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		String title = new String(request.getParameter("title").getBytes("ISO-8859-1"), "UTF-8");
 		String content = new String(request.getParameter("content").getBytes("ISO-8859-1"), "UTF-8");
-		String id_cat = new String(request.getParameter("id_cat").getBytes("ISO-8859-1"), "UTF-8");
-		String nameCat = new String(request.getParameter("nameCat").getBytes("ISO-8859-1"), "UTF-8");
+		String id_cat = new String(request.getParameter("idCat").getBytes("ISO-8859-1"), "UTF-8");
+		String nameCat = "";
 		try {
-
+			CatDAO cat = new CatDAO();
+			Category category = cat.getItem(id_cat);
+			nameCat = category.getName();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
 			News objNews = new News("", title, content, id_cat, nameCat);
 			NewsDAO news = new NewsDAO();
 			int rs = news.addItem(objNews);
