@@ -25,7 +25,7 @@
 			</div>
 			<div class="header-image">
 				<a href="#"><img
-					src="https://www.kogakuin.ac.jp/isat/img/header.jpg" alt=""></a>
+					src="http://www.dut.udn.vn/Files/admin/images/Tin_tuc/Daotao/2017/HCERES/image002.png" alt=""></a>
 			</div>
 		</div>
 

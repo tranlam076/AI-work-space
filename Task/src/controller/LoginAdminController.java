@@ -14,7 +14,6 @@ import model.dao.UsersDAO;
 /**
  * Servlet implementation class LoginAdminController
  */
-@WebServlet("/LoginAdminController")
 public class LoginAdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

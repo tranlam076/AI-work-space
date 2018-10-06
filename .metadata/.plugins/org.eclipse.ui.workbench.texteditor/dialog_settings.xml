@@ -6,29 +6,31 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="getI" key="selection"/>
+		<item value="submission" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="author"/>
+			<item value="Author"/>
+			<item value="Submission"/>
+			<item value="&lt;%@include file=&quot;/templates/conference/inc/header.jsp&quot;%&gt;"/>
+			<item value="show-pa"/>
+			<item value="LoginAdm"/>
+			<item value="Login"/>
+			<item value="admin/in"/>
+			<item value="admin"/>
+			<item value="img"/>
 			<item value="getI"/>
 			<item value="resources"/>
 			<item value="resource"/>
 			<item value="goal"/>
 			<item value="reset"/>
-			<item value="reser"/>
-			<item value="out."/>
-			<item value="&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=ISO-8859-1&quot;"/>
-			<item value="categ"/>
-			<item value="cater"/>
-			<item value="Print"/>
-			<item value="out"/>
-			<item value="check"/>
-			<item value="caroAI"/>
-			<item value="CoCaro"/>
 		</list>
 		<list key="replacehistory">
+			<item value="submission"/>
+			<item value="Submission"/>
 			<item value="templates"/>
 			<item value="correct"/>
 			<item value=""/>

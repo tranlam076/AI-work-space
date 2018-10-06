@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class testGetPropertie
  */
-@WebServlet("/testGetPropertie")
 public class testGetProperties extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

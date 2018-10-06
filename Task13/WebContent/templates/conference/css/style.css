@@ -1,0 +1,183 @@
+/*---------------------------select track--------------------------------*/
+
+.select-track {
+	/*display: none;*/
+	background-color: #94C0E3;
+	padding: 12pt 12pt 2pt 12pt;
+	border-radius: 8pt;
+	border: solid #aaa 1px;
+	margin-top: 10pt;
+	margin-bottom: 15pt;
+}
+
+.select-track p {
+	color: black;
+	margin-bottom: 20px;
+	padding-left: 35px;
+}
+
+.select-track-container {
+	color: #fff;
+	display: block;
+	position: relative;
+	padding-left: 35px;
+	margin-bottom: 12px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.select-track-container input {
+}
+
+.btn-select-track{
+	margin-left: 35px;
+	margin-bottom: 12px;
+	width: 100pt;
+	background: #336BBE;
+	border: 1px #336BBE solid;
+	height: 20pt;
+	padding: 2pt 10pt 1pt 10pt;
+	border-radius: 4pt;
+	font-size: 11pt;
+	font-family: Helvetica, sans serif;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+}
+
+/*-------------------------------mark infomation--------------------------------*/
+.mark-information {
+	display: none;
+	color: black;
+}
+
+
+.mark-information h3{
+	font-size: 14pt;
+	margin: 5pt 0px;
+}
+
+.mark-information li {
+	list-style: circle;
+	float: left;
+	margin-left: 6%;
+}
+
+/*---------------------show-direction----------------------*/
+.show-direction-author {
+	display: block;
+	height: 200px;
+}
+.show-direction-title-abstract {
+	display: block;
+	height: 10%;
+}
+.show-direction-keywords {
+	display: block;
+	height: 8%;
+}
+.show-direction-uploads {
+	display: block;
+	height: 3%;
+}
+
+/*--------author-------*/
+.author {
+	background-color: #94C0E3;
+	padding: 12pt;
+	border-radius: 8pt;
+	border: solid #aaa 1px;
+	margin-top: 10pt;
+	margin-bottom: 15pt;
+
+}
+.author-container {
+	margin: 10px;
+}
+
+.author-container input {
+	float: right;
+	width: 85%;
+}
+
+.author-container input[type="checkbox"] {
+	margin-top: 3px; 
+	margin-right: 10px;
+	float: left;
+	width: auto;
+}
+
+.add-author-information {
+	color: black;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+/*------------title and abstract------------*/
+.title-abstract-information {
+	background-color: #94C0E3;
+	padding: 12pt;
+	border-radius: 8pt;
+	border: solid #aaa 1px;
+	margin-top: 10pt;
+	margin-bottom: 15pt;
+	height: 150px;
+}
+.title-abstract-information-container {
+	margin: 10px;
+}
+
+.title-abstract-information-container input, .title-abstract-information-container textarea {
+	float: right;
+	width: 85%;
+}
+
+
+/*------------keywords------------*/
+.keywords-information {
+	background-color: #94C0E3;
+	padding: 12pt;
+	border-radius: 8pt;
+	border: solid #aaa 1px;
+	margin-top: 10pt;
+	margin-bottom: 15pt;
+	height: 110px;
+}
+.keywords-information-container textarea {
+	float: right;
+	width: 85%;
+}
+
+
+/*------------Upload------------*/
+.uploads-information {
+	background-color: #94C0E3;
+	padding: 12pt;
+	border-radius: 8pt;
+	border: solid #aaa 1px;
+	margin-top: 10pt;
+	margin-bottom: 15pt;
+}
+.uploads-information-container p {
+	display: inline;
+}
+
+.btn-submit-information {
+	margin-bottom: 12px;
+	width: 100pt;
+	background: #336BBE;
+	border: 1px #336BBE solid;
+	height: 20pt;
+	padding: 2pt 10pt 1pt 10pt;
+	border-radius: 4pt;
+	font-size: 11pt;
+	font-family: Helvetica, sans serif;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+}
+
+

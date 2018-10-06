@@ -1,0 +1,178 @@
+/*===============================================
+GLOBAL CSS
+===============================================*/
+* {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+*{margin:0; padding: 0;}
+* {margin: 0; padding: 0;}
+h1,h2,h3,h4,h5,h6,ul,li,p {margin: 0; padding: 0;}
+li {list-style: none; float: left;}
+a{text-decoration: none}
+.row {
+	margin: 0px;
+	padding: 0px;
+}
+
+
+/*===============================================
+GENERAL CSS
+=================================================*/
+/*------------------------admin form-------------------------*/
+.login-form {
+	background: #fff;
+	margin-left: auto;
+	margin-right: auto;
+	width: 300px;
+	box-shadow: 0 0 20px #222;
+	color: #376EC0;
+	padding: 30px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+.login-form form{
+	padding: 40px 30px;
+}
+.login-form form span{
+	display: block;
+	font-size: 25px;
+	font-weight: 400;
+}
+.login-form form input[type="email"],
+.login-form form input[type="password"],
+.login-form form input[type="submit"]{
+	display: block;
+	font-size: 14px;
+	margin: 20px 0 0 0;
+	height: 44px;
+	border-radius: 40px;
+	line-height: 30px;
+	padding: 0px 25px;
+	border: 1px solid #376EC0;
+	color: #376EC0;
+	margin-left: auto;
+	margin-right: auto;
+	width: 200px;
+}
+.login-form form input[type="submit"]{
+	background: #376EC0;
+	color: #fff;
+	cursor: pointer;
+}
+.login-form a{
+	text-decoration: none;
+	font-size: 14px;
+	color: #376EC0;
+}
+
+/* admin - index controller */
+
+table td { 
+	border: 1px solid black;
+	padding: 5px;
+}
+.content-cat {
+	display: block;
+	width: 80%;
+	margin: 20px;
+}
+
+.content-news {
+	display: none;
+	width: 80%;
+	margin: 20px;
+	margin-bottom: 50px;
+}
+
+.content-right h2, .content-left h2 {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100px;
+	margin-bottom: 30px;
+	border: none;
+}
+
+button.add-cat {
+	float: right;
+	margin-top: 20px;
+	background: blue;
+	border: none;
+	color: #fff;
+	font-weight: 2em;
+	padding: 3px;
+	margin-bottom: 20px;
+}
+button.add-news {
+	float: right;
+	margin-top: 20px;
+	background: blue;
+	border: none;
+	color: #fff;
+	font-weight: 2em;
+	padding: 3px;
+	margin-bottom: 20px;
+
+}
+
+.edit-cat-form, .edit-news-form {
+	display: none;
+	margin-top: 50px;
+}
+
+.edit-cat-form form, .edit-news-form form {
+	width: 80%;
+	margin-left: 20px;
+}
+
+table td .info {
+	width: 80px;
+}
+
+button.btn-delete {
+	background: red;
+	border: none;
+	color: #fff;
+	padding: 3px;
+}
+button.btn-edit {
+	background: green;
+	border: none;
+	color: #fff;
+	padding: 3px;
+}
+
+.edit-cat-form form input[type="text"], .edit-cat-form form input[type="submit"], .edit-news-form form input[type="text"], .edit-news-form form input[type="submit"] {
+	display: block;
+	font-size: 14px;
+	margin: 20px 0 0 0;
+	height: 44px;
+	border-radius: 40px;
+	line-height: 30px;
+	padding: 0px 25px;
+	border: 1px solid #376EC0;
+	color: #376EC0;
+	margin-left: auto;
+	margin-right: auto;
+	width: 250px;
+}
+
+.edit-news-form form .select-position {
+	font-size: 14px;
+	margin-top: 20px;
+	line-height: 30px;
+	padding-left: 10px;
+	color: #000;
+	margin-left: auto;
+	margin-right: auto;
+	width: 260px;
+}
+
+.edit-cat-form form input[type="submit"], .edit-news-form form input[type="submit"] {
+	background: #376EC0;
+	color: #fff;
+	cursor: pointer;
+	width: 250px;
+}
