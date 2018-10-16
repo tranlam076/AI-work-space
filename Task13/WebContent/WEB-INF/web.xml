@@ -10,28 +10,20 @@
     <url-pattern>/add-admin</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>ShowIndexAdminController</servlet-name>
-    <servlet-class>controller.ShowIndexAdminController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ShowIndexAdminController</servlet-name>
-    <url-pattern>/admin/index</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>LoginAdminController</servlet-name>
     <servlet-class>controller.LoginAdminController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LoginAdminController</servlet-name>
-    <url-pattern>/admin/login</url-pattern>
+    <url-pattern>/login</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>ShowLoginAdminController</servlet-name>
-    <jsp-file>/admin/login.jsp</jsp-file>
+    <servlet-class>controller.ShowLoginAdminController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ShowLoginAdminController</servlet-name>
-    <url-pattern>/admin/show-login</url-pattern>
+    <url-pattern>/show-login</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>AddNewsAdminController</servlet-name>
@@ -84,6 +76,11 @@
   <servlet>
     <servlet-name>FileUploadController</servlet-name>
     <servlet-class>controller.FileUploadController</servlet-class>
+    <multipart-config>
+      <max-file-size>52428800</max-file-size>
+      <max-request-size>52428800</max-request-size>
+      <file-size-threshold>0</file-size-threshold>
+    </multipart-config>
   </servlet>
   <servlet-mapping>
     <servlet-name>FileUploadController</servlet-name>
@@ -98,13 +95,29 @@
     <url-pattern>/admin/show-file-manager</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>ShowPaperSubmitsion</servlet-name>
-    <jsp-file>/conferences/paper-submission.jsp</jsp-file>
+    <servlet-name>ShowIndexAdminController</servlet-name>
+    <servlet-class>controller.ShowIndexAdminController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ShowPaperSubmitsion</servlet-name>
-    <url-pattern>/show-paper-submission</url-pattern>
+    <servlet-name>ShowIndexAdminController</servlet-name>
+    <url-pattern>/admin/index</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>LogoutAdminController</servlet-name>
+    <servlet-class>controller.LogoutAdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutAdminController</servlet-name>
+    <url-pattern>/admin/logout</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>AuthenticationFilter</filter-name>
+    <filter-class>library.AuthenticationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
   <servlet>
     <servlet-name>ShowIndexController</servlet-name>
     <servlet-class>controller.IndexPublicController</servlet-class>
@@ -124,5 +137,28 @@
   <servlet-mapping>
     <servlet-name>ShowIndex</servlet-name>
     <url-pattern>/show-index</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>PaperSubmissionController</servlet-name>
+    <servlet-class>controller.PaperSubmissionController</servlet-class>
+    <multipart-config>
+      <max-file-size>52428800</max-file-size>
+      <max-request-size>52428800</max-request-size>
+      <file-size-threshold>0</file-size-threshold>
+    </multipart-config>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PaperSubmissionController</servlet-name>
+    <url-pattern>/paper-submission</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ShowPaperSubmissionController</servlet-name>
+    <servlet-class>controller.ShowPaperSubmissionController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowPaperSubmissionController</servlet-name>
+    <url-pattern>/submission</url-pattern>
   </servlet-mapping>
 </web-app>

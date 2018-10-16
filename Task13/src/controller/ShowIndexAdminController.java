@@ -52,7 +52,6 @@ public class ShowIndexAdminController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher rd = request.getRequestDispatcher("/admin/admin-index.jsp");
-		rd.forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/admin/index");
 	}
 }

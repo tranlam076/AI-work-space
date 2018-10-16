@@ -94,6 +94,16 @@
 	margin-bottom: 15pt;
 
 }
+
+.remove-author {
+	text-align: center;
+	color: white;
+	background: red;
+	float: right;
+	cursor: pointer;
+	width: 20px;
+}
+
 .author-container {
 	margin: 10px;
 }

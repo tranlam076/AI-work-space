@@ -15,12 +15,13 @@ import javax.servlet.http.Part;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import library.PropertiesLibrary;
+
 /**
  * Servlet implementation class FileUploadController
  */
 public class FileUploadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String SAVE_DIR = "uploadFiles";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -47,6 +48,7 @@ public class FileUploadController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		PrintWriter out = response.getWriter();
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		response.setContentType("text/html");
@@ -55,18 +57,26 @@ public class FileUploadController extends HttpServlet {
 			out.write("error");
 			return;
 		}
-
-		String savePath = "C:\\Users\\tranl\\eclipse-workspace\\Task13\\" + SAVE_DIR;
+		PropertiesLibrary propertiesLibrary = new PropertiesLibrary();
+//		System.out.println(propertiesLibrary.readProp().getProperty("filePath"));
+		String savePath = propertiesLibrary.readProp().getProperty("filePath");
 		Part filePart = request.getPart("file");
 		String fileName = filePart.getSubmittedFileName();
 		int t = fileName.lastIndexOf("\\");
 		fileName = fileName.substring(t + 1);
+		if (fileName.substring(fileName.lastIndexOf("."), fileName.length()) != "pdf") {
+			out.write("error");
+			request.setAttribute("message", "File format wrong.");
+			getServletContext().getRequestDispatcher("/admin/show-file-manager").forward(request, response);
+			return;
+		};
 		if (fileName.equals("")) {
 			out.write("error");
-			request.setAttribute("message", "Upload fault!");
+			request.setAttribute("message", "Upload fault");
 			getServletContext().getRequestDispatcher("/admin/show-file-manager").forward(request, response);
 			return;
 		}
+		System.out.println(fileName);
 
 		InputStream is = filePart.getInputStream();
 		OutputStream os = new FileOutputStream(savePath + File.separator + fileName);

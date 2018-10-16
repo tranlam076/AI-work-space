@@ -1,6 +1,6 @@
 <%@include file="/templates/public/inc/header.jsp" %>
 <%@include file="/templates/public/inc/menu.jsp" %>
-		<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 content-right">
+		<div class="content-right">
 				<h2>Organization</h2>
 				<div class="box">
 					<div class="box_h1">Organizing Committee</div>

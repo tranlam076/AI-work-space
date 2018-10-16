@@ -3,6 +3,7 @@ package library;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConnectDBLibrary {
 	private Connection conn;
@@ -12,10 +13,12 @@ public class ConnectDBLibrary {
 	private String db;
 	
 	public ConnectDBLibrary(){
-		this.db = "task13";
-		this.url = "jdbc:mysql://localhost:3306/"+db;
-		this.user = "root";
-		this.pass = "709f2dfe";
+		PropertiesLibrary propertiesLibrary = new PropertiesLibrary();
+		Properties objProp = propertiesLibrary.readProp();
+		this.db = objProp.getProperty("db");
+		this.url = "jdbc:mysql://localhost:3306/" + db + "?autoReconnect=true&useSSL=false";
+		this.user = objProp.getProperty("user");
+		this.pass = objProp.getProperty("pass");
 	}
 	
 	public Connection getConnectMySQL() {

@@ -61,8 +61,7 @@ body {
 }
 
 .header-image {
-	width: 100%;
-	background: #fff;
+	height: 250px;
 }
 
 .header-image img {
@@ -70,12 +69,17 @@ body {
 	height: 250px;
 }
 
-.row {
-	margin: none;
+.main-content {
 	background-image: linear-gradient(90deg, #DEEAF6, #fff);
-	height: 100%;
+	display: block;
+	position:relative;
+	overflow:auto;
 }
 /*menu*/
+.content-left {
+	float: left;
+	width: 22%;
+}
 #menu {
 	padding-top: 5px;
 	padding-left: 20px;
@@ -133,13 +137,13 @@ body {
 
 /*content - right*/
 .content-right {
+	float: right;
+	width: 74%;
 	margin-top: 10px;
-	margin-left: -40px;
+	margin-right: 20px;
 	font-size: 12px;
 	text-align: left;
 	min-height: 400px;
-	/*height: 150px;*/
-	/*background: #000;*/
 }
 
 
@@ -207,11 +211,6 @@ body {
 	display: block;
 	margin-inline-start: 40px;
 }
-
-
-
-
-
 
 /*footer*/
 #footer {

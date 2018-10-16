@@ -119,6 +119,8 @@
 						<div class="author-information">
 							<div class="author author1">
 								<strong>Author 1</strong>
+								<span class="close-author">x</span>
+
 								<div class="author-container">
 									First name(†):
 									<input type="text" name="firstname1">
@@ -147,10 +149,12 @@
 									<input type="checkbox" name="corresponding1" value="on">
 									<span>corresponding author</span>
 								</div>
+
 							</div>
 
 							<div class="author">
 								<strong>Author 2</strong>
+								<span class="remove-author" onclick="deleteAuthor()">x</span>
 								<div class="author-container">
 									First name(†):
 									<input type="text" name="firstname2">

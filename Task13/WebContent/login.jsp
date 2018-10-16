@@ -2,7 +2,7 @@
 <%@include file="/templates/public/inc/menu.jsp"%>
 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 content-right">
 	<div class="login-form">
-		<form action="<%=request.getContextPath() %>/admin/login"
+		<form action="<%=request.getContextPath() %>/login"
 			method="POST">
 			<span>Login</span> <input type="email" placeholder="Your e-mail"
 				required name="username" /> <input type="password"

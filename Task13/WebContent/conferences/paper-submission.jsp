@@ -1,33 +1,25 @@
 <%@include file="/templates/conference/inc/header.jsp"%>
 <%@include file="/templates/public/inc/menu.jsp"%>
 
-			<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 content-right">
-				<form action="submission_new_z.cgi" method="post" id="new_sub" enctype="multipart/form-data">
+			<div class="content-right">
+				<form action="${pageContext.request.contextPath}/paper-submission" method="post" id="new_sub" enctype="multipart/form-data">
+					<input type="hidden" name="authorCouting" class ="author-counting" value="1">
 					<div class="select-track">
-						<p>Please select the track relevant for your submission and click "Continue".</p>
-						<label class="select-track-container">
-							<input type="radio" checked="checked" name="radio">
-							<span>AI, Computational Intelligence and Data Analytics</span>
-						</label>
-						<label class="select-track-container">
-							<input type="radio" name="radio">
-							<span>Communications and Networking</span>
-						</label>
-						<label class="select-track-container">
-							<input type="radio" name="radio">
-							<span>Software Engineering and Information Systems</span>
-						</label>
-						<label class="select-track-container">
-						<input type="radio" name="radio">
-							<span>Image, Language, and Speech Processing</span>
-						</label>
-						<label class="select-track-container">
-							<input type="radio" name="radio">
-							<span>Computational Science</span>
-						</label>
+						<p>Please select the track relevant for your submission and click "Continue".</p>						
+						<c:forEach items="${listFields}" var="field" varStatus="theCount">
+							<label class="select-track-container">
+								<c:if test="${theCount.index == 0 }">
+									<input type="radio" checked="checked" name="field" value="<c:out value="${field.idField}"></c:out>">
+								</c:if>
+								<c:if test="${theCount.index != 0 }">
+									<input type="radio" name="field" value="<c:out value="${field.idField}"></c:out>">
+								</c:if>
+									<span><c:out value="${field.name}"></c:out></span>
+							</label>
+						</c:forEach>
 						<input class ="btn-select-track" type="button" value="Continue" />
-					</div>	<!-- end select-track -->
-			
+						<!-- end select-track -->
+					</div>
 					<div class="mark-information">
 						<div class="show-direction-author">
 							<h3 class="track-selected">
@@ -57,23 +49,23 @@
 								<strong>Author 1</strong>
 								<div class="author-container">
 									First name(+):
-									<input type="text" name="firstname1">
+									<input type="text" name="firstName1">
 								</div>
 								<div class="author-container">
 									Last name (*):
-									<input type="text" name="lastname1">
+									<input type="text" name="lastName1" required="required">
 								</div>
 								<div class="author-container">
 									Email (*):
-									<input type="text" name="email1">
+									<input type="text" name="email1" required="required">
 								</div>
 								<div class="author-container">
 									Country (*):
-									<input type="text" name="country1">
+									<input type="text" name="country1" required="required">
 								</div>
 								<div class="author-container">
 									Organization (*):
-									<input type="text" name="organization1">
+									<input type="text" name="organization1" required="required">
 								</div>
 								<div class="author-container">
 									Web page:
@@ -81,38 +73,6 @@
 								</div>
 								<div class="author-container">
 									<input type="checkbox" name="corresponding1" value="on">
-									<span>corresponding author</span>
-								</div>
-							</div>
-
-							<div class="author">
-								<strong>Author 2</strong>
-								<div class="author-container">
-									First name(+):
-									<input type="text" name="firstname2">
-								</div>
-								<div class="author-container">
-									Last name (*):
-									<input type="text" name="lastname2">
-								</div>
-								<div class="author-container">
-									Email (*):
-									<input type="text" name="email2">
-								</div>
-								<div class="author-container">
-									Country (*):
-									<input type="text" name="country2">
-								</div>
-								<div class="author-container">
-									Organization (*):
-									<input type="text" name="organization2">
-								</div>
-								<div class="author-container">
-									Web page:
-									<input type="text" name="webpage2">
-								</div>
-								<div class="author-container">
-									<input type="checkbox" name="corresponding2" value="on">
 									<span>corresponding author</span>
 								</div>
 							</div>
@@ -132,11 +92,11 @@
 						<div class="title-abstract-information">
 							<div class="title-abstract-information-container">
 								Title(*):
-								<input type="text" name="title">
+								<input type="text" name="title" required="required">
 							</div>
 							<div class="title-abstract-information-container">
 								Abstract(*):
-								<textarea rows="4" name="abstract"></textarea>
+								<textarea rows="4" name="description" required="required"></textarea>
 							</div>
 						</div>	<!-- end title-abstract-information -->
 
@@ -148,7 +108,7 @@
 						<div class="keywords-information">
 							<div class="keywords-information-container">
 								Keywords(*):
-								<textarea rows="4" name="keywords"></textarea>
+								<textarea rows="4" name="keywords" required="required"></textarea>
 							</div>
 						</div>	<!-- end keywords-information -->
 
@@ -161,13 +121,12 @@
 								<p> Upload your paper. The paper must be in PDF format (file extension .pdf)</p>	
 							</div>
 							<div class="uploads-information-container">
-								<input name="uploads" type="file">
+								<input name="file" type="file" required="required">
 							</div>
 						</div>	<!-- end uploads-information -->
 						<input class ="btn-submit-information" type="submit" value="Submit"/>		
 					</div>	<!-- end mark-information -->
 				</form>
 			</div>
-		</div>
 
 <%@include file="/templates/public/inc/footer.jsp" %>  

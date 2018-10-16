@@ -6,27 +6,27 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="submission" key="selection"/>
+		<item value="paper-submission" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="author"/>
-			<item value="Author"/>
-			<item value="Submission"/>
-			<item value="&lt;%@include file=&quot;/templates/conference/inc/header.jsp&quot;%&gt;"/>
-			<item value="show-pa"/>
-			<item value="LoginAdm"/>
-			<item value="Login"/>
-			<item value="admin/in"/>
-			<item value="admin"/>
-			<item value="img"/>
-			<item value="getI"/>
-			<item value="resources"/>
-			<item value="resource"/>
-			<item value="goal"/>
-			<item value="reset"/>
+			<item value=" "/>
+			<item value="paper-submission"/>
+			<item value="submission"/>
+			<item value="out"/>
+			<item value="sendAc"/>
+			<item value="crea"/>
+			<item value="512"/>
+			<item value="receivedAck"/>
+			<item value="Client"/>
+			<item value="pape"/>
+			<item value="Sub"/>
+			<item value="sub"/>
+			<item value="subm"/>
+			<item value="submiss"/>
+			<item value="show-lo"/>
 		</list>
 		<list key="replacehistory">
 			<item value="submission"/>

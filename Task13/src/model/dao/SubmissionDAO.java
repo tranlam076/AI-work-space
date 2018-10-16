@@ -50,20 +50,24 @@ public class SubmissionDAO {
 		return listItems;
 	}
 
-	public int addItem(Submission submission) {
-		int result = 0;
+	public String addItem(Submission submission) throws SQLException {
+		String result = "default";
 		conn = connectDBLibrary.getConnectMySQL();
+		st = conn.createStatement();
 		String sql = "INSERT INTO " + table
 				+ " (idField,title,description,keywords,fileNameUpload) VALUES (?,?,?,?,?)";
 		try {
-			pst = conn.prepareStatement(sql);
+			pst = conn.prepareStatement(sql, new String[]{"idSubmission"});
 			pst.setString(1, submission.getIdField());
 			pst.setString(2, submission.getTitle());
 			pst.setString(3, submission.getDescription());
 			pst.setString(4, submission.getKeywords());
 			pst.setString(5, submission.getFileNameUpload());
-			pst.executeUpdate();
-			result = 1;
+			result = "" + pst.executeUpdate();
+//			rs = pst.getGeneratedKeys();
+//			while (rs.next()) {
+//				result = rs.getString(0);
+//			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

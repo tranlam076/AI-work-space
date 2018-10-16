@@ -83,5 +83,5 @@
 					</div>
 				</div>		
 			</div>
-		</div>
+		
 <%@include file="/templates/public/inc/footer.jsp" %>  
