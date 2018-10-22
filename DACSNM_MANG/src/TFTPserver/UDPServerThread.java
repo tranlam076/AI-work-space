@@ -85,7 +85,7 @@ public class UDPServerThread extends Thread {
 		}
 	}
 
-	/**
+	/*
 	 *read fileName, find the file and call function sendFile()
 	 */
 	public void readFileName(DatagramPacket packet) throws FileNotFoundException, IOException {
@@ -112,6 +112,10 @@ public class UDPServerThread extends Thread {
 				createError(1, "File not found");
 			} else {
 				System.out.println(file.length());
+//				do some thing to split file 
+				
+				
+				
 				byte[] fileByte = new byte[(int) file.length()];
 				try {
 					fileInputStream = new FileInputStream(file);
@@ -124,6 +128,8 @@ public class UDPServerThread extends Thread {
 					System.out.println("Error Reading The File.");
 					e1.printStackTrace();
 				}
+				
+				
 
 			}
 		}

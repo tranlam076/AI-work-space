@@ -18,7 +18,6 @@ import library.PropertiesLibrary;
 /**
  * Servlet implementation class FileDownLoadController
  */
-@WebServlet("/FileDownLoadController")
 public class FileDownLoadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -11,6 +11,7 @@ import library.ConnectDBLibrary;
 import model.bean.Submission;
 
 public class SubmissionDAO {
+
 	private ConnectDBLibrary connectDBLibrary;
 	private Connection conn;
 	private Statement st;
@@ -26,14 +27,13 @@ public class SubmissionDAO {
 	public ArrayList<Submission> getItems() {
 		ArrayList<Submission> listItems = new ArrayList<>();
 		conn = connectDBLibrary.getConnectMySQL();
-		String sql = "SELECT * FROM " + table + " ORDER BY createdAt DESC";
+		String sql = "SELECT submission.idSubmission,submission.createdAt,field.name,submission.title FROM submission LEFT JOIN field ON field.idField = submission.idField ORDER BY submission.createdAt DESC LIMIT 1,15";
 		Submission objSubmission = null;
 		try {
 			st = conn.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
-				objSubmission = new Submission(rs.getString("idSubmission"), rs.getString("idField"), rs.getString("title"),
-						rs.getString("description"), rs.getString("keywords"), rs.getString("fileNameUpload"));
+				objSubmission = new Submission(rs.getString("idSubmission"), rs.getString("name"), rs.getString("title"), rs.getString("createdAt"));
 				listItems.add(objSubmission);
 			}
 		} catch (SQLException e) {
@@ -50,31 +50,27 @@ public class SubmissionDAO {
 		return listItems;
 	}
 
-	public String addItem(Submission submission) throws SQLException {
-		String result = "default";
+	public int addItem(Submission submission) throws SQLException {
+
+		int result = 0;
 		conn = connectDBLibrary.getConnectMySQL();
-		st = conn.createStatement();
 		String sql = "INSERT INTO " + table
-				+ " (idField,title,description,keywords,fileNameUpload) VALUES (?,?,?,?,?)";
+				+ " (idSubmission,idField,title,description,keywords,fileNameUpload) VALUES (?,?,?,?,?,?)";
 		try {
-			pst = conn.prepareStatement(sql, new String[]{"idSubmission"});
-			pst.setString(1, submission.getIdField());
-			pst.setString(2, submission.getTitle());
-			pst.setString(3, submission.getDescription());
-			pst.setString(4, submission.getKeywords());
-			pst.setString(5, submission.getFileNameUpload());
-			result = "" + pst.executeUpdate();
-//			rs = pst.getGeneratedKeys();
-//			while (rs.next()) {
-//				result = rs.getString(0);
-//			}
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, submission.getIdSubmission());
+			pst.setString(2, submission.getIdField());
+			pst.setString(3, submission.getTitle());
+			pst.setString(4, submission.getDescription());
+			pst.setString(5, submission.getKeywords());
+			pst.setString(6, submission.getFileNameUpload());
+			result = pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				pst.close();
 				conn.close();
-				rs.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -193,6 +189,10 @@ public class SubmissionDAO {
 		Submission objSubmission = null;
 		try {
 			st = conn.createStatement();
+			pst = conn.prepareStatement(sql);
+			pst.setInt(1, offset);
+			pst.setInt(2, row_count);
+
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
 				objSubmission = new Submission(rs.getString("idSubmission"),rs.getString("idField"), rs.getString("title"),

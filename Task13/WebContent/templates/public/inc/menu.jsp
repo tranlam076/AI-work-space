@@ -3,7 +3,7 @@
 		<div id="menu">
 			<ul>
 				<li class="main-menu-1"><a href="${pageContext.request.contextPath}/index" target="_top">HOME</a></li>
-				<li class="main-menu-3"><a href="${pageContext.request.contextPath}/submission" target="_top">Paper Submission</a>
+				<li class="main-menu-3"><a href="${pageContext.request.contextPath}/submissions" target="_top">Paper Submission</a>
 				</li>
 				<li class="main-menu-4"><a href="" target="_blank">Program</a></li>
 				<li class="main-menu-6">Accommodation
@@ -15,7 +15,7 @@
 				</li>
 				<li class="main-menu-8"><a href="">General Infomation </a></li>
 				<li class="main-menu-10"><a
-					href="<%=request.getContextPath()%>/show-login">Login</a></li>
+					href="<%=request.getContextPath()%>/login">Login</a></li>
 			</ul>
 		</div>
 	</div>

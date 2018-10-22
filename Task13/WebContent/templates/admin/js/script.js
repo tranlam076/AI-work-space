@@ -4,7 +4,7 @@ jQuery(document).ready(function($) {
 		// Private Properties
 		var check1 =true;
 		var check2 =true;
-		var url = "http://localhost:8080/Task";
+		var url = "http://localhost:8080/Task13";
 
 		// Public Properties
 
@@ -88,7 +88,7 @@ jQuery(document).ready(function($) {
 							if (error) {
 								console.log(error);
 							} else {
-								window.location.href = "http://localhost:8080/Task/admin/index";
+								window.location.href = "http://localhost:8080/Task13/admin/index";
 							}
 						});
 					}
@@ -99,7 +99,7 @@ jQuery(document).ready(function($) {
 							if (error) {
 								console.log(error);
 							} else {
-								window.location.href = "http://localhost:8080/Task/admin/index";
+								window.location.href = "http://localhost:8080/Task13/admin/index";
 							}
 						});
 
@@ -124,15 +124,66 @@ jQuery(document).ready(function($) {
 			});
 		}
 
+		// ------------------------- submission nanagerment -----------------
+
+		function sorting() {
+			showDetail("Sort by time");
+			$("#sort-by").change(function(event) {
+				showDetail($("#sort-by").val());
+			});
+		}
+
+		function showDetail (kind) {	
+			console.log(kind);
+			if (typeof listSubmissions !== 'undefined' && listSubmissions !== null) {
+				switch (kind) {
+					case "Sort by time":
+					listSubmissions.sort((a,b) => {
+						return (a.time > b.time) ? 1: (a.time < b.time) ? -1 : 0;
+					});
+					break;
+					case "Sort by title":
+					listSubmissions.sort((a,b) => {
+						return (a.title > b.title) ? 1: (a.title < b.title) ? -1 : 0;
+					});
+					break;
+					case "Sort by fieldName":
+					listSubmissions.sort((a,b) => {
+						return (a.fieldName > b.fieldName) ? 1: (a.fieldName < b.fieldName) ? -1 : 0;
+					});
+					break;
+				}
+
+				if (listSubmissions.length == 0) return;
+				$(".detail-submission").html("");
+				for (var submission of listSubmissions) {
+					$(".detail-submission").append(`
+						<tr>
+						<td width="20%">
+						<input type="checkbox" value="${submission.idSubmission}">
+						</td>
+						<td width="20%">${submission.title}</td>
+						<td width="20%">${submission.fieldName}</td>
+						<td width="20%">${submission.time}</td>
+						<td width="20%"><a href="${submission.detail}">detail</a></td>
+						</tr>
+						`);
+				}
+			}
+		}
+
 		//Public Method
 		return function ( ) {
 			showForm ();
 			showEdit();
 			excecuteDelete ();
+			sorting();
+			
 		}
 	}	
 	SINGLETON()();
 });
+
 
 
 

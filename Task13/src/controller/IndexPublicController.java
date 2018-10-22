@@ -41,7 +41,7 @@ public class IndexPublicController extends HttpServlet {
 			CatDAO cat = new CatDAO();
 			ArrayList<Category> listCats = cat.getItems();
 			request.setAttribute("listCats", listCats);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/show-index");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
 			// TODO: handle exception

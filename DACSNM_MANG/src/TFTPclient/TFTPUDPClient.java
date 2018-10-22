@@ -15,16 +15,6 @@ import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.util.Random;
 
-/**
- *
- * 135124
- *
- *
- * This is the client side, it sends read/write requests to the server it
- * connects to the server and performs the action with the server It can send
- * data packets and acks
- *
- */
 public class TFTPUDPClient {
 
 	private int TFTP_DEFAULT_PORT = 9000;
@@ -39,18 +29,12 @@ public class TFTPUDPClient {
 	Random rand = new Random();
 	private FileInputStream fileInputStream;
 
-	/**
-	 * The main method checks the amount of arguments and creates a new client
-	 *
-	 * @param args the command line arguments
-	 * @throws java.io.IOException
-	 */
 	public static void main(String[] args) throws IOException {
 
 		TFTPUDPClient client = new TFTPUDPClient();
-		fileName = "client.csv";
-//		client.sendReadRequest();
-        client.sendWriteRequest();
+		fileName = "test7.rar";
+		client.sendReadRequest();
+//        client.sendWriteRequest();
 
 	}
 
@@ -77,14 +61,8 @@ public class TFTPUDPClient {
 		socket.close();
 	}
 
-	/**
-	 * This sends a new read request to the server from the client It gets the
-	 * address and port numbers to create a new Datagram Socket object and then
-	 * calls receiveFile()
-	 *
-	 * @throws UnknownHostException
-	 * @throws SocketException
-	 * @throws IOException
+	/*
+	 * send a new read request to the server
 	 */
 	public void sendReadRequest() throws UnknownHostException, SocketException, IOException {
 		InetAddress address = InetAddress.getByName("localhost");
@@ -97,14 +75,8 @@ public class TFTPUDPClient {
 		socket.close();
 	}
 
-	/**
-	 * This creates the request into bytes to be sent off, it uses the opcode the
-	 * filename with a string and the mode.
-	 *
-	 * @param opCode   the opCode of the request
-	 * @param filename the filename of the file
-	 * @param mode     the mode of the packet - octet
-	 * @return
+	/*
+	 * function create the request 
 	 */
 	public byte[] createRequest(byte opCode, String filename, String mode) {
 		byte zeroByte = 0;
@@ -131,20 +103,12 @@ public class TFTPUDPClient {
 	}
 
 	/**
-	 * This will receive the file from the server and is called when the receive
-	 * request is sent
-	 *
-	 * @throws UnknownHostException
-	 * @throws SocketException
-	 * @throws IOException
+	 * receive file from server when call read request
 	 */
 	public void receiveFile() throws UnknownHostException, SocketException, IOException {
 		InetAddress address = InetAddress.getByName("localhost");
 		boolean endOfFile = true;
 		ByteArrayOutputStream file = new ByteArrayOutputStream();
-		// this waits till the end of file, we know when its the end of the file
-		// as the packet.length < 516 bytes
-		// this also send all of the acks
 		while (endOfFile) {
 			byte[] readByteArray = new byte[516];
 			DatagramPacket packet = new DatagramPacket(readByteArray, 516);
@@ -180,14 +144,9 @@ public class TFTPUDPClient {
 		}
 
 	}
-
-	/**
-	 * This writes the file using the filename given and the data that has been sent
-	 * from the server
-	 *
-	 * @param file this is the file from the server
-	 * @throws FileNotFoundException
-	 * @throws IOException
+	
+	/*
+	 * saving file
 	 */
 	public void writeFile(ByteArrayOutputStream file) throws FileNotFoundException, IOException {
 		try (OutputStream outputStream = new FileOutputStream("C:\\Users\\tranl\\Desktop\\client\\" + fileName)) {
@@ -197,12 +156,8 @@ public class TFTPUDPClient {
 		}
 	}
 
-	/**
-	 * this creates an ack
-	 *
-	 * @param first  first block number
-	 * @param second block number
-	 * @return byte[]
+	/*
+	 * creates ack
 	 */
 	public byte[] createAck(byte first, byte second) {
 		byte[] ack = new byte[4];
@@ -218,10 +173,8 @@ public class TFTPUDPClient {
 
 	}
 
-	/**
-	 * this creates an error message
-	 *
-	 * @param byteArray the error array
+	/*
+	 * create error message
 	 */
 	public void error(byte[] byteArray) {
 		String errorCode = new String(byteArray, 3, 1);
@@ -229,13 +182,8 @@ public class TFTPUDPClient {
 		System.err.println("Error: " + errorCode + " " + errorText);
 	}
 
-	/**
-	 * this is called when the write request is called and the first ack from the
-	 * server
-	 *
-	 * @param ack data from the server
-	 * @return boolean
-	 * @throws IOException
+	/*
+	 * call write file request then receive the first request from server.
 	 */
 	public boolean receivedFirstAck(DatagramPacket ack) throws IOException {
 		byte[] firstAck = ack.getData();
@@ -248,14 +196,8 @@ public class TFTPUDPClient {
 
 	}
 
-	/**
-	 * this sends a file to the server when the write request has been called it
-	 * creates the file and splits it into packets and then sends the packets to the
-	 * server in a do while loop, incrementing the block numbers
-	 *
-	 * @param fileByte the file but in bytes
-	 * @param packet   the packet to send
-	 * @throws IOException
+	/*
+	 * split file into packets and send to server
 	 */
 	public void sendFile(byte[] fileByte, DatagramPacket packet) throws IOException {
 		ByteBuffer theFileBuffer = ByteBuffer.wrap(fileByte);
@@ -289,21 +231,14 @@ public class TFTPUDPClient {
 			socket.send(dataPacket);
 			packet = receivedAck(packet);
 			k++;
-		} while (receiveAck(packet, firstBlockNumber, secondBlockNumber) && k < amountOfPackets);
+		} while (isreceiveAck(packet, firstBlockNumber, secondBlockNumber) && k < amountOfPackets);
 		System.out.println("send file success");
 	}
 
-	/**
-	 * this is called in sendFile to receive the ack from the server and checks if
-	 * it is correct
-	 *
-	 * @param packet            packet received
-	 * @param firstBlockNumber  first block number
-	 * @param secondBlockNumber second block number
-	 * @return boolean true if it correct
-	 * @throws IOException
+	/*
+	 * check if server had received exactly packet
 	 */
-	public boolean receiveAck(DatagramPacket packet, int firstBlockNumber, int secondBlockNumber) throws IOException {
+	public boolean isreceiveAck(DatagramPacket packet, int firstBlockNumber, int secondBlockNumber) throws IOException {
 		byte[] inDataStream = packet.getData();
 		if ((int) inDataStream[0] == 0 && (int) inDataStream[1] == OP_ACK && (int) inDataStream[2] == firstBlockNumber
 				&& (int) inDataStream[3] == secondBlockNumber) {
@@ -314,16 +249,8 @@ public class TFTPUDPClient {
 		}
 	}
 
-	/**
-	 * This creates a packet to be send, we make sure we sent the data, the address
-	 * and the port, we need to put the data opcode first, the blockNo and then the
-	 * data
-	 *
-	 * @param packet            the packet
-	 * @param theFile           the file to be sent in a byte array
-	 * @param firstBlockNumber  the first block number
-	 * @param secondBlockNumber the second block number
-	 * @return the datagram packet created
+	/*
+	 * creates a packet for sending
 	 */
 	public DatagramPacket createPacket(DatagramPacket packet, byte[] theFile, int firstBlockNumber,
 			int secondBlockNumber) {
@@ -349,13 +276,8 @@ public class TFTPUDPClient {
         return packet;
 	}
 
-	/**
-	 * this will receive the next ack
-	 *
-	 * @param packet the packet to
-	 * @return
-	 * @throws SocketException
-	 * @throws IOException
+	/*
+	 * set time out and wait for ack from server
 	 */
 	public DatagramPacket receivedAck(DatagramPacket packet) throws SocketException, IOException {
 		byte[] byteAck = new byte[4];
@@ -369,13 +291,8 @@ public class TFTPUDPClient {
 		return ack;
 	}
 
-	/**
-	 * this reads the file name and then retrieves the data from the file and then
-	 * calls sendFile
-	 *
-	 * @param packet the packet to that has been received
-	 * @throws FileNotFoundException
-	 * @throws IOException
+	/*
+	 * read fileName, find the file and call function sendFile()
 	 */
 	public void readFileName(DatagramPacket packet) throws FileNotFoundException, IOException {
 

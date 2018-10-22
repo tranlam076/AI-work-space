@@ -7,13 +7,12 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ClientExample {
-	private InetAddress inetAdress;
-	private DatagramSocket datagramSocket;
-	public static final int PORT = 2808;
+	private static InetAddress inetAdress;
+	private static DatagramSocket datagramSocket;
+	public static final int PORT = 9000;
+	public static final String HOST = "localhost";
 	public static  String VND = "1000";
 	public static  String USD = "";
 	public static  String YEN = "";
@@ -25,7 +24,7 @@ public class ClientExample {
 
 	public ClientExample() throws SocketException, UnknownHostException, InterruptedException {
 		datagramSocket = new DatagramSocket();
-		inetAdress = InetAddress.getByName("localhost");
+		inetAdress = InetAddress.getByName(HOST);
 		Process();
 	}
 
@@ -34,28 +33,27 @@ public class ClientExample {
 		PrintThread print = new PrintThread();
 		print.start();
 		while (true) {
+			Thread.sleep(1500);
+			System.out.println("Enter VND");
 			VND = sc.nextLine();
-			Thread.sleep(1000);
-			print.VND = VND;
-			print.USD = Exchange("USD,"+VND);
-			print.YEN = Exchange("YEN,"+VND);
 		}
 	}
 	
-	private String Exchange(String VND) {
+	static String Exchange(String value) {
 		try {
-			byte[] sendData = VND.getBytes();
+			byte[] sendData = value.getBytes();
 			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, inetAdress, PORT);
 			datagramSocket.send(sendPacket);
 			byte[] receiveData = new byte[1024];
 			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+			datagramSocket.setSoTimeout(3000);
 			datagramSocket.receive(receivePacket);
 			String sReceive = new String(receivePacket.getData(), 0, receivePacket.getLength());
 			return sReceive;
 		} catch (IOException ex) {
-			Logger.getLogger(ClientExample.class.getName()).log(Level.SEVERE, null, ex);
+			ex.printStackTrace();
 		}
-		return VND;
+		return value;
 	}
 }
 
@@ -63,12 +61,6 @@ class PrintThread extends Thread {
 	String VND = "";
 	String USD = "";
 	String YEN = "";
-	public PrintThread(String VND, String USD, String YEN) {
-		this.VND = VND;
-		this.USD = USD;
-		this.YEN = YEN;
-	}
-	
 	public PrintThread() {
 		super();
 	}
@@ -77,7 +69,10 @@ class PrintThread extends Thread {
 	public void run() {
 		while (true) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(1500);
+				this.VND = Float.toString(Float.parseFloat(ClientExample.VND));
+				this.USD = ClientExample.Exchange("USD,"+ClientExample.VND);
+				this.YEN = ClientExample.Exchange("YEN,"+ClientExample.VND);
 				System.out.println(VND + " - " + USD + " - " + YEN);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

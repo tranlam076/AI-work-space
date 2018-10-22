@@ -11,14 +11,14 @@ pageEncoding="ISO-8859-1"%>
 	<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/templates/public/css/style.css">
 	<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/templates/conference/css/style.css">
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	href="${pageContext.request.contextPath}/templates/submission/css/style.css">
+	<script src="${pageContext.request.contextPath}/templates/public/jquery/jquery-3.2.1.min.js"></script>
 	<script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script
 	src="${pageContext.request.contextPath}/templates/public/js/script.js"></script>
 	<script
-	src="${pageContext.request.contextPath}/templates/conference/js/script.js"></script>
+	src="${pageContext.request.contextPath}/templates/submission/js/script.js"></script>
 
 </head>
 

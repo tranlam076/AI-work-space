@@ -3,7 +3,7 @@
 <%@include file="/templates/admin/inc/header.jsp" %>
 <%@include file="/templates/admin/inc/menu.jsp" %>  
 		
-			<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 content-right">			
+			<div class="content-right">			
 				<div class="content-cat">
 					<h2>
 						<span>Position</span>
@@ -83,5 +83,5 @@
 					</div>
 				</div>		
 			</div>
-		
+
 <%@include file="/templates/public/inc/footer.jsp" %>  

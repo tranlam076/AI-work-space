@@ -31,8 +31,7 @@ public class LoginAdminController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect(request.getContextPath() + "/login.jsp");
 	}
 
 	/**
@@ -41,8 +40,11 @@ public class LoginAdminController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String username = new String(request.getParameter("username").getBytes("ISO-8859-1"), "UTF-8");
-		String password = new String(request.getParameter("password").getBytes("ISO-8859-1"), "UTF-8");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		if (username == "" || username == null || password == "" || password == null) {
+			response.sendRedirect(request.getContextPath() + "/login.jsp");
+		}
 		UsersDAO usersDAO = new UsersDAO();
 		User userChecking = usersDAO.checkLogin(username, password);
 		if (userChecking != null) {
@@ -56,7 +58,7 @@ public class LoginAdminController extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/admin/index");
 			}
 		} else {
-			response.sendRedirect(request.getContextPath() + "/show-login");
+			response.sendRedirect(request.getContextPath() + "/login");
 			return;
 		}
 	}

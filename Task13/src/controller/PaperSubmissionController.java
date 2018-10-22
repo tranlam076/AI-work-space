@@ -7,7 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.UUID;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +20,11 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import library.PropertiesLibrary;
 import model.bean.Author;
+import model.bean.Field;
 import model.bean.Param;
 import model.bean.Submission;
 import model.dao.AuthorDAO;
+import model.dao.FieldDAO;
 import model.dao.SubmissionDAO;
 
 /**
@@ -43,7 +47,23 @@ public class PaperSubmissionController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		try {
+			FieldDAO field = new FieldDAO();
+			ArrayList<Field> listFields = field.getItems();
+			request.setAttribute("listFields", listFields);
+
+			request.setAttribute("listFields", listFields);
+			String message =(String) request.getAttribute("messsage");
+			System.out.println("error here: " + message);
+			
+			String msg =(String) request.getParameter("msg");
+			System.out.println("error here: " + msg);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/submissions/paper-submission.jsp");
+			dispatcher.forward(request, response);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	/**
@@ -63,18 +83,56 @@ public class PaperSubmissionController extends HttpServlet {
 				String[] paramValues = request.getParameterValues(paramName);
 				if (paramValues[0] == null) {
 					if (!paramName.equals("webpage") && !paramName.contains("firstName")) {
-						request.setAttribute("message", paramName + " is the required field");
-						getServletContext().getRequestDispatcher("/submission?msg=error").forward(request, response);
+						response.sendRedirect(request.getContextPath() + "/submissions?msg=error&message=" +paramName+ " is the required field");
 					}
 				}
 				listParams.add(new Param(paramName, paramValues[0]));
 			}
 
-			int authorCounting = Integer.parseInt(getValues(listParams, "authorCouting"));
+			int authorCounting = Integer.parseInt(getValues(listParams, "authorCounting"));
 			String idField = getValues(listParams, "field");
 			String title = getValues(listParams, "title");
 			String description = getValues(listParams, "description");
 			String keywords = getValues(listParams, "keywords");
+
+//			file saving
+			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+			response.setContentType("text/html");
+
+			if (!isMultipart) {
+				response.sendRedirect(request.getContextPath() + "/submissions?msg=error&message=form encrypt must be multipart");
+			}
+			PropertiesLibrary propertiesLibrary = new PropertiesLibrary();
+			String savePath = propertiesLibrary.readProp().getProperty("filePath");
+			Part filePart = request.getPart("file");
+			String fileName = filePart.getSubmittedFileName();
+			int t = fileName.lastIndexOf("\\");
+			fileName = fileName.substring(t + 1);
+			if (fileName == null || fileName.equals("")) {
+				response.sendRedirect(request.getContextPath() + "/submissions?msg=error&message=file name null");
+				return;
+			}
+			String fileFormat = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+			if (!fileFormat.toLowerCase().equals(".pdf")) {
+				response.sendRedirect(request.getContextPath() + "/submissions?msg=error&message=file format wrong");
+				return;
+			}
+
+			InputStream is = filePart.getInputStream();
+			OutputStream os = new FileOutputStream(savePath + File.separator + fileName);
+
+			byte[] buffer = new byte[1024];
+			int length;
+			while ((length = is.read(buffer)) > 0)
+				os.write(buffer, 0, length);
+
+			is.close();
+			os.close();
+
+//
+			UUID uuid = UUID.randomUUID();
+			String idSubmission = uuid.toString();
+
 			for (int i = 1; i <= authorCounting; i++) {
 				String firstName = getValues(listParams, "firstName" + i);
 				if (firstName == null) {
@@ -93,87 +151,61 @@ public class PaperSubmissionController extends HttpServlet {
 				if (corresponding != null && corresponding.equals("on")) {
 					isCorresponding = true;
 				}
-				listAuthors.add(new Author("", "", firstName + " " + lastName, email, country, organization,
+				listAuthors.add(new Author("", idSubmission, firstName + " " + lastName, email, country, organization,
 						webpage, isCorresponding));
 			}
 
-//			file saving
-			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-			response.setContentType("text/html");
+			Submission submission = new Submission(idSubmission, idField, title, description, keywords, fileName);
 
-			if (!isMultipart) {
-				request.setAttribute("message", "form encrypt must be multipart");
-				getServletContext().getRequestDispatcher(request.getContextPath() + "/submission?msg=error")
-						.forward(request, response);
-			}
-			PropertiesLibrary propertiesLibrary = new PropertiesLibrary();
-			String savePath = propertiesLibrary.readProp().getProperty("filePath");
-			Part filePart = request.getPart("file");
-			String fileName = filePart.getSubmittedFileName();
-			int t = fileName.lastIndexOf("\\");
-			fileName = fileName.substring(t + 1);
-			if (fileName == null || fileName.equals("")) {
-				request.setAttribute("message", "file name null");
-				getServletContext().getRequestDispatcher("/submission?msg=error").forward(request, response);
-				return;
-			}
-			String fileFormat = fileName.substring(fileName.lastIndexOf("."), fileName.length());
-			if (!fileFormat.toLowerCase().equals(".pdf")) {
-				request.setAttribute("message", "file format wrong");
-				getServletContext().getRequestDispatcher(request.getContextPath() + "/submission?msg=error")
-						.forward(request, response);
-				return;
-			}
-
-			InputStream is = filePart.getInputStream();
-			OutputStream os = new FileOutputStream(savePath + File.separator + fileName);
-
-			byte[] buffer = new byte[1024];
-			int length;
-			while ((length = is.read(buffer)) > 0)
-				os.write(buffer, 0, length);
-
-			is.close();
-			os.close();
-			Submission submission = new Submission("", idField, title, description, keywords, fileName);
 //saving data into database
-
 			AuthorDAO authorDAO = new AuthorDAO();
 			SubmissionDAO submissionDAO = new SubmissionDAO();
-
-			System.out.println("before create submission");
-			String rs = "";
-			try {
-				rs = submissionDAO.addItem(submission);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-			System.out.println("idsubmission: " + rs);
-			System.out.println("create submission success");
-			for (Author author : listAuthors) {
-				System.out.println("into create author");
-				try {
-					int result = authorDAO.addItem(author);
-					if(result != 1) {
-						submissionDAO.delItem(author.getIdSubmission());
-						request.setAttribute("message", "error when creating author");
-						response.sendRedirect(request.getContextPath() + "/submission?msg=error&message=error when creating author");			
-						return;
+			int resultSub = submissionDAO.addItem(submission);
+			if (resultSub == 1) {
+				System.out.println("author length: " + listAuthors.size());
+				for (Author author : listAuthors) {
+					try {
+						int resultAut = authorDAO.addItem(author);
+						System.out.println("author create " + resultAut);
+						if (resultAut != 1) {
+							System.out.println("created author fail");
+							submissionDAO.delItem(author.getIdSubmission());
+							try {
+								File file = new File("savePath + File.separator + fileName");
+								if (file.delete()) {
+									System.out.println(file.getName() + " is deleted!");
+								} else {
+									System.out.println("Delete operation is failed.");
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+							response.sendRedirect(request.getContextPath() + "/submissions?msg=error&message=error when creating author");
+							return;
+						}
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
 					}
+				}
+			} else {
+				try {
+					File file = new File("savePath + File.separator + fileName");
+					if (file.delete()) {
+						System.out.println(file.getName() + " is deleted!");
+					} else {
+						System.out.println("Delete operation is failed.");
+					}
+					response.sendRedirect(request.getContextPath() + "/submissions?msg=error&message=error when creating submission");
+					return;
 				} catch (Exception e) {
-					System.out.println(e.getMessage());
-				}		
+					e.printStackTrace();
+				}
 			}
-
-			System.out.println("done success");
-			response.sendRedirect(request.getContextPath() + "/submission?msg=success");
+			response.sendRedirect(request.getContextPath() + "/submissions?msg=success");
 			return;
 		} catch (Exception e) {
-			request.setAttribute("message", "" + e.getMessage());
-			getServletContext()
-					.getRequestDispatcher(
-							request.getContextPath() + "/submission?msg=error&message=" + e.getLocalizedMessage())
-					.forward(request, response);
+			e.printStackTrace();
+			response.sendRedirect(request.getContextPath() + "/submissions?msg=error$message=" + e.getMessage());
 		}
 	}
 

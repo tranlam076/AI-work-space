@@ -16,9 +16,15 @@ public class ConnectDBLibrary {
 		PropertiesLibrary propertiesLibrary = new PropertiesLibrary();
 		Properties objProp = propertiesLibrary.readProp();
 		this.db = objProp.getProperty("db");
+		this.db = "task13";
+		
 		this.url = "jdbc:mysql://localhost:3306/" + db + "?autoReconnect=true&useSSL=false";
 		this.user = objProp.getProperty("user");
+		this.user = "root";
+		
 		this.pass = objProp.getProperty("pass");
+		this.pass = "709f2dfe";
+		
 	}
 	
 	public Connection getConnectMySQL() {

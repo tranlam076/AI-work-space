@@ -3,6 +3,7 @@ package model.bean;
 public class Submission {
 	String idSubmission;
 	String idField;
+	String fieldName;
 	String title;
 	String description;
 	String keywords;
@@ -11,6 +12,14 @@ public class Submission {
 	private String updatedAt;
 	private String deletedAt;
 	
+	public Submission(String idSubmission, String fieldName, String title, String createdAd) {
+		super();
+		this.idSubmission = idSubmission;
+		this.fieldName = fieldName;
+		this.title = title;
+		this.createdAt = createdAd;
+	}
+
 	public Submission(String idSubmission, String idField, String title, String description, String keywords,
 			String fileNameUpload) {
 		super();
@@ -34,6 +43,16 @@ public class Submission {
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 		this.deletedAt = deletedAt;
+	}
+
+	
+	
+	public String getFieldName() {
+		return fieldName;
+	}
+
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
 	}
 
 	public String getIdSubmission() {

@@ -1,60 +1,35 @@
 package UDPsocket;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Scanner;
 
 import javax.script.ScriptException;
 
-public class ServerExample {
-	public static final int PORT = 2808;
-	private DatagramSocket severSocket;
-	private static int count = 1000;
+public class ServerExample implements Runnable {
+//	private static float rateVND_USD = 0.000043f;
+//	private static float rateVND_JPY = 0.0048f;
+	private static final int PORT = 9000; 
+	Scanner sc = new Scanner(System.in);
+	static UDPThread udpThread;
 
-	public static void main(String[] args) throws ScriptException {
-		new ServerExample(PORT);
+
+	public static void main(String[] args) throws IOException, ScriptException {
+		System.out.println("started the main server");
+		UDPThread serverThread = new UDPThread(PORT);
+		serverThread.start();
+		udpThread = serverThread;
+		new Thread (new ServerExample()).start();
+		
 	}
 
-	public ServerExample(int portHost) throws ScriptException {
-		try {
-			severSocket = new DatagramSocket(portHost);
-			System.out.println("Server is running ...");
-			byte[] receiveData = new byte[1024];
-			byte[] sendData;
-			while (true) {
-				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-				severSocket.receive(receivePacket);
-				InetAddress IPAddress = receivePacket.getAddress();
-				int port = receivePacket.getPort();
-				String request = new String(receivePacket.getData(), 0, receivePacket.getLength());				
-				System.out.println(request);
-				String response = process(request);
-				sendData = response.getBytes();
-				DatagramPacket sendPacket = new DatagramPacket(sendData, response.length(), IPAddress, port);
-				severSocket.send(sendPacket);
-			}
-		} catch (IOException ex) {
-			Logger.getLogger(ServerExample.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
-	
-	public static String process(String request) throws ScriptException {
-		String response = "";
-		String[] reqs = request.split(",");
-		if (reqs[0].equals("USD")) {
-			int money = Integer.parseInt(reqs[1]);
-			response = "" + (money + count);
-		}
-
-		if (reqs[0].equals("YEN")) {
-			int money = Integer.parseInt(reqs[1]);
-			response = "" + (money + count);
-		}
-		System.out.println("receive: "+Integer.parseInt(reqs[1]));
-		count ++;
-		return response;
+	@Override
+	public void run() {
+		while (true) {
+			System.out.println("rate of VND - USD....");
+			String vnd_usd = sc.nextLine();
+			System.out.println("rate of VND - JPY....");
+			String vnd_jpy = sc.nextLine();
+			udpThread.updateRate(Float.parseFloat(vnd_usd), Float.parseFloat(vnd_jpy));
+		}	
 	}
 }

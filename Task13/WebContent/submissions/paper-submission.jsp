@@ -1,9 +1,9 @@
-<%@include file="/templates/conference/inc/header.jsp"%>
+<%@include file="/templates/submission/inc/header.jsp"%>
 <%@include file="/templates/public/inc/menu.jsp"%>
 
 			<div class="content-right">
-				<form action="${pageContext.request.contextPath}/paper-submission" method="post" id="new_sub" enctype="multipart/form-data">
-					<input type="hidden" name="authorCouting" class ="author-counting" value="1">
+				<form action="${pageContext.request.contextPath}/submissions" method="post" id="new_sub" enctype="multipart/form-data">
+					<input type="hidden" name="authorCounting" class ="author-counting" value="1">
 					<div class="select-track">
 						<p>Please select the track relevant for your submission and click "Continue".</p>						
 						<c:forEach items="${listFields}" var="field" varStatus="theCount">

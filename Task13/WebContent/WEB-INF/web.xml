@@ -17,14 +17,7 @@
     <servlet-name>LoginAdminController</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>ShowLoginAdminController</servlet-name>
-    <servlet-class>controller.ShowLoginAdminController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ShowLoginAdminController</servlet-name>
-    <url-pattern>/show-login</url-pattern>
-  </servlet-mapping>
+
   <servlet>
     <servlet-name>AddNewsAdminController</servlet-name>
     <servlet-class>controller.AddNewsAdminController</servlet-class>
@@ -39,7 +32,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>DeleteNewsAdminController</servlet-name>
-    <url-pattern>/admin/delete-newsController</url-pattern>
+    <url-pattern>/admin/delete-news</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>DeleteCatAdminController</servlet-name>
@@ -86,20 +79,31 @@
     <servlet-name>FileUploadController</servlet-name>
     <url-pattern>/file-upload</url-pattern>
   </servlet-mapping>
+  
   <servlet>
-    <servlet-name>ShowFileManager</servlet-name>
-    <jsp-file>/admin/show-file-manager.jsp</jsp-file>
+    <servlet-name>FileDownLoadController</servlet-name>
+	<servlet-class>controller.FileDownLoadController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ShowFileManager</servlet-name>
-    <url-pattern>/admin/show-file-manager</url-pattern>
+    <servlet-name>FileDownLoadController</servlet-name>
+    <url-pattern>/download</url-pattern>
   </servlet-mapping>
+  
   <servlet>
-    <servlet-name>ShowIndexAdminController</servlet-name>
-    <servlet-class>controller.ShowIndexAdminController</servlet-class>
+    <servlet-name>SubmissionManager</servlet-name>
+	<servlet-class>controller.SubmissionAdminController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ShowIndexAdminController</servlet-name>
+    <servlet-name>SubmissionManager</servlet-name>
+    <url-pattern>/admin/submissions</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>IndexAdminController</servlet-name>
+    <servlet-class>controller.IndexAdminController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IndexAdminController</servlet-name>
     <url-pattern>/admin/index</url-pattern>
   </servlet-mapping>
   <servlet>
@@ -119,24 +123,16 @@
     <url-pattern>/admin/*</url-pattern>
   </filter-mapping>
   <servlet>
-    <servlet-name>ShowIndexController</servlet-name>
+    <servlet-name>IndexController</servlet-name>
     <servlet-class>controller.IndexPublicController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ShowIndexController</servlet-name>
+    <servlet-name>IndexController</servlet-name>
     <url-pattern></url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>ShowIndexController</servlet-name>
+    <servlet-name>IndexController</servlet-name>
     <url-pattern>/index</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>ShowIndex</servlet-name>
-    <jsp-file>/show-index.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ShowIndex</servlet-name>
-    <url-pattern>/show-index</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -150,15 +146,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>PaperSubmissionController</servlet-name>
-    <url-pattern>/paper-submission</url-pattern>
+    <url-pattern>/submissions</url-pattern>
   </servlet-mapping>
   
-  <servlet>
-    <servlet-name>ShowPaperSubmissionController</servlet-name>
-    <servlet-class>controller.ShowPaperSubmissionController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ShowPaperSubmissionController</servlet-name>
-    <url-pattern>/submission</url-pattern>
-  </servlet-mapping>
 </web-app>
