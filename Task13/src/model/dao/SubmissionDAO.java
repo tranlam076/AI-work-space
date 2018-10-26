@@ -27,13 +27,14 @@ public class SubmissionDAO {
 	public ArrayList<Submission> getItems() {
 		ArrayList<Submission> listItems = new ArrayList<>();
 		conn = connectDBLibrary.getConnectMySQL();
-		String sql = "SELECT submission.idSubmission,submission.createdAt,field.name,submission.title FROM submission LEFT JOIN field ON field.idField = submission.idField ORDER BY submission.createdAt DESC LIMIT 1,15";
+		String sql = "SELECT submission.idSubmission,submission.createdAt,field.name,submission.title FROM submission LEFT JOIN field ON field.idField = submission.idField ORDER BY submission.createdAt DESC LIMIT 0,10";
 		Submission objSubmission = null;
 		try {
 			st = conn.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
-				objSubmission = new Submission(rs.getString("idSubmission"), rs.getString("name"), rs.getString("title"), rs.getString("createdAt"));
+				objSubmission = new Submission(rs.getString("idSubmission"), rs.getString("name"),
+						rs.getString("title"), rs.getString("createdAt"));
 				listItems.add(objSubmission);
 			}
 		} catch (SQLException e) {
@@ -51,7 +52,6 @@ public class SubmissionDAO {
 	}
 
 	public int addItem(Submission submission) throws SQLException {
-
 		int result = 0;
 		conn = connectDBLibrary.getConnectMySQL();
 		String sql = "INSERT INTO " + table
@@ -80,15 +80,16 @@ public class SubmissionDAO {
 
 	public Submission getItem(String idSubmission) {
 		conn = connectDBLibrary.getConnectMySQL();
-		String sql = "SELECT * FROM " + table + " WHERE idSubmission = ?";
+		String sql = "SELECT submission.description,submission.keywords,submission.fileNameUpload,submission.idField,submission.idSubmission,submission.createdAt,field.name,submission.title FROM submission LEFT JOIN field ON field.idField = submission.idField WHERE submission.idSubmission=?";
 		Submission objSubmission = null;
 		try {
 			pst = conn.prepareStatement(sql);
 			pst.setString(1, idSubmission);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				objSubmission = new Submission(rs.getString("idSubmission"), rs.getString("idField"), rs.getString("title"),
-						rs.getString("description"), rs.getString("keywords"), rs.getString("fileNameUpload"));
+				objSubmission = new Submission(rs.getString("idSubmission"), rs.getString("idField"),rs.getString("name"),
+						rs.getString("title"), rs.getString("description"), rs.getString("keywords"),
+						rs.getString("fileNameUpload"), rs.getString("createdAt"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -182,21 +183,19 @@ public class SubmissionDAO {
 		return result;
 	}
 
-	public Object getItemsPagition(int offset, int row_count) {
+	public ArrayList<Submission> getItemsPagition(int offset, int row_count) {
 		ArrayList<Submission> listItems = new ArrayList<>();
 		conn = connectDBLibrary.getConnectMySQL();
-		String sql = "SELECT * FROM table LIMIT ?,?";
+		String sql = "SELECT submission.idSubmission,submission.createdAt,field.name,submission.title FROM submission LEFT JOIN field ON field.idField = submission.idField ORDER BY submission.createdAt DESC LIMIT ?,?";
 		Submission objSubmission = null;
 		try {
-			st = conn.createStatement();
 			pst = conn.prepareStatement(sql);
 			pst.setInt(1, offset);
 			pst.setInt(2, row_count);
-
-			rs = st.executeQuery(sql);
+			rs = pst.executeQuery();
 			while (rs.next()) {
-				objSubmission = new Submission(rs.getString("idSubmission"),rs.getString("idField"), rs.getString("title"),
-						rs.getString("description"), rs.getString("keywords"), rs.getString("fileNameUpload"));
+				objSubmission = new Submission(rs.getString("idSubmission"), rs.getString("name"),
+						rs.getString("title"), rs.getString("createdAt"));
 				listItems.add(objSubmission);
 			}
 		} catch (SQLException e) {

@@ -72,7 +72,7 @@
 								type="text" placeholder="enter detail" required name="content" />
 								<div class="select-position">
 									<span>Choose Position:</span> 
-									<select name = "idCat">
+									<select class="select-dropdown" name = "idCat">
 										<c:forEach items="${listCats}" var="cat">
 											<option value="${cat.id_cat}">${cat.name}</option>
 										</c:forEach>

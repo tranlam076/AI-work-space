@@ -7,7 +7,7 @@ pageEncoding="ISO-8859-1"%>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Intern ship</title>
+	<title>Internship</title>
 	<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/templates/public/css/style.css">
 	<link rel="stylesheet"
@@ -25,12 +25,24 @@ pageEncoding="ISO-8859-1"%>
 	<div class="container-max">
 		<div id="header">
 			<div class="header-title">
-				<h4>Intern ship HippoTech</h4>
-				<p>October, 2018</p>
+				<div class="top-link">
+					<ul>
+						<li><a href="${pageContext.request.contextPath}">HOME | </a>
+						</li>
+						<li><a href="#"> MODES OF PAYMENT | </a></li>
+						<li><a href="#"> CONTACT US</a></li>
+					</ul>
+				</div>
+				<div class="logo">
+					<img
+						src="${pageContext.request.contextPath}/templates/public/image/bkdn.png"
+						alt="">
+				</div>
 			</div>
+
 			<div class="header-image">
 				<img
-				src="http://www.dut.udn.vn/Files/admin/images/Tin_tuc/Daotao/2017/HCERES/image002.png"
-				alt="">
+					src="http://www.dut.udn.vn/Files/admin/images/Tin_tuc/Daotao/2017/HCERES/image002.png"
+					alt="">
 			</div>
 		</div>

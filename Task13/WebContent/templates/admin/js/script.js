@@ -44,7 +44,6 @@ jQuery(document).ready(function($) {
 				$('.content-news').show();
 				$('.content-cat').hide();
 			});
-
 		}
 
 		function showEdit () {
@@ -124,7 +123,7 @@ jQuery(document).ready(function($) {
 			});
 		}
 
-		// ------------------------- submission nanagerment -----------------
+		// ------------------------- submission manangerment -----------------
 
 		function sorting() {
 			showDetail("Sort by time");
@@ -139,7 +138,7 @@ jQuery(document).ready(function($) {
 				switch (kind) {
 					case "Sort by time":
 					listSubmissions.sort((a,b) => {
-						return (a.time > b.time) ? 1: (a.time < b.time) ? -1 : 0;
+						return (a.time < b.time) ? 1: (a.time > b.time) ? -1 : 0;
 					});
 					break;
 					case "Sort by title":
@@ -147,7 +146,7 @@ jQuery(document).ready(function($) {
 						return (a.title > b.title) ? 1: (a.title < b.title) ? -1 : 0;
 					});
 					break;
-					case "Sort by fieldName":
+					case "Sort by field":
 					listSubmissions.sort((a,b) => {
 						return (a.fieldName > b.fieldName) ? 1: (a.fieldName < b.fieldName) ? -1 : 0;
 					});
@@ -158,32 +157,83 @@ jQuery(document).ready(function($) {
 				$(".detail-submission").html("");
 				for (var submission of listSubmissions) {
 					$(".detail-submission").append(`
-						<tr>
-						<td width="20%">
-						<input type="checkbox" value="${submission.idSubmission}">
-						</td>
-						<td width="20%">${submission.title}</td>
-						<td width="20%">${submission.fieldName}</td>
-						<td width="20%">${submission.time}</td>
-						<td width="20%"><a href="${submission.detail}">detail</a></td>
-						</tr>
-						`);
+						<ul class="row-submission">
+						<li class="submission-title">
+						<a href="${submission.detail}">${submission.title}</a>
+						</li>
+						<li class="submission-field">
+						<p>${submission.fieldName}<span>${submission.time.substring(0, submission.time.length - 2)}</span></p>
+						</li>
+						</ul>
+					`);
+					// $(".detail-submission").append(`
+					// 	<tr>
+					// 	<td width="20%">
+					// 	<input type="checkbox" value="${submission.idSubmission}">
+					// 	</td>
+					// 	<td width="20%">${submission.title}</td>
+					// 	<td width="20%">${submission.fieldName}</td>
+					// 	<td width="20%">${submission.time}</td>
+					// 	<td width="20%"><a href="${submission.detail}">detail</a></td>
+					// 	</tr>
+					// `);
+				}
+			}	
+		}
+		function showPagination () {
+			var totalPage = parseInt($("#totalPage").val());
+			var currentPage = parseInt($("#currentPage").val());
+			var link = $("#link").val();
+			
+			if (totalPage < 5) {
+				if (currentPage > 1) {
+					$('.pagination').html(`<a href="${link}1">&laquo;</a>`);
+				}
+				for (var i = 1; i<= totalPage; i++) {
+					if (i == currentPage) {
+						$('.pagination').append(`<a href="${link}${i}"class="active">${i}</a>`);
+					} else {
+						$('.pagination').append(`<a href="${link}${i}">${i}</a>`);
+					}
+				}
+				if (totalPage > currentPage) {
+					$('.pagination').append(`<a href="${link}${currentPage+1}">&raquo;</a>`);
+				}
+			} else {
+				if (currentPage > 1) {
+					$('.pagination').html(`<a href="${link}${currentPage-1}">&laquo;</a>`);
+				}
+
+				if (currentPage > 5 ) {
+					$('.pagination').append(`<a href="${link}${currentPage-5}">...</a>`);
+				}
+
+				var indexP = parseInt(currentPage/6);
+				for (var i = indexP*5 + 1; i < indexP + 6; i++) {
+					if (i == currentPage) {
+						$('.pagination').append(`<a href="${link}${i}"class="active">${i}</a>`);
+					} else if (i <= totalPage) {
+						$('.pagination').append(`<a href="${link}${i}">${i}</a>`);
+					}
+				}
+				
+				if (totalPage > indexP*5 + 1) {
+					$('.pagination').append(`<a href="${link}${indexP*5 + 6}">...</a>`);
+				}
+				if (currentPage < totalPage)  {
+					$('.pagination').append(`<a href="${link}${currentPage + 1}">&raquo;</a>`);
 				}
 			}
 		}
-
 		//Public Method
 		return function ( ) {
 			showForm ();
 			showEdit();
 			excecuteDelete ();
 			sorting();
-			
+			showPagination ();
 		}
 	}	
 	SINGLETON()();
 });
-
-
-
 

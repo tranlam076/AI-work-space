@@ -1,6 +1,7 @@
 
 package TFTPserver;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,25 +53,18 @@ public class UDPServerThread extends Thread {
 		socket.close();
 	}
 
-	
-	/*
-	 *determine request is read or write file
-	 */
 	public void firstReq(DatagramPacket packet) throws IOException {
 		byte[] opcode = new byte[2];
 		byte[] inDataStream = packet.getData();
 		for (int i = 0; i < 2; i++) {
-			//get opcode
 			opcode[i] = inDataStream[i];
 		}
-		// read file
 		if (opcode[0] == 0 && opcode[1] == OP_RRQ) {
 			System.out.println("read request");
 			address = packet.getAddress();
 			defaultPort = packet.getPort();
 			readFileName(packet);
 
-			// write file
 		} else if (opcode[0] == 0 && opcode[1] == OP_WRQ) {
 			System.out.println("write request");
 			address = packet.getAddress();
@@ -80,19 +74,15 @@ public class UDPServerThread extends Thread {
 			DatagramPacket ack = new DatagramPacket(createAck((byte) 0, (byte) 0), 4, packet.getAddress(),
 					packet.getPort());
 			socket.send(ack);
+			System.out.println("begin receive file");
 			receiveFile();
-
 		}
 	}
 
-	/*
-	 *read fileName, find the file and call function sendFile()
-	 */
 	public void readFileName(DatagramPacket packet) throws FileNotFoundException, IOException {
 		byte[] inDataStream = packet.getData();
 		int i = 2;
 		while (inDataStream[i] != 0) {
-
 			i++;
 		}
 		ByteBuffer fileNameBytes = ByteBuffer.allocate(i - 2);
@@ -102,7 +92,6 @@ public class UDPServerThread extends Thread {
 			i++;
 		}
 		fileName = new String(fileNameBytes.array());
-
 		System.out.println(fileName);
 
 		File file = new File("C:\\Users\\tranl\\Desktop\\server\\" + fileName);
@@ -128,16 +117,10 @@ public class UDPServerThread extends Thread {
 					System.out.println("Error Reading The File.");
 					e1.printStackTrace();
 				}
-				
-				
-
 			}
 		}
 	}
 	
-	/*
-	 * this creates an error message to be sent
-	 */
 	public void createError(int errorCode, String errMessage) throws IOException {
 		byte[] error = new byte[512];
 		int position = 0;
@@ -158,9 +141,6 @@ public class UDPServerThread extends Thread {
 		socket.send(errorPacket);
 	}
 
-	/*
-	 *split file into packets and send each packet
-	 */
 	public void sendFile(byte[] fileByte, DatagramPacket packet) throws IOException {
 		ByteBuffer theFileBuffer = ByteBuffer.wrap(fileByte);
 		int byteLength = theFileBuffer.remaining();
@@ -199,9 +179,6 @@ public class UDPServerThread extends Thread {
 		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && k < amountOfPackets);
 	}
 
-	/*
-	 * create the packet, it contains the a part of file
-	 */
 	public DatagramPacket createPacket(DatagramPacket packet, byte[] theFile, int firstBlockNumber,
 			int secondBlockNumber) {
 		int position = 0;
@@ -227,9 +204,6 @@ public class UDPServerThread extends Thread {
 		return packet;
 	}
 
-	/*
-	 * check if client had received exactly packet
-	 */
 	public boolean isReceivedAck(DatagramPacket packet, int firstBlockNumber, int secondBlockNumber)
 			throws IOException {
 
@@ -242,9 +216,6 @@ public class UDPServerThread extends Thread {
 		}
 	}
 
-	/*
-	 * set time out and wait for ack from client
-	 */
 	public DatagramPacket receivedAck(DatagramPacket packet) throws SocketException, IOException {
 		byte[] byteAck = new byte[4];
 		DatagramPacket ack = new DatagramPacket(byteAck, 4, packet.getAddress(), packet.getPort());
@@ -257,9 +228,6 @@ public class UDPServerThread extends Thread {
 		return ack;
 	}
 
-	/*
-	 * create ack
-	 */
 	public byte[] createAck(byte first, byte second) {
 		byte[] ack = new byte[4];
 		int position = 0;
@@ -271,16 +239,13 @@ public class UDPServerThread extends Thread {
 		position++;
 		ack[position] = second;
 		return ack;
-
 	}
 
-	/*
-	 * receive the file and save file
-	 */
 	public void receiveFile() throws UnknownHostException, SocketException, IOException {
 		InetAddress address = InetAddress.getByName("localhost");
 		boolean endOfFile = true;
-		ByteArrayOutputStream file = new ByteArrayOutputStream();
+//		ByteArrayOutputStream file = new ByteArrayOutputStream();
+		OutputStream file = new BufferedOutputStream(new FileOutputStream("C:\\Users\\tranl\\Desktop\\server\\" + fileName));
 		while (endOfFile) {
 			byte[] readByteArray = new byte[516];
 			DatagramPacket packet = new DatagramPacket(readByteArray, readByteArray.length, address, defaultPort);
@@ -292,6 +257,8 @@ public class UDPServerThread extends Thread {
 			if (packetInput[1] == OP_ERROR) {
 				error(packetInput);
 			} else {
+				System.out.println("ending file");
+
 				if (packetInput[1] == OP_DATAPACKET && packet.getLength() == PACKET_SIZE) {
 					DatagramPacket ack = new DatagramPacket(createAck(packetInput[2], packetInput[3]), 4, address,
 							defaultPort);
@@ -310,7 +277,8 @@ public class UDPServerThread extends Thread {
 					}
 					file.write(packetInput, 4, (packetInput.length - 4) - j);
 					socket.send(ack);
-					writeFile(file);
+					file.close();
+//					writeFile(file);
 					endOfFile = false;
 				}
 			}
@@ -318,19 +286,12 @@ public class UDPServerThread extends Thread {
 
 	}
 
-	/*
-	 * write file into memory
-	 */
 	public void writeFile(ByteArrayOutputStream file) throws FileNotFoundException, IOException {
 		try (OutputStream outputStream = new FileOutputStream("C:\\Users\\tranl\\Desktop\\server\\" + fileName)) {
 			file.writeTo(outputStream);
 		}
 	}
 
-	/*
-	 * creates an error message
-	 * 
-	 */
 	public void error(byte[] byteArray) {
 		String errorCode = new String(byteArray, 3, 1);
 		String errorText = new String(byteArray, 4, byteArray.length - 4);

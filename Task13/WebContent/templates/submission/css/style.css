@@ -4,7 +4,7 @@
 	/*display: none;*/
 	background-color: #94C0E3;
 	padding: 12pt 12pt 2pt 12pt;
-	border-radius: 8pt;
+	/*border-radius: 8pt;*/
 	border: solid #aaa 1px;
 	margin-top: 10pt;
 	margin-bottom: 15pt;
@@ -40,7 +40,7 @@
 	border: 1px #336BBE solid;
 	height: 20pt;
 	padding: 2pt 10pt 1pt 10pt;
-	border-radius: 4pt;
+	/*border-radius: 4pt;*/
 	font-size: 11pt;
 	font-family: Helvetica, sans serif;
 	font-weight: bold;
@@ -88,7 +88,7 @@
 .author {
 	background-color: #94C0E3;
 	padding: 12pt;
-	border-radius: 8pt;
+	/*border-radius: 8pt;*/
 	border: solid #aaa 1px;
 	margin-top: 10pt;
 	margin-bottom: 15pt;
@@ -108,13 +108,17 @@
 	margin: 10px;
 }
 
+.corresponding {
+	margin-top: 20px;
+}
+
 .author-container input {
 	float: right;
 	width: 85%;
 }
 
 .author-container input[type="checkbox"] {
-	margin-top: 3px; 
+	/*margin-top: 3px; */
 	margin-right: 10px;
 	float: left;
 	width: auto;
@@ -130,7 +134,7 @@
 .title-abstract-information {
 	background-color: #94C0E3;
 	padding: 12pt;
-	border-radius: 8pt;
+	/*border-radius: 8pt;*/
 	border: solid #aaa 1px;
 	margin-top: 10pt;
 	margin-bottom: 15pt;
@@ -150,7 +154,7 @@
 .keywords-information {
 	background-color: #94C0E3;
 	padding: 12pt;
-	border-radius: 8pt;
+	/*border-radius: 8pt;*/
 	border: solid #aaa 1px;
 	margin-top: 10pt;
 	margin-bottom: 15pt;
@@ -166,7 +170,7 @@
 .uploads-information {
 	background-color: #94C0E3;
 	padding: 12pt;
-	border-radius: 8pt;
+	/*border-radius: 8pt;*/
 	border: solid #aaa 1px;
 	margin-top: 10pt;
 	margin-bottom: 15pt;
@@ -182,7 +186,7 @@
 	border: 1px #336BBE solid;
 	height: 20pt;
 	padding: 2pt 10pt 1pt 10pt;
-	border-radius: 4pt;
+	/*border-radius: 4pt;*/
 	font-size: 11pt;
 	font-family: Helvetica, sans serif;
 	font-weight: bold;

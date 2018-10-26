@@ -9,8 +9,8 @@
 				placeholder="Your password" required name="password" /> <input
 				type="submit" value="Login" />
 		</form>
-		<a href="#">Forgot password</a> <a href="#" style="float: right;">Sign
-			up here</a>
+		<!-- <a href="#">Forgot password</a> <a href="#" style="float: right;">Sign
+			up here</a> -->
 	</div>
 </div>
 <%@include file="/templates/public/inc/footer.jsp" %>  

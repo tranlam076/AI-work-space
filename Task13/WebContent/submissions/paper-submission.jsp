@@ -1,6 +1,15 @@
 <%@include file="/templates/submission/inc/header.jsp"%>
 <%@include file="/templates/public/inc/menu.jsp"%>
-
+			
+			
+			<% if (request.getParameter("msg") == "success") {%>
+				<script type="text/javascript">
+					alert("submiss successful");
+				</script>
+					
+			<%}%>
+			
+			
 			<div class="content-right">
 				<form action="${pageContext.request.contextPath}/submissions" method="post" id="new_sub" enctype="multipart/form-data">
 					<input type="hidden" name="authorCounting" class ="author-counting" value="1">
@@ -71,7 +80,7 @@
 									Web page:
 									<input type="text" name="webpage1">
 								</div>
-								<div class="author-container">
+								<div class="author-container corresponding">
 									<input type="checkbox" name="corresponding1" value="on">
 									<span>corresponding author</span>
 								</div>

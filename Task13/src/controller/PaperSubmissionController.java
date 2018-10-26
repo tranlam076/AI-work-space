@@ -53,11 +53,8 @@ public class PaperSubmissionController extends HttpServlet {
 			request.setAttribute("listFields", listFields);
 
 			request.setAttribute("listFields", listFields);
-			String message =(String) request.getAttribute("messsage");
-			System.out.println("error here: " + message);
-			
-			String msg =(String) request.getParameter("msg");
-			System.out.println("error here: " + msg);
+//			String message =(String) request.getAttribute("messsage");			
+//			String msg =(String) request.getParameter("msg");
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/submissions/paper-submission.jsp");
 			dispatcher.forward(request, response);
@@ -86,6 +83,7 @@ public class PaperSubmissionController extends HttpServlet {
 						response.sendRedirect(request.getContextPath() + "/submissions?msg=error&message=" +paramName+ " is the required field");
 					}
 				}
+				System.out.println(paramName + " - " + paramValues[0]);
 				listParams.add(new Param(paramName, paramValues[0]));
 			}
 
@@ -171,7 +169,7 @@ public class PaperSubmissionController extends HttpServlet {
 							System.out.println("created author fail");
 							submissionDAO.delItem(author.getIdSubmission());
 							try {
-								File file = new File("savePath + File.separator + fileName");
+								File file = new File(savePath + File.separator + fileName);
 								if (file.delete()) {
 									System.out.println(file.getName() + " is deleted!");
 								} else {
@@ -189,7 +187,7 @@ public class PaperSubmissionController extends HttpServlet {
 				}
 			} else {
 				try {
-					File file = new File("savePath + File.separator + fileName");
+					File file = new File(savePath + File.separator + fileName);
 					if (file.delete()) {
 						System.out.println(file.getName() + " is deleted!");
 					} else {
@@ -205,13 +203,14 @@ public class PaperSubmissionController extends HttpServlet {
 			return;
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect(request.getContextPath() + "/submissions?msg=error$message=" + e.getMessage());
+			response.sendRedirect(request.getContextPath() + "/submissions?msg=error&message=" + e.getMessage());
 		}
 	}
 
 	private String getValues(ArrayList<Param> listParams, String name) {
 		for (Param param : listParams) {
 			if (param.getName().equals(name)) {
+				System.out.println(param.getName() + " - " + param.getValue());
 				return param.getValue();
 			}
 		}

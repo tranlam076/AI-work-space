@@ -9,6 +9,7 @@ public class Author {
 	private String organization;
 	private String webPage;
 	private boolean isCorresponding;
+//	private String corresponding;
 	private String createdAt;
 	private String updatedAt;
 	private String deletedAt;
@@ -24,6 +25,8 @@ public class Author {
 		this.organization = organization;
 		this.webPage = webPage;
 		this.isCorresponding = isCorresponding;
+
+//		this.corresponding = (isCorresponding)? "yes" : "no";
 	}
 
 	public Author(String idAuthor, String idSubmission, String name, String email, String country, String organization,
@@ -42,6 +45,14 @@ public class Author {
 		this.deletedAt = deletedAt;
 	}
 
+//	public String getCorresponding() {
+//		return corresponding;
+//	}
+//
+//	public void setCorresponding(String corresponding) {
+//		this.corresponding = corresponding;
+//	}
+	
 	public String getIdAuthor() {
 		return idAuthor;
 	}

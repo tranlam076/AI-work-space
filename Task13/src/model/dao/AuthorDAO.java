@@ -23,14 +23,15 @@ public class AuthorDAO {
 		this.table = "author";
 	}
 
-	public ArrayList<Author> getItems() {
+	public ArrayList<Author> getItems(String idSubmission ) {
 		ArrayList<Author> listItems = new ArrayList<>();
 		conn = connectDBLibrary.getConnectMySQL();
-		String sql = "SELECT * FROM " + table + " ORDER BY createdAt DESC";
+		String sql = "SELECT * FROM " + table + " WHERE idSubmission=? ORDER BY createdAt DESC";
 		Author objAuthor = null;
 		try {
-			st = conn.createStatement();
-			rs = st.executeQuery(sql);
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, idSubmission);
+			rs = pst.executeQuery();
 			while (rs.next()) {
 				objAuthor = new Author(rs.getString("idAuthor"), rs.getString("idSubmission"), rs.getString("name"),
 						rs.getString("email"), rs.getString("country"), rs.getString("organization"),
@@ -41,7 +42,6 @@ public class AuthorDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				st.close();
 				conn.close();
 				rs.close();
 			} catch (SQLException e) {

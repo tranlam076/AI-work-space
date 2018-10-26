@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Internship</title>
+	<link rel="stylesheet"
+	href="http://localhost:8080/Task13/templates/public/css/style.css">
+	<link rel="stylesheet"
+	href="http://localhost:8080/Task13/templates/admin/css/style.css">
+	<script src="http://localhost:8080/Task13/templates/public/jquery/jquery-3.2.1.min.js"></script>
+	<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script
+	src="http://localhost:8080/Task13/templates/public/js/script.js"></script>
+	<script type="text/javascript" src="http://localhost:8080/Task13/templates/admin/js/script.js"></script>
+
+</head>
+
+<body>
+	<div class="container-max">
+		<div id="header">
+			<div class="header-title">
+				<div class="top-link">
+					<ul>
+						<li><a href="http://localhost:8080/Task13">HOME | </a>
+						</li>
+						<li><a href="#"> MODES OF PAYMENT | </a></li>
+						<li><a href="#"> CONTACT US</a></li>
+					</ul>
+				</div>
+				<div class="logo">
+					<img
+					src="http://localhost:8080/Task13/templates/public/image/bkdn.png"
+					alt="">
+				</div>
+			</div>
+
+			<div class="header-image">
+				<img
+				src="http://www.dut.udn.vn/Files/admin/images/Tin_tuc/Daotao/2017/HCERES/image002.png"
+				alt="">
+			</div>
+		</div>
+		<div class="main-content">
+			<div class="content-left">
+				<div id="menu">
+					<ul>
+						<li class="main-menu-4"><a
+							href="http://localhost:8080/Task13/admin/index">HOME</a>
+						</li>
+						<li class="main-menu-1">Position
+						</li>
+						<li class="main-menu-2">Person
+						</li>
+						<li class="main-menu-5"><a href="http://localhost:8080/Task13/admin/submissions">Paper Submission Manager</a>
+						</li>
+						<li class="main-menu-3"><a
+							href="http://localhost:8080/Task13/admin/logout">Logout</a>
+						</li>
+					</ul>
+					<div class="sub-menu">
+
+					</div>
+				</div>
+			</div>
+			<div class="content-right">
+				<div class="submission-controller">
+					<select name="sorting" id="sort-by">
+						<option>Sort by time</option>
+						<option>Sort by title</option>
+						<option>Sort by field</option>
+					</select>
+				</div>
+				<div class="detail-submission">
+					<ul class="row-submission">
+						<li class="submission-title">
+							<a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
+						</li>
+						<li class="submission-field">
+							<p>Communications and Networking <span>2018-10-23 20:26:21.0</span></p>
+						</li>
+					</ul>
+					<ul class="row-submission">
+						<li class="submission-title">
+							<a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
+						</li>
+						<li class="submission-field">
+							<p>Communications and Networking <span>2018-10-23 20:26:21.0</span></p>
+
+						</li>
+					</ul>
+
+				</div>
+
+				<div class="pagination">
+				</div>
+				<input type="hidden" id="totalPage" value="6">
+				<input type="hidden" id="currentPage" value="1">
+				<input type="hidden" id="link" value="http://localhost:8080/Task13/admin/submissions?requestPage=">
+
+			</div>
+		</div>
+		<div id="footer">
+			<a href="">Call for Papers</a> | <a href=""
+			>Abstract Submission</a> | <a href="">Organization</a>
+			| <a href="" target="_top">Accommodation</a> | <a href=""
+			target="_Top">Contact us</a><br> Copyright © 2018.
+		</div>
+	</div>
+</body>
+</html>

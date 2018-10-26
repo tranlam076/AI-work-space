@@ -11,6 +11,7 @@ public class Submission {
 	private String createdAt;
 	private String updatedAt;
 	private String deletedAt;
+
 	
 	public Submission(String idSubmission, String fieldName, String title, String createdAd) {
 		super();
@@ -44,9 +45,20 @@ public class Submission {
 		this.updatedAt = updatedAt;
 		this.deletedAt = deletedAt;
 	}
+	
+	public Submission(String idSubmission, String idField, String fieldName, String title, String description, String keywords,
+			String fileNameUpload, String createdAt) {
+		super();
+		this.idSubmission = idSubmission;
+		this.idField = idField;
+		this.fieldName = fieldName;
+		this.title = title;
+		this.description = description;
+		this.keywords = keywords;
+		this.fileNameUpload = fileNameUpload;
+		this.createdAt = createdAt;
+	}
 
-	
-	
 	public String getFieldName() {
 		return fieldName;
 	}

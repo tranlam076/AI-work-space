@@ -10,6 +10,7 @@ jQuery(document).ready(function($) {
 		function showAddAuthor () {
 			$('.add-author-information').click(function(event) {
 				addAuthor ();
+				showDeleteAuthor ();
 			});
 		}
 
@@ -53,15 +54,15 @@ jQuery(document).ready(function($) {
 			Web page:
 			<input type="text" name="${webpage}">
 			</div>
-			<div class="author-container">
+			<div class="author-container corresponding">
 			<input type="checkbox" name="${corresponding}" value="on">
 			<span>corresponding author</span>
 			</div>
 			</div>
 			`;
-			$('.author-information').append(newAuthorForm);
+			var $target = $('.mark-information').find('.author-information');
+			$target.append(newAuthorForm);
 			$('.author-counting').val(counting);
-			showDeleteAuthor();
 		}
 
 		function showStep () {
@@ -78,20 +79,17 @@ jQuery(document).ready(function($) {
 		} 
 
 		function showDeleteAuthor () {
-			var check = false;
-			$('.remove-author').click(function() {
-				console.log('on delete');
-				if (confirm("Delete "+$(this).siblings('strong').text()+"?")) {
+			$('.remove-author').on('click', function() {
+				var isConfirm = confirm("Delete "+$(this).siblings('strong').text()+"?");
+				if (isConfirm) {
 					$(this).closest('.author').remove();
-					check = true;
-				}
-				if (check) {
-					var authorCouting = $('.author1').siblings().length;
+					var authorCounting = $('.author1').siblings().length;
 					while ($('.author1').siblings().length>0) {
 						$('.author1').siblings()[0].remove();
 					}
-					for (var i =0; i< authorCouting; i++) {
+					for (var i =0; i< authorCounting; i++) {
 						addAuthor ();
+						showDeleteAuthor ();
 					}
 				}
 			});

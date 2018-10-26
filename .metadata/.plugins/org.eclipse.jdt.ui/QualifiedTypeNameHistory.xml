@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="javax.script.ScriptException"/>
-<fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
-<fullyQualifiedTypeName name="myServlet.Authentication"/>
-<fullyQualifiedTypeName name="javax.servlet.http.Cookie"/>
-<fullyQualifiedTypeName name="tranlam.models.Image"/>
-<fullyQualifiedTypeName name="javax.servlet.http.HttpSessionBindingListener"/>
-<fullyQualifiedTypeName name="javax.servlet.http.HttpSessionActivationListener"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpSessionListener"/>
 <fullyQualifiedTypeName name="java.lang.Object"/>
 <fullyQualifiedTypeName name="java.io.ObjectInputStream"/>
@@ -18,10 +11,8 @@
 <fullyQualifiedTypeName name="org.omg.CORBA.PUBLIC_MEMBER"/>
 <fullyQualifiedTypeName name="com.sun.media.sound.AlawCodec"/>
 <fullyQualifiedTypeName name="BanMayBay.ServerAircraft"/>
-<fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="javax.crypto.spec.OAEPParameterSpec"/>
 <fullyQualifiedTypeName name="tamso.Operator"/>
-<fullyQualifiedTypeName name="java.util.Random"/>
 <fullyQualifiedTypeName name="EvolutionaryComputation.BTSieuThi"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="model.bean.User"/>
@@ -32,7 +23,6 @@
 <fullyQualifiedTypeName name="Aircraft.ServerAircraft"/>
 <fullyQualifiedTypeName name="model.dao.NewsDAO"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.nio.file.Path"/>
 <fullyQualifiedTypeName name="model.dao.AuthorDAO"/>
 <fullyQualifiedTypeName name="model.dao.FieldDAO"/>
@@ -47,7 +37,6 @@
 <fullyQualifiedTypeName name="model.bean.Field"/>
 <fullyQualifiedTypeName name="java.io.InputStream"/>
 <fullyQualifiedTypeName name="java.io.OutputStream"/>
-<fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="model.bean.Author"/>
 <fullyQualifiedTypeName name="java.lang.Float"/>
 <fullyQualifiedTypeName name="java.lang.Thread"/>
@@ -58,6 +47,17 @@
 <fullyQualifiedTypeName name="java.net.URL"/>
 <fullyQualifiedTypeName name="java.sql.Statement"/>
 <fullyQualifiedTypeName name="java.util.UUID"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.awt.Point"/>
+<fullyQualifiedTypeName name="fileSplit.Splitme"/>
+<fullyQualifiedTypeName name="java.io.PrintWriter"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="KMeans.k_means"/>
+<fullyQualifiedTypeName name="javax.swing.JFrame"/>
+<fullyQualifiedTypeName name="KMeans.XyLyAnh"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.List"/>
 </qualifiedTypeNameHistroy>

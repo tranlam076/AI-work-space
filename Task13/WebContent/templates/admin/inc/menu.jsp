@@ -1,5 +1,5 @@
 <div class="main-content">
-	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 content-left">
+	<div class="content-left">
 		<div id="menu">
 			<ul>
 				<li class="main-menu-4"><a

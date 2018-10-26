@@ -1,21 +1,6 @@
 /*===============================================
 GLOBAL CSS
 ===============================================*/
-* {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-}
-*{margin:0; padding: 0;}
-* {margin: 0; padding: 0;}
-h1,h2,h3,h4,h5,h6,ul,li,p {margin: 0; padding: 0;}
-li {list-style: none; float: left;}
-a{text-decoration: none}
-.row {
-	margin: 0px;
-	padding: 0px;
-}
-
 
 /*===============================================
 GENERAL CSS
@@ -37,19 +22,19 @@ GENERAL CSS
 }
 .login-form form span{
 	display: block;
-	font-size: 25px;
+	font-size: 18px;
 	font-weight: 400;
 }
 .login-form form input[type="email"],
 .login-form form input[type="password"],
 .login-form form input[type="submit"]{
 	display: block;
-	font-size: 14px;
+	font-size: 12px;
 	margin: 20px 0 0 0;
-	height: 44px;
-	border-radius: 40px;
-	line-height: 30px;
-	padding: 0px 25px;
+	height: 25px;
+	/*border-radius: 40px;*/
+	line-height: 20px;
+	padding: 0px 6px;
 	border: 1px solid #376EC0;
 	color: #376EC0;
 	margin-left: auto;
@@ -60,10 +45,11 @@ GENERAL CSS
 	background: #376EC0;
 	color: #fff;
 	cursor: pointer;
+	width: 212px;
 }
 .login-form a{
 	text-decoration: none;
-	font-size: 14px;
+	font-size: 12px;
 	color: #376EC0;
 }
 
@@ -146,17 +132,17 @@ button.btn-edit {
 
 .edit-cat-form form input[type="text"], .edit-cat-form form input[type="submit"], .edit-news-form form input[type="text"], .edit-news-form form input[type="submit"] {
 	display: block;
-	font-size: 14px;
+	font-size: 12px;
 	margin: 20px 0 0 0;
-	height: 44px;
-	border-radius: 40px;
-	line-height: 30px;
+	height: 25px;
+	/*border-radius: 40px;*/
+	line-height: 20px;
 	padding: 0px 25px;
 	border: 1px solid #376EC0;
 	color: #376EC0;
 	margin-left: auto;
 	margin-right: auto;
-	width: 250px;
+	width: 240px;
 }
 
 .edit-news-form form .select-position {
@@ -174,33 +160,123 @@ button.btn-edit {
 	background: #376EC0;
 	color: #fff;
 	cursor: pointer;
-	width: 250px;
+	width: 240px;
 }
 
 
 /*Submission page*/
-.submission {
+.submission-controller {
+	margin: 10px 0px;
+}
+.detail-submission {
+	display: block;
 	width: 100%;
-	/*border: none;*/
+	position: relative;
+	margin-bottom: 10px;
 }
 
+.detail-submission ul {
+	padding: 5px 0px;
+	margin: 3px;
+	display: block;
+	height: 40px;
+	border-top: 2px solid #A7A7A7;
+}
+
+.detail-submission ul li {
+	float: none;
+}
+.detail-submission ul li span {
+	float: right;
+	display: inline-block;
+}
+
+.detail-submission .submission-title  {
+	color: #187CBC;
+	font-size: 1.5em;
+}
+
+.detail-submission .submission-field {
+	color: #37474A;
+}
+
+/*----------pagination-----------*/
 .pagination {
-    display: inline-block;
+	display: inline-block;
+	margin-bottom: 20px;
 }
 
 .pagination a {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-    transition: background-color .3s;
-    border: 1px solid #ddd;
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	transition: background-color .3s;
+	border: 1px solid #ddd;
 }
 
 .pagination a.active {
-    background-color: #6993D2;
-    color: white;
-    border: 1px solid #6993D2;
+	background-color: #6993D2;
+	color: white;
+	border: 1px solid #6993D2;
 }
 
 .pagination a:hover:not(.active) {background-color: #ddd;}
+
+/*-------detail papaer submission---------*/
+.detail-submission .row {
+	display: block;
+	overflow: auto;
+}
+
+.detail-submission h2{
+	text-align: left;
+	margin: 0px;
+	padding: 0px;
+	color: #666666;
+	font-size: 1.75em;
+	border: none;
+}
+
+.detail-submission .row .left {
+	float: left;
+	width: 65%;
+}
+
+.detail-submission .row .left h3 {
+	margin-top: 4px;
+}
+
+.detail-submission .row .left h2 {
+	color: #543532;
+}
+
+.detail-submission .row .left .description {
+	border: 1px solid #000;
+	margin: 5px 0px;
+	margin-left: 10px;
+	padding: 4px;
+	border-style: dotted dashed solid double;
+}
+
+.detail-submission .row .right {
+	float: right;
+	width: 30%;
+}
+
+.detail-submission .row .right p {
+	margin-top: 5px;
+}
+
+.detail-submission hr {
+	height: 2px;
+	background-image:linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.detail-submission .author {
+	border: 1px solid #000;
+	margin: 10px 0px;
+	margin-left: 10px;
+	padding: 5px;
+	border-style: dotted;
+}
