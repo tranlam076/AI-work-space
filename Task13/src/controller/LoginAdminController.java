@@ -51,7 +51,7 @@ public class LoginAdminController extends HttpServlet {
 			if (username.equals(userChecking.getUsername()) && password.equals(userChecking.getPassword())) {
 				HttpSession session = request.getSession();
 				session.setAttribute("userInfo", userChecking);
-				session.setMaxInactiveInterval(30 * 60);
+				session.setMaxInactiveInterval(30*60);
 				Cookie userName = new Cookie("user", userChecking.getFullname());
 				userName.setMaxAge(30 * 60);
 				response.addCookie(userName);

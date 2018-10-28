@@ -79,7 +79,7 @@ jQuery(document).ready(function($) {
 		} 
 
 		function showDeleteAuthor () {
-			$('.remove-author').on('click', function() {
+			$('.remove-author').off('click').on('click', function() {
 				var isConfirm = confirm("Delete "+$(this).siblings('strong').text()+"?");
 				if (isConfirm) {
 					$(this).closest('.author').remove();

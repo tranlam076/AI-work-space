@@ -1,7 +1,6 @@
 package library;
 
 import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -22,6 +21,11 @@ public class AuthenticationFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 
 		HttpSession session = req.getSession(false);
+		
+		javax.servlet.http.Cookie[] ck=((HttpServletRequest) request).getCookies();  
+		
+		System.out.println(ck[1].getName() + " - " + ck[1].getValue());
+		
 		if (session != null && session.getAttribute("userInfo") == null) {
 			res.sendRedirect(req.getContextPath() + "/login");
 		} else {

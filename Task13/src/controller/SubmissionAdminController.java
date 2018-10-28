@@ -60,7 +60,6 @@ public class SubmissionAdminController extends HttpServlet {
 				
 			} else if (requestPage != null) {
 				int reqPage = Integer.parseInt(requestPage);
-				System.out.println(reqPage);
 				ArrayList<Submission> listSubs = subDAO.getItemsPagition((reqPage - 1) * ROW_COUNT, ROW_COUNT);
 				request.setAttribute("listSubs", listSubs);
 				RequestDispatcher dispatcher = request

@@ -83,7 +83,6 @@ public class PaperSubmissionController extends HttpServlet {
 						response.sendRedirect(request.getContextPath() + "/submissions?msg=error&message=" +paramName+ " is the required field");
 					}
 				}
-				System.out.println(paramName + " - " + paramValues[0]);
 				listParams.add(new Param(paramName, paramValues[0]));
 			}
 
@@ -160,13 +159,10 @@ public class PaperSubmissionController extends HttpServlet {
 			SubmissionDAO submissionDAO = new SubmissionDAO();
 			int resultSub = submissionDAO.addItem(submission);
 			if (resultSub == 1) {
-				System.out.println("author length: " + listAuthors.size());
 				for (Author author : listAuthors) {
 					try {
 						int resultAut = authorDAO.addItem(author);
-						System.out.println("author create " + resultAut);
 						if (resultAut != 1) {
-							System.out.println("created author fail");
 							submissionDAO.delItem(author.getIdSubmission());
 							try {
 								File file = new File(savePath + File.separator + fileName);
@@ -210,7 +206,6 @@ public class PaperSubmissionController extends HttpServlet {
 	private String getValues(ArrayList<Param> listParams, String name) {
 		for (Param param : listParams) {
 			if (param.getName().equals(name)) {
-				System.out.println(param.getName() + " - " + param.getValue());
 				return param.getValue();
 			}
 		}

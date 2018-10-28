@@ -1,14 +1,19 @@
 <%@include file="/templates/submission/inc/header.jsp"%>
 <%@include file="/templates/public/inc/menu.jsp"%>
 			
-			
-			<% if (request.getParameter("msg") == "success") {%>
-				<script type="text/javascript">
-					alert("submiss successful");
-				</script>
-					
-			<%}%>
-			
+			<% String msg = request.getParameter("msg");%>
+			<% if (msg != null) {
+				if (msg.equals("success")) {%>				
+					<script type="text/javascript">
+						alert("submit successful");
+					</script>	
+				<%}
+				if (msg.equals("error")) {%>
+					<script type="text/javascript">
+						alert("Error: <%=request.getParameter("message")%>" );
+					</script>
+				<%}
+			}%>
 			
 			<div class="content-right">
 				<form action="${pageContext.request.contextPath}/submissions" method="post" id="new_sub" enctype="multipart/form-data">

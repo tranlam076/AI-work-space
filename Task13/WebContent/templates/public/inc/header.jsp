@@ -12,7 +12,6 @@
 	src="${pageContext.request.contextPath}/templates/public/jquery/jquery-3.2.1.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/templates/public/css/style.css">
 <script

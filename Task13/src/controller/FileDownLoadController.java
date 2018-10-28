@@ -57,7 +57,6 @@ public class FileDownLoadController extends HttpServlet {
 		os.flush();
 		os.close();
 		fis.close();
-		System.out.println("File downloaded at client successfully");
 		return;
 	}
 
