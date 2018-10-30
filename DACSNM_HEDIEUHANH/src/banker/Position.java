@@ -1,25 +1,33 @@
 package banker;
 
+import java.awt.Point;
+
 public class Position {
-	String name = "";
-	String value = "";
-	public String getName() {
-		return name;
+	Point start;
+	Point end;
+	
+	public Point getStart() {
+		return start;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setStart(Point start) {
+		this.start = start;
 	}
-	public String getValue() {
-		return value;
+
+	public Point getEnd() {
+		return end;
 	}
-	public void setValue(String value) {
-		this.value = value;
+
+	public void setEnd(Point end) {
+		this.end = end;
 	}
-	public Position(String name, String value) {
+
+	public Position(Point start, Point end) {
 		super();
-		this.name = name;
-		this.value = value;
+		this.start = start;
+		this.end = end;
 	}
+
 	public Position() {
 		super();
 		// TODO Auto-generated constructor stub

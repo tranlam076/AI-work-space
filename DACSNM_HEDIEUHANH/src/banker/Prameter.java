@@ -2,22 +2,27 @@ package banker;
 
 public class Prameter {
 	String name = "";
-	Position p = new Position();
+	Position psotion = new Position();
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Position getP() {
-		return p;
+	public Position getPsotion() {
+		return psotion;
 	}
-	public void setP(Position p) {
-		this.p = p;
+	public void setPsotion(Position psotion) {
+		this.psotion = psotion;
 	}
-	public Prameter(String name, Position p) {
+	public Prameter(String name, Position psotion) {
 		super();
 		this.name = name;
-		this.p = p;
+		this.psotion = psotion;
 	}
+	public Prameter() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 }

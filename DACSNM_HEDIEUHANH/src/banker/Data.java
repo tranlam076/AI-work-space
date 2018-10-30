@@ -5,11 +5,11 @@ import java.io.FileInputStream;
 import java.util.Properties;
 public class Data {
 	
-	public Properties readProp(){
+	public Properties readData(){
 		Properties prop = new Properties();
 		String path = this.getClass().getResource("").getPath();
-		path = path.replaceAll("/WEB-INF/classes/library/", "/resources/config.properties");		
-//		path = path.replaceAll("/classes/library/", "/config.properties");		
+		path += "/input.properties";
+//		System.out.println(path);
 		File file = new File(path);
 		FileInputStream fis;
 		try {
@@ -22,6 +22,6 @@ public class Data {
 	}
 	public static void main(String[] args) {
 		Data prop = new Data();
-		System.out.println("database: "+prop.readProp().getProperty("db"));
+		System.out.println(prop.readData().getProperty("num-process"));
 	}
 }
