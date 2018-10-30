@@ -121,7 +121,6 @@ public class AircraftPlay extends JFrame implements MouseListener {
 	public void paint(Graphics graphic) {
 		graphic.setColor(Color.white);
 		graphic.fillRect(0, 0, this.getWidth(), this.getHeight());
-
 		graphic.setColor(Color.blue);
 		graphic.fillRect(offset + (mapSize - 2) * size / 2, offset + (mapSize + 1) * size + 10, size, size - 30);
 		graphic.setColor(Color.white);

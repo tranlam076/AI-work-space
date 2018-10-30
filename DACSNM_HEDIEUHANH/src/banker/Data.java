@@ -1,9 +1,9 @@
-package library;
+package banker;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
-public class PropertiesLibrary {
+public class Data {
 	
 	public Properties readProp(){
 		Properties prop = new Properties();
@@ -21,7 +21,7 @@ public class PropertiesLibrary {
 		return prop;
 	}
 	public static void main(String[] args) {
-		PropertiesLibrary prop = new PropertiesLibrary();
+		Data prop = new Data();
 		System.out.println("database: "+prop.readProp().getProperty("db"));
 	}
 }
