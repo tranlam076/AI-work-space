@@ -1,7 +1,4 @@
 package banker;
-/**
- * @author Yimu Yang
- */
 
 import java.util.*;
 
