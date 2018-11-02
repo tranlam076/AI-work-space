@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import library.EncryptLibrary;
 import model.bean.User;
 import model.dao.UsersDAO;
 
@@ -22,7 +24,6 @@ public class LoginAdminController extends HttpServlet {
 	 */
 	public LoginAdminController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -38,28 +39,34 @@ public class LoginAdminController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		if (username == "" || username == null || password == "" || password == null) {
-			response.sendRedirect(request.getContextPath() + "/login.jsp");
-		}
-		UsersDAO usersDAO = new UsersDAO();
-		User userChecking = usersDAO.checkLogin(username, password);
-		if (userChecking != null) {
-			if (username.equals(userChecking.getUsername()) && password.equals(userChecking.getPassword())) {
-				HttpSession session = request.getSession();
-				session.setAttribute("userInfo", userChecking);
-				session.setMaxInactiveInterval(30*60);
-				Cookie userName = new Cookie("user", userChecking.getFullname());
-				userName.setMaxAge(30 * 60);
-				response.addCookie(userName);
-				response.sendRedirect(request.getContextPath() + "/admin/index");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			EncryptLibrary encrypt = new EncryptLibrary();
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			if (username == "" || username == null || password == "" || password == null) {
+				response.sendRedirect(request.getContextPath() + "/login.jsp");
 			}
-		} else {
-			response.sendRedirect(request.getContextPath() + "/login");
+			UsersDAO usersDAO = new UsersDAO();
+			User userChecking = usersDAO.checkLogin(username);
+			if (userChecking != null) {
+				if (encrypt.checkHash(password, userChecking.getPassword())) {
+					HttpSession session = request.getSession();
+					session.setAttribute("userInfo", userChecking);
+					session.setMaxInactiveInterval(30 * 60);
+					Cookie userName = new Cookie("user", userChecking.getFullname());
+					userName.setMaxAge(30 * 60);
+					response.addCookie(userName);
+					response.sendRedirect(request.getContextPath() + "/admin/index");
+				}
+			} else {
+				response.sendRedirect(request.getContextPath() + "/login?msg=error&message=wrong name or passowrd");
+				return;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 			return;
 		}
+
 	}
 }

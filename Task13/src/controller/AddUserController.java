@@ -4,23 +4,26 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import library.EncryptLibrary;
 import model.bean.User;
 import model.dao.UsersDAO;
 
 /**
  * Servlet implementation class AddNewAdminController
  */
-public class AddUserAdminController extends HttpServlet {
+@WebServlet("/add-admin")
+public class AddUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddUserAdminController() {
+    public AddUserController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,17 +41,19 @@ public class AddUserAdminController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
-		String username = new String(request.getParameter("username").getBytes("ISO-8859-1"),"UTF-8");
-		String password = new String(request.getParameter("password").getBytes("ISO-8859-1"),"UTF-8");
-		String fullname = new String(request.getParameter("fullname").getBytes("ISO-8859-1"),"UTF-8");
 		try {
-			User objUser = new User("", username, password, fullname);
+			EncryptLibrary encrypt = new EncryptLibrary();
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			String newPassword = encrypt.hash(password);
+			String fullname = request.getParameter("fullname");
+			User objUser = new User("", username, newPassword, fullname);
 			UsersDAO u = new UsersDAO();
 			int rs = u.addItem(objUser);
 			if(rs>0)
-			writer.println("hello" + username + password+ fullname);
+			writer.println("hello" + username + newPassword+ fullname);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 }

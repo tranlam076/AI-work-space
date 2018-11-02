@@ -7,14 +7,6 @@
     </cookie-config>
   </session-config>
   <servlet>
-    <servlet-name>AddAdminController</servlet-name>
-    <servlet-class>controller.AddNewAdminController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddAdminController</servlet-name>
-    <url-pattern>/add-admin</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>LoginAdminController</servlet-name>
     <servlet-class>controller.LoginAdminController</servlet-class>
   </servlet>

@@ -16,8 +16,8 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 
 	private Process[] process_array;
 	private Process processTmp;
-	private boolean turn = true;
-	private boolean deny = false;
+	private boolean run = true;
+	private boolean isDeny = false;
 
 	private int[] available;
 	private int[] availableMax;
@@ -30,7 +30,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 //	UI
 	Image img;
 	Graphics gg;
-	int X = 1020;
+	int X = 1180;
 	int Y = 700;
 	int size = 10;
 	int offset = 40;
@@ -63,7 +63,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 //	test 4
 	int startReqX = startResNeedX + divX;
 	int startAvaiX = startReqX + divX;
-	int startDiv1Y = divY*3 - offset/5;
+	int startDiv1Y = divY * 3 - offset / 5;
 
 	public BankersAlgorithm() {
 		this.setTitle("Banker Algorithm");
@@ -71,11 +71,11 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		this.setDefaultCloseOperation(3);
 		this.addMouseListener(this);
 		this.setVisible(true);
-		img = this.createImage(X, Y);
-		gg = img.getGraphics();
 	}
 
 	public void paint(Graphics graphic) {
+		img = this.createImage(X, Y);
+		gg = img.getGraphics();
 		int disEachProcY = disPannelY / procNum;
 		int disEachResX = (divX - (resNum + 1) * space) / resNum;
 		int ResMaxY_1 = disEachProcY - 5;
@@ -133,7 +133,8 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 			if (changeAt == j) {
 				for (int i = 0; i < resNum; i++) {
 					gg.setColor(Color.ORANGE);
-					if (!deny) gg.setColor(Color.RED);
+					if (!isDeny)
+						gg.setColor(Color.RED);
 					gg.fillRect(offset + startReqX + i * (disEachResX + space),
 							offset + valueY - requesting[i] * ResMaxY_1 / UImaxY, disEachResX,
 							requesting[i] * ResMaxY_1 / UImaxY);
@@ -143,6 +144,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 							offset + startReqX + i * (disEachResX + space) + disEachResX / 2 - 2, offset + valueY - 2);
 				}
 				gg.setColor(Color.RED);
+				gg.setFont(new Font("TimesRoman", Font.BOLD, 15));
 				gg.drawString("P" + j, offset + offset / 5, valueY + offset * 4 / 5);
 				gg.setColor(Color.BLUE);
 			} else {
@@ -191,11 +193,28 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 					(availableMax[i] - available[i]) * ResMaxY_2 / UImaxY);
 			gg.setColor(Color.WHITE);
 			gg.setFont(new Font("TimesRoman", Font.PLAIN, 15));
-			gg.drawString(available[i] + "",
-					offset + startAvaiX + i * (disEachResX + space) + disEachResX / 2 - 2,
+			gg.drawString(available[i] + "", offset + startAvaiX + i * (disEachResX + space) + disEachResX / 2 - 2,
 					offset + startDiv1Y - 2);
 			gg.setColor(Color.BLUE);
 		}
+
+//		test 5
+		if (run) {
+			gg.setColor(Color.GREEN);
+			gg.fillRect(offset + mapSizeX * size - 24 * size, offset + mapSizeY * size + size / 2, 8 * size, 2 * size);
+			gg.setColor(Color.WHITE);
+			gg.setFont(new Font("TimesRoman", Font.PLAIN, 15));
+			gg.drawString("RUNNING", offset + mapSizeX * size - 24 * size + size / 2,
+					offset + mapSizeY * size + 2 * size);
+		}
+		if (!run) {
+			gg.setColor(Color.PINK);
+			gg.fillRect(offset + mapSizeX * size - 24 * size, offset + mapSizeY * size + size / 2, 8 * size, 2 * size);
+			gg.setColor(Color.WHITE);
+			gg.setFont(new Font("TimesRoman", Font.PLAIN, 15));
+			gg.drawString("PAUSED", offset + mapSizeX * size - 23 * size, offset + mapSizeY * size + 2 * size);
+		}
+
 		graphic.drawImage(img, 0, 0, null);
 	}
 
@@ -259,114 +278,129 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 	}
 
 	private void go() {
-
-		if (!is_safe()) {
-			messageSub = "Input System is not Safe! Please try again!";
-			System.out.println("Input System is not Safe! Please try again!");
-			this.repaint();
-			try {
-				Thread.sleep(delay);
+		int curProc = 0;
+		int[] curRequesting = new int[resNum];
+		Arrays.fill(curRequesting, 0);
+		boolean isContinue = false;
+		while (true) {
+			if (!isSafe()) {
+				messageSub = "Input System is not Safe! Please try again!";
+				System.out.println("Input System is not Safe! Please try again!");
 				this.repaint();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return;
-		}
-		try {
-			Thread.sleep(delay);
-			this.repaint();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		while (true && turn) {
-			if (all_done()) {
-				System.out.println("All processes are finished! Algorithm Done!");
+				try {
+					Thread.sleep(delay);
+					this.repaint();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				return;
 			}
-			int checkTime = 0;
-			int i = rand.nextInt(process_array.length);
-			if (process_array[i].isFinished) {
-				continue;
-			}
-			processTmp = process_array[i];
-			changeAt = i;
-			while (true && checkTime < 4 && turn) {
-				checkTime++;
-				if (processTmp.check_finished()) {
-					System.out.println("Process " + processTmp.id + " is finished!");
-					Arrays.fill(requesting, 0);
-					this.repaint();
-					break;
+			while (true && run) {
+				if (allDone()) {
+					System.out.println("All processes are finished! Algorithm Done!");
+					return;
+				}
+				if (curProc == 0 || process_array[curProc].isFinished) {
+					curProc = rand.nextInt(process_array.length);
 				}
 
-				requesting = get_random_array(processTmp.need);
-				deny = true;
-				messageSub = "Process " + processTmp.id + " try to generate a request " + Arrays.toString(requesting);
-				try {
-					Thread.sleep(delay);
-					this.repaint();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				if (!array_compare_smaller_or_equal(requesting, available)) {
+				processTmp = process_array[curProc];
+				changeAt = curProc;
+				while (true && run) {
+					if (processTmp.checkFinished()) {
+						System.out.println("Process " + processTmp.id + " is finished!");
+						Arrays.fill(requesting, 0);
+						this.repaint();
+						if (!run)
+							continue;
+						break;
+					}
+					requesting = curRequesting;
+					if (!isContinue)
+						requesting = createRandomArray(processTmp.need);
+					isDeny = true;
 					messageSub = "Process " + processTmp.id + " try to generate a request "
-							+ Arrays.toString(requesting) + "... Exceeding available resources. Request is denied!";
-					deny = false;
+							+ Arrays.toString(requesting);
 					try {
 						Thread.sleep(delay);
 						this.repaint();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					continue;
-				}
-				for (int j = 0; j < requesting.length; j++) {
-					available[j] = available[j] - requesting[j];
-					processTmp.allocation[j] = processTmp.allocation[j] + requesting[j];
-					processTmp.need[j] = processTmp.need[j] - requesting[j];
-				}
-				try {
-					Thread.sleep(delay);
-					this.repaint();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				if (is_safe()) {
-					messageSub = "Process " + processTmp.id + " try to generate a request "
-							+ Arrays.toString(requesting) + "... Safe state. Make request!";
-					for (int k = 0; k < requesting.length; k++) {
-						available[k] = available[k] + processTmp.allocation[k];
-						processTmp.allocation[k] = 0;
-						processTmp.max[k] = processTmp.need[k];
-					}
+						if (!run) {
+							curRequesting = requesting;
+							isContinue = true;
+							continue;
+						}
 
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					if (!arrayCompareSmallerOrEqual(requesting, available)) {
+						messageSub = "Process " + processTmp.id + " try to generate a request "
+								+ Arrays.toString(requesting) + "... Exceeding available resources. Request is denied!";
+						isDeny = false;
+						try {
+							Thread.sleep(delay);
+							this.repaint();
+							if (!run) {
+								isContinue = false;
+								continue;
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						continue;
+					}
+					
+					for (int j = 0; j < requesting.length; j++) {
+						available[j] = available[j] - requesting[j];
+						processTmp.allocation[j] = processTmp.allocation[j] + requesting[j];
+						processTmp.need[j] = processTmp.need[j] - requesting[j];
+					}
 					try {
 						Thread.sleep(delay);
 						this.repaint();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				} else {
-					messageSub = "Process " + processTmp.id + " try to generate a request "
-							+ Arrays.toString(requesting) + "... Unsafe state. Request is denied!";
-					deny = false;
-					for (int l = 0; l < requesting.length; l++) {
-						available[l] = available[l] + requesting[l];
-						processTmp.allocation[l] = processTmp.allocation[l] - requesting[l];
-						processTmp.need[l] = processTmp.need[l] + requesting[l];
+					if (isSafe()) {
+						messageSub = "Process " + processTmp.id + " try to generate a request "
+								+ Arrays.toString(requesting) + "... Safe state. Make request!";
+						for (int k = 0; k < requesting.length; k++) {
+							available[k] = available[k] + processTmp.allocation[k];
+							processTmp.allocation[k] = 0;
+							processTmp.max[k] = processTmp.need[k];
+						}
+
+						try {
+							Thread.sleep(delay);
+							this.repaint();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} else {
+						messageSub = "Process " + processTmp.id + " try to generate a request "
+								+ Arrays.toString(requesting) + "... Unsafe state. Request is denied!";
+						isDeny = false;
+						for (int l = 0; l < requesting.length; l++) {
+							available[l] = available[l] + requesting[l];
+							processTmp.allocation[l] = processTmp.allocation[l] - requesting[l];
+							processTmp.need[l] = processTmp.need[l] + requesting[l];
+						}
+						try {
+							Thread.sleep(delay);
+							this.repaint();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
-					try {
-						Thread.sleep(delay);
-						this.repaint();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					isContinue = false;
 				}
 			}
 		}
 	}
 
-	private boolean all_done() {
+	
+	
+	private boolean allDone() {
 		for (int i = 0; i < process_array.length; i++) {
 			if (process_array[i].isFinished == false) {
 				return false;
@@ -375,7 +409,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		return true;
 	}
 
-	private synchronized boolean is_safe() {
+	private synchronized boolean isSafe() {
 		int[] work = new int[available.length];
 		for (int i = 0; i < available.length; i++) {
 			work[i] = available[i];
@@ -386,14 +420,14 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		while (true) {
 			int index = -1;
 			for (int i = 0; i < finish.length; i++) {
-				if (finish[i] == false && array_compare_smaller_or_equal(process_array[i].need, work)) {
+				if (finish[i] == false && arrayCompareSmallerOrEqual(process_array[i].need, work)) {
 					index = i;
 					break;
 				}
 			}
 
 			if (index == -1) {
-				if (!contain_false(finish)) {
+				if (!isContainFalse(finish)) {
 					return true;
 				} else {
 					return false;
@@ -407,7 +441,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		}
 	}
 
-	private boolean array_compare_smaller_or_equal(int[] a, int[] b) {
+	private boolean arrayCompareSmallerOrEqual(int[] a, int[] b) {
 		for (int i = 0; i < a.length; i++) {
 			if (a[i] > b[i]) {
 				return false;
@@ -416,7 +450,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		return true;
 	}
 
-	private boolean contain_false(boolean[] input) {
+	private boolean isContainFalse(boolean[] input) {
 		for (int i = 0; i < input.length; i++) {
 			if (input[i] == false) {
 				return true;
@@ -425,12 +459,25 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		return false;
 	}
 
-	private int[] get_random_array(int[] input) {
+	private int[] createRandomArray(int[] input) {
+		int count = 0;
 		int[] res = new int[input.length];
-		for (int i = 0; i < input.length; i++) {
-			int cur = rand.nextInt(input[i] + 1);
-			res[i] = cur;
+		while (true) {
+			count = 0;
+			for (int i = 0; i < input.length; i++) {
+				int cur = rand.nextInt(input[i] + 1);
+				if (cur == 0) {
+					count++;
+				}
+				res[i] = cur;
+			}
+
+			if (count == input.length) {
+				continue;
+			} else
+				break;
 		}
+
 		return res;
 	}
 
@@ -449,7 +496,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 			isFinished = false;
 		}
 
-		public boolean check_finished() {
+		public boolean checkFinished() {
 			for (int i = 0; i < need.length; i++) {
 				if (need[i] > 0) {
 					isFinished = false;
@@ -462,8 +509,23 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-
+	public void mouseClicked(MouseEvent arg0) {
+		int ix = arg0.getX();
+		int iy = arg0.getY();
+		int x = (ix - offset) / size;
+		int y = (iy - offset) / size;
+		System.out.println(ix + "-" + iy);
+		System.out.println(x + "-" + y);
+		System.out.println(mapSizeX + "-" + mapSizeY);
+		if (x >= 86 && x <= 93 && y >= 62 && y <= 63) {
+			run = !run;
+			this.repaint();
+		}
+		try {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return;
 	}
 
 	@Override
@@ -490,5 +552,8 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		BankersAlgorithm bankers_algorithm = new BankersAlgorithm();
 		bankers_algorithm.init();
 		bankers_algorithm.go();
+//		bankers_algorithm.run = false;
+//		bankers_algorithm.init();
+//		bankers_algorithm.go();
 	}
 }

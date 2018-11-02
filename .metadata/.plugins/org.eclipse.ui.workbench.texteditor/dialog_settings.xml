@@ -6,12 +6,18 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="AvaiX" key="selection"/>
+		<item value="printStackTrace" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="clicked"/>
+			<item value="go"/>
+			<item value="getConn"/>
+			<item value="browseFolder"/>
+			<item value="btnBrowse"/>
+			<item value="Duyệt"/>
 			<item value="AvaiX"/>
 			<item value="RED"/>
 			<item value="PINK"/>
@@ -21,12 +27,6 @@
 			<item value="sleep"/>
 			<item value="ResMaxY"/>
 			<item value="UImaxY_1"/>
-			<item value="max"/>
-			<item value="check"/>
-			<item value="need"/>
-			<item value="filter"/>
-			<item value="out"/>
-			<item value="logout"/>
 		</list>
 		<list key="replacehistory">
 			<item value="submissions"/>

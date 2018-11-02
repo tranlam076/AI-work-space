@@ -74,7 +74,7 @@ public class k_means {
 		}
 	}
 
-	private int Chia(int[] x) {
+	int Chia(int[] x) {
 		int id = 0;
 		int min = Integer.MAX_VALUE;
 		for (int i = 0; i < k; i++) {

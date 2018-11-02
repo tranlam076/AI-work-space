@@ -207,14 +207,13 @@ public class UsersDAO {
 		return result;
 	}
 
-	public User checkLogin(String username, String password) {
+	public User checkLogin(String username) {
 		conn = connectDBLibrary.getConnectMySQL();
-		String sql = "SELECT * FROM " + table + " WHERE username = ? && password = ?";
+		String sql = "SELECT * FROM " + table + " WHERE username = ?";
 		User objUser = null;
 		try {
 			pst = conn.prepareStatement(sql);
 			pst.setString(1, username);
-			pst.setString(2, password);
 			rs = pst.executeQuery();
 			while (rs.next()) {
 				objUser = new User(rs.getString("id_user"), rs.getString("username"), rs.getString("password"),

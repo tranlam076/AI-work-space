@@ -38,24 +38,21 @@ public class AddNewsAdminController extends HttpServlet {
 	}
 
 	/**
+	 * @throws IOException
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		PrintWriter writer = response.getWriter();
-		String title = new String(request.getParameter("title").getBytes("ISO-8859-1"), "UTF-8");
-		String content = new String(request.getParameter("content").getBytes("ISO-8859-1"), "UTF-8");
-		String id_cat = new String(request.getParameter("idCat").getBytes("ISO-8859-1"), "UTF-8");
-		String nameCat = "";
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
+			PrintWriter writer = response.getWriter();
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			String id_cat = request.getParameter("idCat");
+			String nameCat = "";
 			CatDAO cat = new CatDAO();
 			Category category = cat.getItem(id_cat);
 			nameCat = category.getName();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		try {
+
 			News objNews = new News("", title, content, id_cat, nameCat);
 			NewsDAO news = new NewsDAO();
 			int rs = news.addItem(objNews);
@@ -64,6 +61,7 @@ public class AddNewsAdminController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/admin/index?msg=1");
 			return;
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + "/admin/index?msg=0");
 			return;
 		}
