@@ -62,7 +62,7 @@ public class EncryptLibrary {
 		return null;
 	}
 
-	public String hash(String text) {
+	public String createHash(String text) {
 		try {
 			return this.encrypt(text, "A/dsF0awq-szszfF");
 		} catch (Exception e) {
@@ -78,8 +78,9 @@ public class EncryptLibrary {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (text == plainText)
+		if (text.equals(plainText)) {
 			return true;
+		}
 		return false;
 	}
 
@@ -90,9 +91,9 @@ public class EncryptLibrary {
 	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
 			IllegalBlockSizeException, BadPaddingException, IOException, InvalidAlgorithmParameterException {
 		EncryptLibrary en = new EncryptLibrary();
-		String check = en.hash("hello word 123");
+		String check = en.createHash("123");
 		System.out.println(check);
-		if (en.checkHash("hi") == true) {
+		if (en.checkHash("123", check) == true) {
 			System.out.println("true");
 		} else {
 			System.out.println("false");

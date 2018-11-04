@@ -19,14 +19,9 @@ public class AuthenticationFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-
 		HttpSession session = req.getSession(false);
-		
-		javax.servlet.http.Cookie[] ck=((HttpServletRequest) request).getCookies();  
-		
-		System.out.println(ck[1].getName() + " - " + ck[1].getValue());
-		
-		if (session != null && session.getAttribute("userInfo") == null) {
+//		javax.servlet.http.Cookie[] ck=((HttpServletRequest) request).getCookies();  
+		if (session == null || session.getAttribute("userInfo") == null) {
 			res.sendRedirect(req.getContextPath() + "/login");
 		} else {
 			chain.doFilter(request, response);

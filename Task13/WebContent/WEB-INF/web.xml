@@ -63,19 +63,6 @@
     <url-pattern>/admin/edit-news</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>FileUploadController</servlet-name>
-    <servlet-class>controller.FileUploadController</servlet-class>
-    <multipart-config>
-      <max-file-size>52428800</max-file-size>
-      <max-request-size>52428800</max-request-size>
-      <file-size-threshold>0</file-size-threshold>
-    </multipart-config>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FileUploadController</servlet-name>
-    <url-pattern>/file-upload</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>FileDownLoadController</servlet-name>
     <servlet-class>controller.FileDownLoadController</servlet-class>
   </servlet>

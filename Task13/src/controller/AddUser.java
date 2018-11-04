@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/AddUser")
 public class AddUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     /**
      * @see HttpServlet#HttpServlet()
      */

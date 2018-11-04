@@ -45,7 +45,7 @@ public class AddUserController extends HttpServlet {
 			EncryptLibrary encrypt = new EncryptLibrary();
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-			String newPassword = encrypt.hash(password);
+			String newPassword = encrypt.createHash(password);
 			String fullname = request.getParameter("fullname");
 			User objUser = new User("", username, newPassword, fullname);
 			UsersDAO u = new UsersDAO();
