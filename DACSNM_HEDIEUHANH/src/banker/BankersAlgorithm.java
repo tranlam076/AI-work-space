@@ -14,23 +14,21 @@ import javax.swing.JFrame;
 
 public class BankersAlgorithm extends JFrame implements MouseListener {
 
-	private Process[] process_array;
+	private Process[] processArray;
 	private Process processTmp;
-	private boolean run = true;
-	private boolean isDeny = false;
+	private boolean run = false;
 
 	private int[] available;
 	private int[] availableMax;
 	Random rand = new Random();
-	private int[] requesting;
+	private int[] request;
 	int delay = 1000;
 	private int changeAt = 0;
 	private static final long serialVersionUID = 1L;
 
-//	UI
 	Image img;
 	Graphics gg;
-	int X = 1180;
+	int X = 1020;
 	int Y = 700;
 	int size = 10;
 	int offset = 40;
@@ -39,28 +37,23 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 	String message = "";
 	String messageSub = "";
 
-//	create pannel
-	int divX = 171; // 46
-	int divY = 209; // 75
+	int divX = 171;
+	int divY = 209;
 
-//	test----
 	int procNum = 1;
 	int startProcPannelX = 1;
 	int disPannelX = divX / 2 + divX * 3;
 	int startProcPannelY = divY / 4 + 1;
 	int disPannelY = mapSizeY * size - divY / 4 - 2;
 
-//	test 2
 	int space = 3;
 	int resNum = 1;
 	int startResAllocX = space + 1 + divX / 2;
 	int startResMaxX = startResAllocX + divX;
 	int startResNeedX = startResMaxX + divX;
 
-//	test 3
 	int UImaxY = 1;
 
-//	test 4
 	int startReqX = startResNeedX + divX;
 	int startAvaiX = startReqX + divX;
 	int startDiv1Y = divY * 3 - offset / 5;
@@ -84,10 +77,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		gg.fillRect(0, 0, this.getWidth(), this.getHeight());
 		gg.setColor(Color.black);
 		gg.drawRect(offset, offset, mapSizeX * size, mapSizeY * size);
-
-//		draw x
 		gg.drawLine(offset, offset + divY / 4, offset + mapSizeX * size, offset + divY / 4);
-//		draw y
 		gg.drawLine(offset + divX / 2, offset, offset + divX / 2, offset + mapSizeY * size);
 		for (int i = divX / 2 + divX; i < mapSizeX * size; i += divX) {
 			gg.drawLine(offset + i, offset, offset + i, offset + mapSizeY * size);
@@ -115,17 +105,12 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		gg.setFont(new Font("TimesRoman", Font.BOLD, 15));
 		gg.drawString("Available", offset + offset / 5 + divX / 2 + divX * 4, offset + divY / 4 - offset / 5);
 
-//		test
-//		gg.setColor(Color.WHITE);
-//		gg.fillRect(offset + startProcPannelX, offset + startProcPannelY, disPannelX - 2, disPannelY + 1);
-
 		gg.setColor(Color.GREEN);
 		for (int i = startProcPannelY + disEachProcY + 1; i <= startProcPannelY + disPannelY; i += disEachProcY) {
 			gg.drawLine(offset + startProcPannelX, offset + i, offset + startProcPannelX * 2 + disPannelX - 3,
 					offset + i);
 		}
 
-//		test 2 
 		gg.setColor(Color.BLUE);
 		for (int j = 0; j < procNum; j++) {
 			int valueY = startProcPannelY + 1 + disEachProcY + j * disEachProcY;
@@ -133,14 +118,12 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 			if (changeAt == j) {
 				for (int i = 0; i < resNum; i++) {
 					gg.setColor(Color.ORANGE);
-					if (!isDeny)
-						gg.setColor(Color.RED);
 					gg.fillRect(offset + startReqX + i * (disEachResX + space),
-							offset + valueY - requesting[i] * ResMaxY_1 / UImaxY, disEachResX,
-							requesting[i] * ResMaxY_1 / UImaxY);
+							offset + valueY - request[i] * ResMaxY_1 / UImaxY, disEachResX,
+							request[i] * ResMaxY_1 / UImaxY);
 					gg.setColor(Color.WHITE);
 					gg.setFont(new Font("TimesRoman", Font.PLAIN, 15));
-					gg.drawString(requesting[i] + "",
+					gg.drawString(request[i] + "",
 							offset + startReqX + i * (disEachResX + space) + disEachResX / 2 - 2, offset + valueY - 2);
 				}
 				gg.setColor(Color.RED);
@@ -153,31 +136,31 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 
 			for (int i = 0; i < resNum; i++) {
 				gg.fillRect(offset + startResAllocX + i * (disEachResX + space),
-						offset + valueY - process_array[j].allocation[i] * ResMaxY_1 / UImaxY, disEachResX,
-						process_array[j].allocation[i] * ResMaxY_1 / UImaxY);
+						offset + valueY - processArray[j].allocation[i] * ResMaxY_1 / UImaxY, disEachResX,
+						processArray[j].allocation[i] * ResMaxY_1 / UImaxY);
 				gg.fillRect(offset + startResMaxX + i * (disEachResX + space),
-						offset + valueY - process_array[j].max[i] * ResMaxY_1 / UImaxY, disEachResX,
-						process_array[j].max[i] * ResMaxY_1 / UImaxY);
+						offset + valueY - processArray[j].max[i] * ResMaxY_1 / UImaxY, disEachResX,
+						processArray[j].max[i] * ResMaxY_1 / UImaxY);
 				gg.fillRect(offset + startResNeedX + i * (disEachResX + space),
-						offset + valueY - process_array[j].need[i] * ResMaxY_1 / UImaxY, disEachResX,
-						process_array[j].need[i] * ResMaxY_1 / UImaxY);
-				if (changeAt == j && process_array[j].max[i] > process_array[j].need[i]) {
-					int maxChangeY = requesting[i];
+						offset + valueY - processArray[j].need[i] * ResMaxY_1 / UImaxY, disEachResX,
+						processArray[j].need[i] * ResMaxY_1 / UImaxY);
+				if (changeAt == j && processArray[j].max[i] > processArray[j].need[i]) {
+					int requestChange = request[i];
 					gg.setColor(Color.PINK);
-					gg.fillRect(offset + startResMaxX + i * (disEachResX + space),
-							offset + valueY - process_array[j].max[i] * ResMaxY_1 / UImaxY, disEachResX,
-							maxChangeY * ResMaxY_1 / UImaxY);
+					gg.fillRect(offset + startResAllocX + i * (disEachResX + space),
+							offset + valueY - (requestChange + processArray[j].allocation[i])* ResMaxY_1 / UImaxY, disEachResX,
+							requestChange * ResMaxY_1 / UImaxY);
 					gg.setColor(Color.BLUE);
 				}
 				gg.setColor(Color.WHITE);
 				gg.setFont(new Font("TimesRoman", Font.PLAIN, 15));
-				gg.drawString(process_array[j].max[i] + "",
+				gg.drawString(processArray[j].max[i] + "",
 						offset + startResMaxX + i * (disEachResX + space) + disEachResX / 2 - 2, offset + valueY - 2);
 				gg.setFont(new Font("TimesRoman", Font.PLAIN, 15));
-				gg.drawString(process_array[j].allocation[i] + "",
+				gg.drawString(processArray[j].allocation[i] + "",
 						offset + startResAllocX + i * (disEachResX + space) + disEachResX / 2 - 2, offset + valueY - 2);
 				gg.setFont(new Font("TimesRoman", Font.PLAIN, 15));
-				gg.drawString(process_array[j].need[i] + "",
+				gg.drawString(processArray[j].need[i] + "",
 						offset + startResNeedX + i * (disEachResX + space) + disEachResX / 2 - 2, offset + valueY - 2);
 				gg.setColor(Color.BLUE);
 			}
@@ -198,7 +181,6 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 			gg.setColor(Color.BLUE);
 		}
 
-//		test 5
 		if (run) {
 			gg.setColor(Color.GREEN);
 			gg.fillRect(offset + mapSizeX * size - 24 * size, offset + mapSizeY * size + size / 2, 8 * size, 2 * size);
@@ -225,14 +207,14 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		int UImaxYtmp = UImaxY;
 
 		int process_number = Integer.parseInt(prop.getProperty("num-process"));
-		process_array = new Process[process_number];
+		processArray = new Process[process_number];
 		procNum = process_number;
 
 		int resource_number = Integer.parseInt(prop.getProperty("num-sources"));
 		available = new int[resource_number];
 		availableMax = new int[resource_number];
-		requesting = new int[resource_number];
-		Arrays.fill(requesting, 0);
+		request = new int[resource_number];
+		Arrays.fill(request, 0);
 		resNum = resource_number;
 
 		String vector = prop.getProperty("available");
@@ -266,12 +248,12 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 				cur.need[j] = cur.max[j] - cur.allocation[j];
 			}
 
-			process_array[i] = cur;
-			process_array[i] = cur;
+			processArray[i] = cur;
+			processArray[i] = cur;
 		}
-		for (int i = 0; i < process_array.length; i++) {
+		for (int i = 0; i < processArray.length; i++) {
 			for (int j = 0; j < resNum; j++) {
-				availableMax[j] += process_array[i].allocation[j];
+				availableMax[j] += processArray[i].allocation[j];
 			}
 		}
 		this.repaint();
@@ -285,7 +267,6 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		while (true) {
 			if (!isSafe()) {
 				messageSub = "Input System is not Safe! Please try again!";
-				System.out.println("Input System is not Safe! Please try again!");
 				this.repaint();
 				try {
 					Thread.sleep(delay);
@@ -297,100 +278,76 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 			}
 			while (true && run) {
 				if (allDone()) {
-					System.out.println("All processes are finished! Algorithm Done!");
+					messageSub = "All processes are finished! Algorithm Done!";
+					this.repaint();
 					return;
 				}
-				if (curProc == 0 || process_array[curProc].isFinished) {
-					curProc = rand.nextInt(process_array.length);
+				if (curProc == 0 || processArray[curProc].isFinished()) {
+					for (int i = 0; i < procNum; i++) {
+						if (arrayCompareSmallerOrEqual(processArray[i].need, available)
+								&& !processArray[i].isFinished()) {
+							curProc = i;
+						}
+					}
 				}
 
-				processTmp = process_array[curProc];
+				processTmp = processArray[curProc];
 				changeAt = curProc;
 				while (true && run) {
-					if (processTmp.checkFinished()) {
-						System.out.println("Process " + processTmp.id + " is finished!");
-						Arrays.fill(requesting, 0);
-						this.repaint();
+					if (processTmp.isFinished()) {
+						messageSub = "Process " + processTmp.id + " is finished!";
+						try {
+							for (int j = 0; j < request.length; j++) {
+								available[j] = available[j] + processTmp.allocation[j];
+								processTmp.allocation[j] = 0;
+							}
+							this.repaint();
+							Thread.sleep(delay);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 						if (!run)
 							continue;
 						break;
 					}
-					requesting = curRequesting;
+					request = curRequesting;
 					if (!isContinue)
-						requesting = createRandomArray(processTmp.need);
-					isDeny = true;
+						request = createRandomArray(processTmp.need);
 					messageSub = "Process " + processTmp.id + " try to generate a request "
-							+ Arrays.toString(requesting);
+							+ Arrays.toString(request) + "...";
 					try {
-						Thread.sleep(delay);
 						this.repaint();
+						Thread.sleep(delay);
 						if (!run) {
-							curRequesting = requesting;
+							curRequesting = request;
 							isContinue = true;
 							continue;
 						}
-
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					if (!arrayCompareSmallerOrEqual(requesting, available)) {
-						messageSub = "Process " + processTmp.id + " try to generate a request "
-								+ Arrays.toString(requesting) + "... Exceeding available resources. Request is denied!";
-						isDeny = false;
-						try {
-							Thread.sleep(delay);
-							this.repaint();
-							if (!run) {
-								isContinue = false;
-								continue;
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						continue;
+
+					for (int j = 0; j < request.length; j++) {
+						processTmp.allocation[j] = processTmp.allocation[j] + request[j];
+						processTmp.need[j] = processTmp.need[j] - request[j];
 					}
-					
-					for (int j = 0; j < requesting.length; j++) {
-						available[j] = available[j] - requesting[j];
-						processTmp.allocation[j] = processTmp.allocation[j] + requesting[j];
-						processTmp.need[j] = processTmp.need[j] - requesting[j];
+
+					messageSub = "Process " + processTmp.id + " try to generate a request "
+							+ Arrays.toString(request) + "... Safe state. Make request!";
+					for (int j = 0; j < request.length; j++) {
+						available[j] = available[j] - request[j];
+						curRequesting = request;
+						Arrays.fill(request, 0);
 					}
 					try {
-						Thread.sleep(delay);
 						this.repaint();
+						Thread.sleep(delay);
+						if (!run) {
+							isContinue = true;
+							continue;
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
-					}
-					if (isSafe()) {
-						messageSub = "Process " + processTmp.id + " try to generate a request "
-								+ Arrays.toString(requesting) + "... Safe state. Make request!";
-						for (int k = 0; k < requesting.length; k++) {
-							available[k] = available[k] + processTmp.allocation[k];
-							processTmp.allocation[k] = 0;
-							processTmp.max[k] = processTmp.need[k];
-						}
-
-						try {
-							Thread.sleep(delay);
-							this.repaint();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					} else {
-						messageSub = "Process " + processTmp.id + " try to generate a request "
-								+ Arrays.toString(requesting) + "... Unsafe state. Request is denied!";
-						isDeny = false;
-						for (int l = 0; l < requesting.length; l++) {
-							available[l] = available[l] + requesting[l];
-							processTmp.allocation[l] = processTmp.allocation[l] - requesting[l];
-							processTmp.need[l] = processTmp.need[l] + requesting[l];
-						}
-						try {
-							Thread.sleep(delay);
-							this.repaint();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
 					}
 					isContinue = false;
 				}
@@ -398,14 +355,16 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		}
 	}
 
-	
-	
 	private boolean allDone() {
-		for (int i = 0; i < process_array.length; i++) {
-			if (process_array[i].isFinished == false) {
+		for (int i = 0; i < processArray.length; i++) {
+			if (processArray[i].isFinished() == false) {
 				return false;
 			}
 		}
+		init();
+		this.repaint();
+		run = false;
+		go();
 		return true;
 	}
 
@@ -414,18 +373,16 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		for (int i = 0; i < available.length; i++) {
 			work[i] = available[i];
 		}
-		boolean[] finish = new boolean[process_array.length];
+		boolean[] finish = new boolean[processArray.length];
 		Arrays.fill(finish, false);
-
 		while (true) {
 			int index = -1;
 			for (int i = 0; i < finish.length; i++) {
-				if (finish[i] == false && arrayCompareSmallerOrEqual(process_array[i].need, work)) {
+				if (finish[i] == false && arrayCompareSmallerOrEqual(processArray[i].need, work)) {
 					index = i;
 					break;
 				}
 			}
-
 			if (index == -1) {
 				if (!isContainFalse(finish)) {
 					return true;
@@ -435,7 +392,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 			} else {
 				finish[index] = true;
 				for (int i = 0; i < work.length; i++) {
-					work[i] = work[i] + process_array[index].allocation[i];
+					work[i] = work[i] + processArray[index].allocation[i];
 				}
 			}
 		}
@@ -471,7 +428,6 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 				}
 				res[i] = cur;
 			}
-
 			if (count == input.length) {
 				continue;
 			} else
@@ -486,24 +442,20 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		private int[] max;
 		private int[] allocation;
 		private int[] need;
-		private boolean isFinished;
 
 		public Process(int total_resource) {
 			id = -1;
 			max = new int[total_resource];
 			allocation = new int[total_resource];
 			need = new int[total_resource];
-			isFinished = false;
 		}
 
-		public boolean checkFinished() {
+		public boolean isFinished() {
 			for (int i = 0; i < need.length; i++) {
 				if (need[i] > 0) {
-					isFinished = false;
 					return false;
 				}
 			}
-			isFinished = true;
 			return true;
 		}
 	}
@@ -514,10 +466,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		int iy = arg0.getY();
 		int x = (ix - offset) / size;
 		int y = (iy - offset) / size;
-		System.out.println(ix + "-" + iy);
-		System.out.println(x + "-" + y);
-		System.out.println(mapSizeX + "-" + mapSizeY);
-		if (x >= 86 && x <= 93 && y >= 62 && y <= 63) {
+		if (x >= 70 && x <= 77 && y >= 62 && y <= 63) {
 			run = !run;
 			this.repaint();
 		}
@@ -549,11 +498,8 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 	}
 
 	public static void main(String[] args) {
-		BankersAlgorithm bankers_algorithm = new BankersAlgorithm();
-		bankers_algorithm.init();
-		bankers_algorithm.go();
-//		bankers_algorithm.run = false;
-//		bankers_algorithm.init();
-//		bankers_algorithm.go();
+		BankersAlgorithm bankersAlgorithm = new BankersAlgorithm();
+		bankersAlgorithm.init();
+		bankersAlgorithm.go();
 	}
 }

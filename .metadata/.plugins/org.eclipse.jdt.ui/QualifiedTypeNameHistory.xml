@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
 <fullyQualifiedTypeName name="model.bean.Parameter"/>
 <fullyQualifiedTypeName name="model.bean.Param"/>
 <fullyQualifiedTypeName name="model.bean.Field"/>
@@ -55,9 +54,10 @@
 <fullyQualifiedTypeName name="java.lang.EnumConstantNotPresentException"/>
 <fullyQualifiedTypeName name="javax.crypto.Cipher"/>
 <fullyQualifiedTypeName name="java.io.ByteArrayOutputStream"/>
-<fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.lang.Exception"/>
 <fullyQualifiedTypeName name="java.io.PrintWriter"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
 <fullyQualifiedTypeName name="library.EncryptLibrary"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="banker.BankersAlgorithm.Process"/>
 </qualifiedTypeNameHistroy>
