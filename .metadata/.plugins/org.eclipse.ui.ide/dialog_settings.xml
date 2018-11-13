@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="C:\HippoTech\StudentAttendance"/>
 		<item value="C:\Users\tranl\Desktop\_DATA\TTNT\CarRacingClient_V1.03 _coding"/>
 		<item value="C:\Users\tranl\Desktop\_DATA\TTNT\CarRacingClient_V1.03"/>
 		<item value="C:\Users\tranl\Desktop\_DATA\Code\FTPProjectFinal"/>
