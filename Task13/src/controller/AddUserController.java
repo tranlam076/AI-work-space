@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import library.EncryptLibrary;
+import model.DAO.UsersDAO;
 import model.bean.User;
-import model.dao.UsersDAO;
 
 /**
  * Servlet implementation class AddNewAdminController

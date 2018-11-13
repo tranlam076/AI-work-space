@@ -336,9 +336,9 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 							+ Arrays.toString(request) + "... Safe state. Make request!";
 					for (int j = 0; j < request.length; j++) {
 						available[j] = available[j] - request[j];
-						curRequesting = request;
-						Arrays.fill(request, 0);
 					}
+					curRequesting = request;
+					Arrays.fill(request, 0);
 					try {
 						this.repaint();
 						Thread.sleep(delay);

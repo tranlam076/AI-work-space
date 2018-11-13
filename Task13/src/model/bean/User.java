@@ -36,6 +36,12 @@ public class User {
 		this.password = password;
 		this.fullname = fullname;
 	}
+	
+	public User(String id, String username) {
+		super();
+		this.id = id;
+		this.username = username;
+	}
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub

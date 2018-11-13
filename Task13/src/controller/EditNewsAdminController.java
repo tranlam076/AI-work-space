@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.DAO.NewsDAO;
 import model.bean.News;
-import model.dao.NewsDAO;
 
 /**
  * Servlet implementation class AddNewsAdminController

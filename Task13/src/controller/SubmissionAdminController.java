@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.DAO.AuthorDAO;
+import model.DAO.SubmissionDAO;
 import model.bean.Author;
 import model.bean.Submission;
-import model.dao.AuthorDAO;
-import model.dao.SubmissionDAO;
 
 /**
  * Servlet implementation class Admin

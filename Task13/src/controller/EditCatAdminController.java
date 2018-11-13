@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.DAO.CatDAO;
 import model.bean.Category;
-import model.dao.CatDAO;
 
 
 /**

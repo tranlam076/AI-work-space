@@ -19,13 +19,13 @@ import javax.servlet.http.Part;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import library.PropertiesLibrary;
+import model.DAO.AuthorDAO;
+import model.DAO.FieldDAO;
+import model.DAO.SubmissionDAO;
 import model.bean.Author;
 import model.bean.Field;
 import model.bean.Param;
 import model.bean.Submission;
-import model.dao.AuthorDAO;
-import model.dao.FieldDAO;
-import model.dao.SubmissionDAO;
 
 /**
  * Servlet implementation class PaperSubmissionController

@@ -6,27 +6,27 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="_" key="selection"/>
+		<item value="last" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="_"/>
-			<item value="isFi"/>
-			<item value="ResMaxY_2"/>
+			<item value="last"/>
+			<item value="lát"/>
+			<item value="isStartCatch"/>
+			<item value="runAI"/>
+			<item value="x_b"/>
+			<item value="next_direc"/>
+			<item value="curMx"/>
+			<item value="check"/>
+			<item value="this.curMx"/>
+			<item value="isNeedToMove"/>
+			<item value="myRoad"/>
+			<item value="speed"/>
 			<item value="out"/>
-			<item value="ouy"/>
-			<item value="requesting"/>
-			<item value="sleep"/>
+			<item value="clone"/>
 			<item value="available"/>
-			<item value="isDeny"/>
-			<item value="GREEN"/>
-			<item value="green"/>
-			<item value="isNext"/>
-			<item value="processTmp"/>
-			<item value="add"/>
-			<item value="clicked"/>
 		</list>
 		<list key="replacehistory">
 			<item value="submissions"/>

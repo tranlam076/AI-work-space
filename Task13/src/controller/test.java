@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.DAO.SubmissionDAO;
 import model.bean.Submission;
-import model.dao.SubmissionDAO;
 
 /**
  * Servlet implementation class test

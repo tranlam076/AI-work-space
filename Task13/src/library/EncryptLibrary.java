@@ -57,7 +57,7 @@ public class EncryptLibrary {
 			String plainText = new String(plainTextBytes);
 			return plainText;
 		} catch (Exception e) {
-//			System.out.println(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 		return null;
 	}
