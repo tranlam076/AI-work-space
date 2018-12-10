@@ -29,7 +29,7 @@ public class ServerThread extends Thread {
 	private int defaultPort;
 	private InetAddress address;
 	private DatagramPacket firstPacket;
-	private String filePath = "C:\\Users\\tranl\\Desktop\\server\\";
+	private String filePath = "C:\\Users\\tranl\\Desktop\\DACSNM\\server\\";
 	private String fileName;
 	private FileInputStream fileInputStream;
 
@@ -101,11 +101,7 @@ public class ServerThread extends Thread {
 				System.out.println("ERROR CODE 1 - FILE NOT FOUND");
 				createError(1, "File not found");
 			} else {
-				System.out.println(file.length());
-//				do some thing to split file 
-				
-				
-				
+				System.out.println(file.length());				
 				byte[] fileByte = new byte[(int) file.length()];
 				try {
 					fileInputStream = new FileInputStream(file);
@@ -149,34 +145,34 @@ public class ServerThread extends Thread {
 		int j = 0;
 		int k = -1;
 		int dataOffset = 0;
-		int firstBlockNumber = -1;
-		int secondBlockNumber = 0;
+		int firstBlockNumber = -128;
+		int secondBlockNumber = -128;
 		do {
-			byte[] dst;
-			if (fileByte.length - (dataOffset) >= 512) {
-
-				dst = new byte[DATALENGTH];
+			byte[] dataStream;
+			if (fileByte.length - (dataOffset) >= DATALENGTH) {
+				dataStream = new byte[DATALENGTH];
 			} else {
-				dst = new byte[fileByte.length - (dataOffset)];
+				dataStream = new byte[fileByte.length - (dataOffset)];
 			}
-			for (int i = dataOffset; i < 512 + dataOffset && i < fileByte.length; i++) {
-				dst[j] = fileByte[i];
+			for (int i = dataOffset; i < DATALENGTH + dataOffset && i < fileByte.length; i++) {
+				dataStream[j] = fileByte[i];
 				j++;
 			}
 			j = 0;
-			dataOffset += 512;
+			dataOffset += DATALENGTH;
 			secondBlockNumber++;
 			if (secondBlockNumber == 128) {
 				firstBlockNumber++;
-				secondBlockNumber = 0;
+				secondBlockNumber = -128;
 			}
-
-			DatagramPacket dataPacket = createPacket(packet, dst, firstBlockNumber, secondBlockNumber);
+			if (firstBlockNumber == 128) {
+				firstBlockNumber = -128;
+			}
+			DatagramPacket dataPacket = createPacket(packet, dataStream, firstBlockNumber, secondBlockNumber);
 			socket.send(dataPacket);
 			packet = receivedAck(packet);
-
 			k++;
-
+			System.out.println(k + "/" + amountOfPackets);
 		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && k < amountOfPackets);
 	}
 
@@ -207,7 +203,6 @@ public class ServerThread extends Thread {
 
 	public boolean isReceivedAck(DatagramPacket packet, int firstBlockNumber, int secondBlockNumber)
 			throws IOException {
-
 		byte[] inDataStream = packet.getData();
 		if ((int) inDataStream[0] == 0 && (int) inDataStream[1] == OP_ACK && (int) inDataStream[2] == firstBlockNumber
 				&& (int) inDataStream[3] == secondBlockNumber) {
@@ -258,8 +253,6 @@ public class ServerThread extends Thread {
 			if (packetInput[1] == OP_ERROR) {
 				error(packetInput);
 			} else {
-				System.out.println("ending file");
-
 				if (packetInput[1] == OP_DATAPACKET && packet.getLength() == PACKET_SIZE) {
 					DatagramPacket ack = new DatagramPacket(createAck(packetInput[2], packetInput[3]), 4, address,
 							defaultPort);

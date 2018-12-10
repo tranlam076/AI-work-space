@@ -7,7 +7,7 @@ pageEncoding="ISO-8859-1"%>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Internship</title>
+	<title>Submission Site</title>
 	<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/templates/public/css/style.css">
 	<link rel="stylesheet"

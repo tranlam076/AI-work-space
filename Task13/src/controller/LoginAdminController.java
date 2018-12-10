@@ -21,7 +21,13 @@ public class LoginAdminController extends HttpServlet {
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.sendRedirect(request.getContextPath() + "/login.jsp");
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("userInfo") == null) {
+			response.sendRedirect(request.getContextPath() + "/login.jsp");
+			return;
+		}
+		response.sendRedirect(request.getContextPath() + "/admin/index");
+		return;
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {

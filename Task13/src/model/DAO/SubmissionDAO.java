@@ -27,7 +27,7 @@ public class SubmissionDAO {
 	public ArrayList<Submission> getItems() {
 		ArrayList<Submission> listItems = new ArrayList<>();
 		conn = connectDBLibrary.getConnectMySQL();
-		String sql = "SELECT submission.idSubmission,submission.createdAt,field.name,submission.title FROM submission LEFT JOIN field ON field.idField = submission.idField ORDER BY submission.createdAt DESC LIMIT 0,10";
+		String sql = "SELECT submission.idSubmission,submission.createdAt,field.name,submission.title FROM submission LEFT JOIN field ON field.idField = submission.idField WHERE submission.deletedAt IS NULL ORDER BY submission.createdAt DESC LIMIT 0,10";
 		Submission objSubmission = null;
 		try {
 			st = conn.createStatement();
@@ -140,6 +140,37 @@ public class SubmissionDAO {
 		try {
 			pst = conn.prepareStatement(sql);
 			pst.setString(1, idSubmission);
+			pst.executeUpdate();
+			result = 3;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				pst.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int delItems(ArrayList<String> listIdSubmission) {
+		int result = 0;
+		conn = connectDBLibrary.getConnectMySQL();
+		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+		String sql = "UPDATE submission SET deletedAt = '" + date +"' WHERE "; //idSubmission = ";
+		for (int i = 0; i < listIdSubmission.size(); i++) {
+			sql += "idSubmission = '" + listIdSubmission.get(i) + "'";
+			if (i < listIdSubmission.size() - 1) {
+				sql += " OR ";
+			}
+		}
+		System.out.println(sql);
+		try {
+			pst = conn.prepareStatement(sql);
 			pst.executeUpdate();
 			result = 3;
 		} catch (SQLException e) {

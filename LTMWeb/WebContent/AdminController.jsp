@@ -1,6 +1,5 @@
-<%@ page import="model.bean.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,23 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
-		User user = (User) request.getAttribute("user");
-		if (user != null) {
-	%>
-	<p>
-		id:
-		<%=user.getId()%></p>
-	<p>
-		info:
-		<%=user.getInfo()%></p>
-	<%
-		} else {
-	%>
-	response.sendRedirect("LoginServlet");
-	<%
-		}
-	%>
+	<p>Welcome Admin</p>	
+	<form action="${pageContext.request.contextPath}/FileUploadController"
+		method="post" enctype="multipart/form-data">
+		<input name="file" type="file" required="required"> 
+		<input type="submit" value="Submit" />
+	</form>
+	
 	<form action="${pageContext.request.contextPath}/LogoutController"
 		method="post">
 		<input type="submit" value="Logout" />

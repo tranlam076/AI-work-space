@@ -6,29 +6,37 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="last" key="selection"/>
+		<item value="margin-top" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="last"/>
-			<item value="lát"/>
-			<item value="isStartCatch"/>
-			<item value="runAI"/>
-			<item value="x_b"/>
-			<item value="next_direc"/>
-			<item value="curMx"/>
-			<item value="check"/>
-			<item value="this.curMx"/>
-			<item value="isNeedToMove"/>
-			<item value="myRoad"/>
-			<item value="speed"/>
-			<item value="out"/>
-			<item value="clone"/>
-			<item value="available"/>
+			<item value="margin-top"/>
+			<item value="pers"/>
+			<item value="per"/>
+			<item value="Enter"/>
+			<item value="En"/>
+			<item value="Position"/>
+			<item value="PositionN"/>
+			<item value="260px"/>
+			<item value=".edit-cat-form form input[type=&quot;submit&quot;], .edit-news-form form input[type=&quot;submit&quot;]"/>
+			<item value="menu"/>
+			<item value="content-news"/>
+			<item value="none"/>
+			<item value="showEdit"/>
+			<item value="main-men"/>
+			<item value="encodedInitialData"/>
 		</list>
 		<list key="replacehistory">
+			<item value="newDate"/>
+			<item value="listItem"/>
+			<item value="js/admin/"/>
+			<item value="css/pages/admin/"/>
+			<item value="http://localhost:8080/StudentAttendance/"/>
+			<item value="&lt;%=request.getContextPath()%&gt;/assets"/>
+			<item value="C:\HippoTech\StudentAttendance\WebContent\assets"/>
+			<item value="..."/>
 			<item value="submissions"/>
 			<item value="submission"/>
 			<item value="Submission"/>
@@ -36,15 +44,13 @@
 			<item value="correct"/>
 			<item value=""/>
 			<item value="caroAI"/>
-			<item value="6"/>
-			<item value="5"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="284" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
-		<item value="479" key="DIALOG_HEIGHT"/>
-		<item value="29" key="DIALOG_X_ORIGIN"/>
-		<item value="184" key="DIALOG_Y_ORIGIN"/>
+		<item value="286" key="DIALOG_HEIGHT"/>
+		<item value="770" key="DIALOG_X_ORIGIN"/>
+		<item value="475" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

@@ -10,17 +10,17 @@ jQuery(document).ready(function($) {
 		
 		//Public Method
 		return function ( ) {
-//			$('.main-menu-3').hover(function() {
-//				$('.main-menu-3-sub').show()
-//			}, function() {
-//				$('.main-menu-3-sub').hide();
-//			});
-//
-//			$('.main-menu-6').hover(function() {
-//				$('.main-menu-6-sub').show()
-//			}, function() {
-//				$('.main-menu-6-sub').hide();
-//			});
+			$('.main-menu-3').hover(function() {
+				$('.main-menu-3-sub').show()
+			}, function() {
+				$('.main-menu-3-sub').hide();
+			});
+
+			$('.main-menu-5').hover(function() {
+				$('.main-menu-5-sub').show()
+			}, function() {
+				$('.main-menu-5-sub').hide();
+			});
 
 		}
 	}	

@@ -35,15 +35,17 @@ jQuery(document).ready(function($) {
 				}
 			});
 
-			$('.main-menu-1').click(function(event) {
-				$('.content-cat').show();
-				$('.content-news').hide();
-			});
-
-			$('.main-menu-2').click(function(event) {
-				$('.content-news').show();
-				$('.content-cat').hide();
-			});
+			$('.content-cat').show();
+			$('.content-news').show();
+//			$('.main-menu-1').click(function(event) {
+//				$('.content-cat').show();
+//				$('.content-news').hide();
+//			});
+//
+//			$('.main-menu-2').click(function(event) {
+//				$('.content-news').show();
+//				$('.content-cat').hide();
+//			});
 		}
 
 		function showEdit () {
@@ -160,6 +162,8 @@ jQuery(document).ready(function($) {
 						<ul class="row-submission">
 						<li class="submission-title">
 						<a href="${submission.detail}">${submission.title}</a>
+						<input type="checkbox" name = "checkbox${submission.idSubmission}" style="
+							float: right;">
 						</li>
 						<li class="submission-field">
 						<p>${submission.fieldName}<span>${submission.time.substring(0, submission.time.length - 2)}</span></p>

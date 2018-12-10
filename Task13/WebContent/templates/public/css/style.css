@@ -154,8 +154,8 @@ body {
 #menu ul li ul {
 	position: absolute;
 	z-index: 1;
-	margin-left: 147px;
-	margin-top: -26px;
+    margin-left: 154px;
+    margin-top: -20px;
 	display: none;
 }
 

@@ -11,6 +11,7 @@ pageEncoding="ISO-8859-1"%>
 		title: "${sub.title}",
 		time: "${sub.createdAt}",
 		detail: "${pageContext.request.contextPath}/admin/submissions?idSubmission=${sub.idSubmission}",
+		idSubmission: "${sub.idSubmission}"
 	});				
 	</c:forEach>
 </script>
@@ -22,18 +23,21 @@ pageEncoding="ISO-8859-1"%>
 			<option>Sort by field</option>
 		</select>
 	</div>
-	<div class="detail-submission">
-	</div>
-	<%
-	int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-	%>
-	<%
-	int totalPage = (int) request.getAttribute("totalPage");
-	%>
-	<input type="hidden" id="totalPage" value="<%=totalPage%>">
-	<input type="hidden" id="currentPage" value="<%=currentPage%>">
-	<input type="hidden" id="link" value="<%=request.getContextPath()%>/admin/submissions?requestPage=">
-	<div class="pagination">
-	</div>
+	<form action="<%=request.getContextPath() %>/admin/delete-submission" method="POST">
+		<div class="detail-submission">
+		</div>
+		<%
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		%>
+		<%
+		int totalPage = (int) request.getAttribute("totalPage");
+		%>
+		<input type="hidden" id="totalPage" value="<%=totalPage%>">
+		<input type="hidden" id="currentPage" value="<%=currentPage%>">
+		<input type="hidden" id="link" value="<%=request.getContextPath()%>/admin/submissions?requestPage=">
+		<div class="pagination">
+		</div>
+		<input type="submit" value="delete" style="float: right; background: red"/>
+	</form>
 </div>
 <%@include file="/templates/public/inc/footer.jsp"%>

@@ -1,9 +1,9 @@
 <%@include file="/templates/public/inc/header.jsp" %>
 <%@include file="/templates/public/inc/menu.jsp" %>
 		<div class="content-right">
-				<h2>Organization</h2>
+				<!-- <h2>Organization</h2> -->
 				<div class="box">
-					<div class="box_h1">Organizing Committee</div>
+					<div class="box_h1">Information And Notification</div>
 					<c:forEach items="${listCats}" var="cat">
 						<h5>
 							<c:out value="${cat.name}"></c:out>
@@ -24,14 +24,13 @@
 				</div>
 
 				<div class="box">
-					<div class="box_h1">Correspondence</div>
+					<div class="box_h1">About us</div>
 					<p>
-						If you have any inquiry, you can contact with the general
-						secretary via e-mail.<br> Dr. Hiroki Nagai (Kogakuin
-						University)<br> 2665-1 Nakano-machi, Hachioji, Tokyo,
-						192-0015 Japan
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum nobis, dolor asperiores
+						consequuntur!Tempora eaque rerum sint pariatur cum dolorum aut placeat illo voluptas 
+						assumenda nihil recusandae, libero provident ipsam.
 					</p>
-					E-mail: <a href="mailto:isat16@sc.kogakuin.ac.jp">isat16@sc.kogakuin.ac.jp</a>
+					
 					<div>
 						<div></div>
 						<div></div>

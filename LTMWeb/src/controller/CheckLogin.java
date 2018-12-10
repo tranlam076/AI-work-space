@@ -28,21 +28,29 @@ public class CheckLogin extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		RequestDispatcher dispatcher = request.getRequestDispatcher("Info.jsp");
+		RequestDispatcher dispatcher;
 		HttpSession session = request.getSession();
 		String id = request.getParameter("id");
 		String password = request.getParameter("pass"); 
 		System.out.println(id +  "-" + password);
 		UserBO userBO = new UserBO();
-		User user = userBO.getUser(id, password);
-		if (user != null) {
-			out.println("hello :" + user.getId());
-			out.println(user.getInfo());
-			request.setAttribute("user", user);
-			session.setAttribute("user", user);
-			dispatcher.forward(request, response);
+		User userLogin = userBO.getUser(id, password);
+		if (userLogin != null) {
+			out.println("hello :" + userLogin.getId());
+			out.println(userLogin.getInfo());
+			request.setAttribute("user", userLogin);
+			session.setAttribute("user", userLogin);
+			if (userLogin.getRole().equals("admin")) {
+//				dispatcher = request.getRequestDispatcher("AdminController.jsp");
+//				dispatcher.forward(request, response);
+				response.sendRedirect(request.getContextPath() + "/AdminController");
+			} else {
+				dispatcher  = request.getRequestDispatcher("Info.jsp");
+				dispatcher.forward(request, response);
+			}
 		} else {
 			out.println("user not found");
+			response.sendRedirect(request.getContextPath() + "/LoginServlet");
 		}
 	}
 
