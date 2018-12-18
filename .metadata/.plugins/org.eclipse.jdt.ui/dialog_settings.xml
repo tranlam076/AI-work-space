@@ -29,7 +29,7 @@
 	</section>
 	<section name="FatJarPackageWizard">
 		<item value="C:\Users\tranl\eclipse-workspace" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
-		<item value="ok - test" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
+		<item value="TFTPClient - DACSNM_MANG" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
 		<item value="C:\Users\tranl\Desktop\ok.java" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
 		<item value="1" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>

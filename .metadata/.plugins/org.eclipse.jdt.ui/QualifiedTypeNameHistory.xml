@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="javax.servlet.annotation.WebServlet"/>
-    <fullyQualifiedTypeName name="library.JwtLibrary"/>
-    <fullyQualifiedTypeName name="library.PropertiesLibrary"/>
     <fullyQualifiedTypeName name="model.BO.UserChecking"/>
     <fullyQualifiedTypeName name="model.BO.User"/>
     <fullyQualifiedTypeName name="org.apache.catalina.servlet4preview.RequestDispatcher"/>
@@ -35,7 +32,6 @@
     <fullyQualifiedTypeName name="java.awt.List"/>
     <fullyQualifiedTypeName name="util.Constants"/>
     <fullyQualifiedTypeName name="model.Image"/>
-    <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="data.service.StudentImageService"/>
     <fullyQualifiedTypeName name="java.io.File"/>
     <fullyQualifiedTypeName name="java.io.PrintWriter"/>
@@ -60,4 +56,8 @@
     <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
     <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseAdapter"/>
+    <fullyQualifiedTypeName name="com.sun.media.sound.DLSModulator"/>
+    <fullyQualifiedTypeName name="serverTFTP.MainServer"/>
+    <fullyQualifiedTypeName name="javax.swing.JTextField"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>

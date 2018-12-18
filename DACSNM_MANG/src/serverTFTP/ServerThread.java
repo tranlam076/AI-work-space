@@ -57,7 +57,6 @@ public class ServerThread extends Thread {
 		} catch (IOException e) {
 			System.err.println(e);
 		}
-		System.out.println("done");
 		socket.close();
 	}
 
@@ -194,13 +193,6 @@ public class ServerThread extends Thread {
 		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && k < amountOfPackets);
 		uiServer.updatePercent(null, 0);
 		uiServer.updateLogger("RRQ", firstPacket.getAddress() + ":" + firstPacket.getPort(), fileName, fileDir);
-		
-		System.out.println("done---------");
-		System.out.println(firstPacket.getAddress());
-		System.out.println(firstPacket.getOffset());
-		System.out.println(firstPacket.getPort());
-		System.out.println(fileName);
-		
 	}
 
 	public DatagramPacket createPacket(DatagramPacket packet, byte[] theFile, int firstBlockNumber,

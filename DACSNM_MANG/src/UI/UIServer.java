@@ -63,7 +63,7 @@ public class UIServer extends JFrame implements ActionListener {
 					int index = list.locationToIndex(evt.getPoint());
 					String item = dlm.getElementAt(index).toString();
 					String filePath = item.split("-")[1];
-					textField.setText(filePath);
+					textField.setText(filePath.split(" ")[1]);
 				}
 				if (evt.getClickCount() == 2) {
 					int index = list.locationToIndex(evt.getPoint());
@@ -163,7 +163,7 @@ public class UIServer extends JFrame implements ActionListener {
 			long fileSize = (fileSizeInMB > 0) ? fileSizeInMB : (fileSizeInKB > 0) ? fileSizeInKB : fileSizeInBytes;
 			String ex = (fileSizeInMB > 0) ? "MB" : (fileSizeInKB > 0) ? "KB" : "B";
 			String size = " (" + fileSize + " " + ex + ")";
-			dlm.addElement((Object) fileName + " - " + filePath + size);
+			dlm.addElement((Object) " " + fileName + " - " + filePath + size);
 			if (listAccessibleFile.get(fileName) == null) {
 				listAccessibleFile.put(fileName, filePath);
 			}

@@ -28,25 +28,44 @@ public class Client {
 	private DatagramSocket socket;
 	private static final int DATA_LENGTH = 65464;
 	private static final int PACKET_SIZE = DATA_LENGTH + 4;
+	static String addressByName = "";
 	
 	Random rand = new Random();
 	private FileInputStream fileInputStream;
 
 	public static void main(String[] args) throws IOException {
-
+		if (args.length != 3) {
+			System.out.println("Wrong args input!\n"
+					+ "arg[0]: Type of request (RRQ or WRQ) \n"
+					+ "arg[1]: IP adress (IP of server)\n"
+					+ "arg[1]: file name (name of the file)\n"
+					+ "");
+			return;
+		}
+		System.out.println(args[0]);
+		System.out.println(args[1]);
+		System.out.println(args[2]);
+		
+		String req = args[0];
+		
+		addressByName = args[1];
 		Client client = new Client();
 		File directory = new File(client.fileDir);
 	    if (! directory.exists()){
 	    	directory.mkdirs();
 	    }
-		fileName = "winXP.iso";
-		client.sendReadRequest();
-//        client.sendWriteRequest();
-
+		fileName = args[2];
+		
+		if (req.equals("RRQ")) {
+			client.sendReadRequest();
+		}
+		if (req.equals("WRQ")) {
+			client.sendWriteRequest();
+		}
 	}
 
 	public void sendWriteRequest() throws SocketException, IOException {
-		InetAddress address = InetAddress.getByName("localhost");
+		InetAddress address = InetAddress.getByName(addressByName);
 		socket = new DatagramSocket(rand.nextInt(4000) + 4000);
 		byte[] ackArray = new byte[4];
 		byte[] requestByteArray = createRequest(OP_WRQ, fileName, "octet");
@@ -61,7 +80,7 @@ public class Client {
 	}
 
 	public void sendReadRequest() throws UnknownHostException, SocketException, IOException {
-		InetAddress address = InetAddress.getByName("localhost");
+		InetAddress address = InetAddress.getByName(addressByName);
 		socket = new DatagramSocket(rand.nextInt(4000) + 4000);
 		byte[] requestByteArray = createRequest(OP_RRQ, fileName, "dacsnm");
 		DatagramPacket packet = new DatagramPacket(requestByteArray, requestByteArray.length, address,
@@ -135,6 +154,8 @@ public class Client {
 		int dataOffset = 0;
 		int firstBlockNumber = 0;
 		int secondBlockNumber = 0;
+		int chekPercent = 0;
+		int percent = 0;
 		do {
 			byte[] dataStream;
 			if (fileByte.length - (dataOffset) >= DATA_LENGTH) {
@@ -157,11 +178,17 @@ public class Client {
 			socket.send(dataPacket);
 			packet = receivedAck(packet);
 			k++;
-			if (!isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && k < amountOfPackets) {
-				System.out.println("error");
+			
+			if (chekPercent >= amountOfPackets/200) {
+				chekPercent = 0;
+				System.out.print("#");
+				if (percent%5 == 0) {
+					System.out.println();
+				}
+				percent ++;
 			}
-			System.out.println(k + "/" + amountOfPackets);
 		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && k < amountOfPackets);
+		System.out.println("Upload file done!");
 	}
 
 	public DatagramPacket createPacket(DatagramPacket packet, byte[] theFile, int firstBlockNumber,
@@ -225,6 +252,7 @@ public class Client {
 		InetAddress address = InetAddress.getByName("localhost");
 		boolean endOfFile = true;
 		OutputStream file = new BufferedOutputStream(new FileOutputStream(fileDir + fileName));
+		long curTime = System.currentTimeMillis();
 		while (endOfFile) {
 			byte[] readByteArray = new byte[PACKET_SIZE];
 			DatagramPacket packet = new DatagramPacket(readByteArray, readByteArray.length, address, TFTP_PORT);
@@ -236,6 +264,10 @@ public class Client {
 			if (packetInput[1] == OP_ERROR) {
 				error(packetInput);
 			} else {
+				if (System.currentTimeMillis() - curTime > 500) {
+					curTime = System.currentTimeMillis();
+					System.out.print("#");
+				}
 				if (packetInput[1] == OP_DATAPACKET && packet.getLength() == PACKET_SIZE) {
 					DatagramPacket ack = new DatagramPacket(createAck(packetInput[2], packetInput[3]), 4, address,
 							TFTP_PORT);
@@ -255,6 +287,7 @@ public class Client {
 					socket.send(ack);
 					file.close();
 					endOfFile = false;
+					System.out.println("Down load done!");
 				}
 			}
 		}
