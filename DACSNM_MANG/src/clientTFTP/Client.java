@@ -24,7 +24,7 @@ public class Client {
 	private static final byte OP_ACK = 4;
 	private static final byte OP_ERROR = 5;
 	private static String fileName;
-	private String filePath = "C:\\Users\\tranl\\Desktop\\DACSNM\\client\\";
+	private String fileDir = "C:\\TFTPClient\\";
 	private DatagramSocket socket;
 	private static final int DATA_LENGTH = 65464;
 	private static final int PACKET_SIZE = DATA_LENGTH + 4;
@@ -35,6 +35,10 @@ public class Client {
 	public static void main(String[] args) throws IOException {
 
 		Client client = new Client();
+		File directory = new File(client.fileDir);
+	    if (! directory.exists()){
+	    	directory.mkdirs();
+	    }
 		fileName = "winXP.iso";
 		client.sendReadRequest();
 //        client.sendWriteRequest();
@@ -107,7 +111,7 @@ public class Client {
 	
 
 	public void readFileName(DatagramPacket packet) throws FileNotFoundException, IOException {
-		File file = new File(filePath + fileName);		
+		File file = new File(fileDir + fileName);		
 		byte[] fileByte = new byte[(int) file.length()];
 		try {
 			fileInputStream = new FileInputStream(file);
@@ -220,7 +224,7 @@ public class Client {
 	public void receiveFile() throws UnknownHostException, SocketException, IOException {
 		InetAddress address = InetAddress.getByName("localhost");
 		boolean endOfFile = true;
-		OutputStream file = new BufferedOutputStream(new FileOutputStream(filePath + fileName));
+		OutputStream file = new BufferedOutputStream(new FileOutputStream(fileDir + fileName));
 		while (endOfFile) {
 			byte[] readByteArray = new byte[PACKET_SIZE];
 			DatagramPacket packet = new DatagramPacket(readByteArray, readByteArray.length, address, TFTP_PORT);

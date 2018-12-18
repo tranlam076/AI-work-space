@@ -6,27 +6,27 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="PINK" key="selection"/>
+		<item value="550" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="550"/>
+			<item value="55"/>
+			<item value="15"/>
+			<item value="pathDirSave"/>
+			<item value="addTree"/>
+			<item value="fileRoot"/>
+			<item value="browseFolder"/>
+			<item value="btnBrowse"/>
+			<item value="Duy"/>
+			<item value="duy"/>
 			<item value="PINK"/>
 			<item value="allocation"/>
 			<item value="changeAt"/>
 			<item value="=="/>
 			<item value="ResMaxY_1"/>
-			<item value="ping"/>
-			<item value="all"/>
-			<item value="request"/>
-			<item value="Make"/>
-			<item value="make"/>
-			<item value="messageSub"/>
-			<item value="UImaxY"/>
-			<item value="data"/>
-			<item value="dât"/>
-			<item value="ResMaxY_2"/>
 		</list>
 		<list key="replacehistory">
 			<item value="Object"/>

@@ -2,7 +2,6 @@
 package serverTFTP;
 
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,6 +14,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+
+import UI.UIServer;
 
 public class ServerThread extends Thread {
 
@@ -29,13 +30,19 @@ public class ServerThread extends Thread {
 	private int defaultPort;
 	private InetAddress address;
 	private DatagramPacket firstPacket;
-	private String filePath = "C:\\Users\\tranl\\Desktop\\DACSNM\\server\\";
+	private String fileDir = "C:\\TFTPServer\\";
 	private String fileName;
 	private FileInputStream fileInputStream;
+	UIServer uiServer;
 
-	public ServerThread(int socketNo, DatagramPacket packet) throws SocketException, FileNotFoundException {
+	public ServerThread(int socketNo, DatagramPacket packet, UIServer uiServer) throws SocketException, FileNotFoundException {
 		this.firstPacket = packet;
+		this.uiServer = uiServer;
 		socket = new DatagramSocket(socketNo);
+		File directory = new File(fileDir);
+	    if (! directory.exists()){
+	    	directory.mkdirs();
+	    }
 	}
 	public ServerThread(String name) throws SocketException, FileNotFoundException {
 		super(name);
@@ -95,7 +102,12 @@ public class ServerThread extends Thread {
 		fileName = new String(fileNameBytes.array());
 		System.out.println(fileName);
 
-		File file = new File(filePath + fileName);
+		if (uiServer.getFilePath(fileName) == null) {
+			createError(1, "File not found");
+			return;
+		}
+		
+		File file = new File(uiServer.getFilePath(fileName));
 		if (inDataStream[1] != OP_WRQ) {
 			if (!file.exists()) {
 				System.out.println("ERROR CODE 1 - FILE NOT FOUND");
@@ -147,6 +159,8 @@ public class ServerThread extends Thread {
 		int dataOffset = 0;
 		int firstBlockNumber = 0;
 		int secondBlockNumber = 0;
+		int chekPercent = 0;
+		int percent = 0;
 		do {
 			byte[] dataStream;
 			if (fileByte.length - (dataOffset) >= DATA_LENGTH) {
@@ -170,7 +184,23 @@ public class ServerThread extends Thread {
 			packet = receivedAck(packet);
 			k++;
 			System.out.println(k + "/" + amountOfPackets);
+			chekPercent ++;
+			if (chekPercent >= amountOfPackets/100) {
+				chekPercent = 0;
+				uiServer.updatePercent(fileName, percent);
+				percent ++;
+				
+			}
 		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && k < amountOfPackets);
+		uiServer.updatePercent(null, 0);
+		uiServer.updateLogger("RRQ", firstPacket.getAddress() + ":" + firstPacket.getPort(), fileName, fileDir);
+		
+		System.out.println("done---------");
+		System.out.println(firstPacket.getAddress());
+		System.out.println(firstPacket.getOffset());
+		System.out.println(firstPacket.getPort());
+		System.out.println(fileName);
+		
 	}
 
 	public DatagramPacket createPacket(DatagramPacket packet, byte[] theFile, int firstBlockNumber,
@@ -235,9 +265,10 @@ public class ServerThread extends Thread {
 	}
 
 	public void receiveFile() throws UnknownHostException, SocketException, IOException {
-		InetAddress address = InetAddress.getByName("localhost");
+		InetAddress address = firstPacket.getAddress();
 		boolean endOfFile = true;
-		OutputStream file = new BufferedOutputStream(new FileOutputStream(filePath + fileName));
+		OutputStream file = new BufferedOutputStream(new FileOutputStream(fileDir + fileName));
+		uiServer.updateWritingFile(fileName);
 		while (endOfFile) {
 			byte[] readByteArray = new byte[PACKET_SIZE];
 			DatagramPacket packet = new DatagramPacket(readByteArray, readByteArray.length, address, defaultPort);
@@ -271,7 +302,8 @@ public class ServerThread extends Thread {
 				}
 			}
 		}
-
+		uiServer.updateLogger("WRQ", firstPacket.getAddress() + ":" + firstPacket.getPort(), fileName, fileDir);
+		uiServer.updateWritingFile(null);
 	}
 
 	public void error(byte[] byteArray) {
