@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="C:\HippoTech\StudentAttendance_Maven"/>
+		<item value="C:\HippoTech\StudentAttendanceMaven"/>
+		<item value="C:\Users\tranl\Desktop\StudentAttendance - final"/>
+		<item value="C:\Users\tranl\Desktop\newStudentAttendance"/>
+		<item value="C:\Users\tranl\eclipse-workspace\newStudentAttendance"/>
+		<item value="C:\Users\tranl\eclipse-workspace\THLapTrinhMang"/>
+		<item value="E:\bkdn 7\TH Lap Trinh Mang\Submission_Site"/>
 		<item value="C:\Users\tranl\Desktop\StudentAttendance"/>
 		<item value="C:\Users\tranl\eclipse-workspace\TTNT"/>
 		<item value="C:\Users\tranl\eclipse-workspace\LapTrinhMang"/>

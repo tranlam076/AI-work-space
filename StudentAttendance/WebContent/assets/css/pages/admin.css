@@ -1,0 +1,136 @@
+body {
+    background: white;
+}
+
+.subnavbar {
+    margin-bottom: 0px;
+}
+
+.modal {
+    display: none; /* hidden by default */
+    position: fixed; /* stay in place */
+    z-index: 2000; /* sit on top */
+    padding-top: 5%; /* location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* full width */
+    height: 100%; /* full height */
+    overflow: auto; /* enable scroll if needed */
+    background-color: rgb(0,0,0); /* fallback color */
+    background-color: rgba(0,0,0,0.4); /* black w/ opacity */
+}
+
+/* modal content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    min-width: 300px; 
+    width: 60%;
+    border-radius: 4px;
+}
+
+/* add animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* the close button */
+.close {
+    font-family: sans-serif;
+    color: black;
+    float: right;
+    font-size: 20pt;
+    font-weight: bolder;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.color-red {
+    color: #e74c3c !important;
+}
+
+.color-blue {
+    color: #3498db !important;
+}
+
+.wrapper {
+    height: unset; 
+}
+
+.btn {
+    padding: 6px;
+}
+
+div.box-body {
+    width: 100%;
+}
+
+#data-table_paginate {
+    margin-top: 10px;
+}
+
+div.dataTables_wrapper div.dataTables_paginate {
+    margin: 0;
+    white-space: nowrap;
+    cursor: pointer;
+    text-align: left !important;
+}
+
+a.paginate_button {
+    margin-right: 5px;
+    color: #007bff;
+    text-decoration: none;
+    padding: 5px 8px;
+    border: 1px solid #dee2e6;
+}
+
+a.paginate_button:hover {
+    background:  #E9ECEF;
+    color: #007BFF;
+}
+
+a.paginate_button.current {
+    color: #fff;
+    text-decoration: none;
+    background: #007BFF;
+}
+
+#add-one {
+    margin-left: -5px;
+    text-align: center;
+    color: #fff;
+}

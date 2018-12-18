@@ -24,8 +24,8 @@ public class ServerThread extends Thread {
 	private static final byte OP_DATAPACKET = 3;
 	private static final byte OP_ACK = 4;
 	private static final byte OP_ERROR = 5;
-	private static final int DATALENGTH = 512;
-	private static final int PACKET_SIZE = 516;
+	private static final int DATA_LENGTH = 65464;
+	private static final int PACKET_SIZE = DATA_LENGTH + 4;
 	private int defaultPort;
 	private InetAddress address;
 	private DatagramPacket firstPacket;
@@ -119,7 +119,7 @@ public class ServerThread extends Thread {
 	}
 	
 	public void createError(int errorCode, String errMessage) throws IOException {
-		byte[] error = new byte[512];
+		byte[] error = new byte[DATA_LENGTH];
 		int position = 0;
 		error[position] = 0;
 		position++;
@@ -141,32 +141,29 @@ public class ServerThread extends Thread {
 	public void sendFile(byte[] fileByte, DatagramPacket packet) throws IOException {
 		ByteBuffer theFileBuffer = ByteBuffer.wrap(fileByte);
 		int byteLength = theFileBuffer.remaining();
-		int amountOfPackets = byteLength / DATALENGTH;
+		int amountOfPackets = byteLength / DATA_LENGTH;
 		int j = 0;
 		int k = -1;
 		int dataOffset = 0;
-		int firstBlockNumber = -128;
-		int secondBlockNumber = -128;
+		int firstBlockNumber = 0;
+		int secondBlockNumber = 0;
 		do {
 			byte[] dataStream;
-			if (fileByte.length - (dataOffset) >= DATALENGTH) {
-				dataStream = new byte[DATALENGTH];
+			if (fileByte.length - (dataOffset) >= DATA_LENGTH) {
+				dataStream = new byte[DATA_LENGTH];
 			} else {
 				dataStream = new byte[fileByte.length - (dataOffset)];
 			}
-			for (int i = dataOffset; i < DATALENGTH + dataOffset && i < fileByte.length; i++) {
+			for (int i = dataOffset; i < DATA_LENGTH + dataOffset && i < fileByte.length; i++) {
 				dataStream[j] = fileByte[i];
 				j++;
 			}
 			j = 0;
-			dataOffset += DATALENGTH;
+			dataOffset += DATA_LENGTH;
 			secondBlockNumber++;
-			if (secondBlockNumber == 128) {
+			if (secondBlockNumber == 256) {
 				firstBlockNumber++;
-				secondBlockNumber = -128;
-			}
-			if (firstBlockNumber == 128) {
-				firstBlockNumber = -128;
+				secondBlockNumber = 0;
 			}
 			DatagramPacket dataPacket = createPacket(packet, dataStream, firstBlockNumber, secondBlockNumber);
 			socket.send(dataPacket);
@@ -204,8 +201,8 @@ public class ServerThread extends Thread {
 	public boolean isReceivedAck(DatagramPacket packet, int firstBlockNumber, int secondBlockNumber)
 			throws IOException {
 		byte[] inDataStream = packet.getData();
-		if ((int) inDataStream[0] == 0 && (int) inDataStream[1] == OP_ACK && (int) inDataStream[2] == firstBlockNumber
-				&& (int) inDataStream[3] == secondBlockNumber) {
+		if ((int) inDataStream[0] == 0 && (int) inDataStream[1] == OP_ACK && (byte) (inDataStream[2] & 0xff) == (byte) firstBlockNumber
+				&& (byte) (inDataStream[3] & 0xff) == (byte) secondBlockNumber) {
 			return true;
 		} else {
 			return false;
@@ -240,10 +237,9 @@ public class ServerThread extends Thread {
 	public void receiveFile() throws UnknownHostException, SocketException, IOException {
 		InetAddress address = InetAddress.getByName("localhost");
 		boolean endOfFile = true;
-//		ByteArrayOutputStream file = new ByteArrayOutputStream();
 		OutputStream file = new BufferedOutputStream(new FileOutputStream(filePath + fileName));
 		while (endOfFile) {
-			byte[] readByteArray = new byte[516];
+			byte[] readByteArray = new byte[PACKET_SIZE];
 			DatagramPacket packet = new DatagramPacket(readByteArray, readByteArray.length, address, defaultPort);
 			socket.receive(packet);
 
@@ -271,18 +267,11 @@ public class ServerThread extends Thread {
 					file.write(packetInput, 4, (packetInput.length - 4) - j);
 					socket.send(ack);
 					file.close();
-//					writeFile(file);
 					endOfFile = false;
 				}
 			}
 		}
 
-	}
-
-	public void writeFile(ByteArrayOutputStream file) throws FileNotFoundException, IOException {
-		try (OutputStream outputStream = new FileOutputStream(filePath + fileName)) {
-			file.writeTo(outputStream);
-		}
 	}
 
 	public void error(byte[] byteArray) {

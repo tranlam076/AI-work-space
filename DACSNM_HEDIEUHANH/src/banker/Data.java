@@ -8,8 +8,8 @@ public class Data {
 	public Properties readData(){
 		Properties prop = new Properties();
 		String path = this.getClass().getResource("").getPath();
-		path += "/input.properties";
-//		System.out.println(path);
+		path += "input.properties";
+		System.out.println(path);
 		File file = new File(path);
 		FileInputStream fis;
 		try {

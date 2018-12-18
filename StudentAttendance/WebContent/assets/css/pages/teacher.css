@@ -1,0 +1,61 @@
+.image-container {
+    width: 100%;
+    height: 500px;
+    background: #000;        
+    user-select: none;
+}
+
+#canvas-large-image {
+    width: 100%;
+    height: 100%;
+}
+
+.mark-face-rect {
+    border: 1px solid rgb(0,255,0);
+    position: absolute;
+}
+.color-red {
+    color: #E74C3C !important;
+}
+
+.color-blue {
+    color: #3498DB !important;
+}
+
+.class-item-selected {
+    border: 2px solid #E67E22;
+}
+
+.selected-mark {
+    border : 2px solid rgb(255,0,0);
+}
+
+.width-resize {
+    cursor: w-resize;
+}
+.height-resize {
+    cursor: n-resize;
+}
+
+.student-code {
+    color: white;
+    font-weight: bold;
+    background-color: #1FB264;
+    font-size: 12pt;
+    position: absolute;
+    top: -23px;
+    left: -1px;
+    display: none
+}
+
+.face-mark-action {
+    margin-top: 14px;
+}
+
+.widget-content {
+    overflow-y: scroll;
+}
+/*
+.fix-weight {
+    width: 
+}*/

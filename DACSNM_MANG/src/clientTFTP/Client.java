@@ -1,7 +1,6 @@
  package clientTFTP;
 
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,8 +26,8 @@ public class Client {
 	private static String fileName;
 	private String filePath = "C:\\Users\\tranl\\Desktop\\DACSNM\\client\\";
 	private DatagramSocket socket;
-	private static final int DATALENGTH = 512;
-	private static final int PACKETSIZE = 516;
+	private static final int DATA_LENGTH = 65464;
+	private static final int PACKET_SIZE = DATA_LENGTH + 4;
 	
 	Random rand = new Random();
 	private FileInputStream fileInputStream;
@@ -36,7 +35,7 @@ public class Client {
 	public static void main(String[] args) throws IOException {
 
 		Client client = new Client();
-		fileName = "test2.pdf";
+		fileName = "winXP.iso";
 		client.sendReadRequest();
 //        client.sendWriteRequest();
 
@@ -44,7 +43,7 @@ public class Client {
 
 	public void sendWriteRequest() throws SocketException, IOException {
 		InetAddress address = InetAddress.getByName("localhost");
-		socket = new DatagramSocket(rand.nextInt(4000) + 2000);
+		socket = new DatagramSocket(rand.nextInt(4000) + 4000);
 		byte[] ackArray = new byte[4];
 		byte[] requestByteArray = createRequest(OP_WRQ, fileName, "octet");
 		DatagramPacket packet = new DatagramPacket(requestByteArray, requestByteArray.length, address,
@@ -59,7 +58,7 @@ public class Client {
 
 	public void sendReadRequest() throws UnknownHostException, SocketException, IOException {
 		InetAddress address = InetAddress.getByName("localhost");
-		socket = new DatagramSocket(rand.nextInt(4000) + 2000);
+		socket = new DatagramSocket(rand.nextInt(4000) + 4000);
 		byte[] requestByteArray = createRequest(OP_RRQ, fileName, "dacsnm");
 		DatagramPacket packet = new DatagramPacket(requestByteArray, requestByteArray.length, address,
 				TFTP_PORT);
@@ -126,32 +125,29 @@ public class Client {
 	public void sendFile(byte[] fileByte, DatagramPacket packet) throws IOException {
 		ByteBuffer theFileBuffer = ByteBuffer.wrap(fileByte);
 		int byteLength = theFileBuffer.remaining();
-		int amountOfPackets = byteLength / DATALENGTH;
+		int amountOfPackets = byteLength / DATA_LENGTH;
 		int j = 0;
 		int k = -1;
 		int dataOffset = 0;
-		int firstBlockNumber = -128;
-		int secondBlockNumber = -128;
+		int firstBlockNumber = 0;
+		int secondBlockNumber = 0;
 		do {
 			byte[] dataStream;
-			if (fileByte.length - (dataOffset) >= DATALENGTH) {
-				dataStream = new byte[DATALENGTH];
+			if (fileByte.length - (dataOffset) >= DATA_LENGTH) {
+				dataStream = new byte[DATA_LENGTH];
 			} else {
 				dataStream = new byte[fileByte.length - (dataOffset)];
 			}
-			for (int i = dataOffset; i < DATALENGTH + dataOffset && i < fileByte.length; i++) {
+			for (int i = dataOffset; i < DATA_LENGTH + dataOffset && i < fileByte.length; i++) {
 				dataStream[j] = fileByte[i];
 				j++;
 			}
 			j = 0;
-			dataOffset += DATALENGTH;
+			dataOffset += DATA_LENGTH;
 			secondBlockNumber++;
-			if (secondBlockNumber == 128) {
+			if (secondBlockNumber == 256) {
 				firstBlockNumber++;
-				secondBlockNumber = -128;
-			}
-			if (firstBlockNumber == 128) {
-				firstBlockNumber = -128;
+				secondBlockNumber = 0;
 			}
 			DatagramPacket dataPacket = createPacket(packet, dataStream, firstBlockNumber, secondBlockNumber);
 			socket.send(dataPacket);
@@ -187,8 +183,8 @@ public class Client {
 	
 	public boolean isReceivedAck(DatagramPacket packet, int firstBlockNumber, int secondBlockNumber) throws IOException {
 		byte[] inDataStream = packet.getData();
-		if ((int) inDataStream[0] == 0 && (int) inDataStream[1] == OP_ACK && (int) inDataStream[2] == firstBlockNumber
-				&& (int) inDataStream[3] == secondBlockNumber) {
+		if ((int) inDataStream[0] == 0 && (int) inDataStream[1] == OP_ACK && (byte) (inDataStream[2] & 0xff) == (byte) firstBlockNumber
+				&& (byte) (inDataStream[3] & 0xff) == (byte) secondBlockNumber) {
 			return true;
 		} else {
 			return false;
@@ -224,10 +220,9 @@ public class Client {
 	public void receiveFile() throws UnknownHostException, SocketException, IOException {
 		InetAddress address = InetAddress.getByName("localhost");
 		boolean endOfFile = true;
-//		ByteArrayOutputStream file = new ByteArrayOutputStream();
 		OutputStream file = new BufferedOutputStream(new FileOutputStream(filePath + fileName));
 		while (endOfFile) {
-			byte[] readByteArray = new byte[516];
+			byte[] readByteArray = new byte[PACKET_SIZE];
 			DatagramPacket packet = new DatagramPacket(readByteArray, readByteArray.length, address, TFTP_PORT);
 			socket.receive(packet);
 			TFTP_PORT = packet.getPort();
@@ -237,13 +232,13 @@ public class Client {
 			if (packetInput[1] == OP_ERROR) {
 				error(packetInput);
 			} else {
-				if (packetInput[1] == OP_DATAPACKET && packet.getLength() == PACKETSIZE) {
+				if (packetInput[1] == OP_DATAPACKET && packet.getLength() == PACKET_SIZE) {
 					DatagramPacket ack = new DatagramPacket(createAck(packetInput[2], packetInput[3]), 4, address,
 							TFTP_PORT);
 					file.write(packetInput, 4, packetInput.length - 4);
 					socket.send(ack);
 					
-				} else if (packetInput[1] == OP_DATAPACKET && packet.getLength() < PACKETSIZE) {
+				} else if (packetInput[1] == OP_DATAPACKET && packet.getLength() < PACKET_SIZE) {
 					DatagramPacket ack = new DatagramPacket(createAck(packetInput[2], packetInput[3]), 4, address,
 							TFTP_PORT);
 					int j = 0;
@@ -255,17 +250,9 @@ public class Client {
 					file.write(packetInput, 4, (packetInput.length - 4) - j);
 					socket.send(ack);
 					file.close();
-//					writeFile(file);
 					endOfFile = false;
 				}
 			}
-		}
-	}
-	
-	public void writeFile(ByteArrayOutputStream file) throws FileNotFoundException, IOException {
-		try (OutputStream outputStream = new FileOutputStream(filePath + fileName)) {
-			file.writeTo(outputStream);
-			System.out.println(fileName);
 		}
 	}
 	

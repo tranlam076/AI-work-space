@@ -6,29 +6,30 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="margin-top" key="selection"/>
+		<item value="PINK" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="margin-top"/>
-			<item value="pers"/>
-			<item value="per"/>
-			<item value="Enter"/>
-			<item value="En"/>
-			<item value="Position"/>
-			<item value="PositionN"/>
-			<item value="260px"/>
-			<item value=".edit-cat-form form input[type=&quot;submit&quot;], .edit-news-form form input[type=&quot;submit&quot;]"/>
-			<item value="menu"/>
-			<item value="content-news"/>
-			<item value="none"/>
-			<item value="showEdit"/>
-			<item value="main-men"/>
-			<item value="encodedInitialData"/>
+			<item value="PINK"/>
+			<item value="allocation"/>
+			<item value="changeAt"/>
+			<item value="=="/>
+			<item value="ResMaxY_1"/>
+			<item value="ping"/>
+			<item value="all"/>
+			<item value="request"/>
+			<item value="Make"/>
+			<item value="make"/>
+			<item value="messageSub"/>
+			<item value="UImaxY"/>
+			<item value="data"/>
+			<item value="dât"/>
+			<item value="ResMaxY_2"/>
 		</list>
 		<list key="replacehistory">
+			<item value="Object"/>
 			<item value="newDate"/>
 			<item value="listItem"/>
 			<item value="js/admin/"/>
@@ -43,14 +44,13 @@
 			<item value="templates"/>
 			<item value="correct"/>
 			<item value=""/>
-			<item value="caroAI"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="284" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="286" key="DIALOG_HEIGHT"/>
-		<item value="770" key="DIALOG_X_ORIGIN"/>
-		<item value="475" key="DIALOG_Y_ORIGIN"/>
+		<item value="966" key="DIALOG_X_ORIGIN"/>
+		<item value="301" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

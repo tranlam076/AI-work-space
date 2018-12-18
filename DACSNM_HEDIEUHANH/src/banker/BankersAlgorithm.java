@@ -35,7 +35,6 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 	int mapSizeX = (X - offset * 2) / size;
 	int mapSizeY = (Y - offset * 2) / size;
 	String message = "";
-	String messageSub = "";
 
 	int divX = 171;
 	int divY = 209;
@@ -85,7 +84,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		gg.setColor(Color.BLACK);
 
 		gg.setFont(new Font("TimesRoman", Font.BOLD, 15));
-		gg.drawString(messageSub, offset + offset / 5, Y - 20);
+		gg.drawString(message, offset + offset / 5, Y - 20);
 
 		gg.setFont(new Font("TimesRoman", Font.BOLD, 15));
 		gg.drawString("Process", offset + offset / 5, offset + divY / 4 - offset / 5);
@@ -121,7 +120,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 					gg.fillRect(offset + startReqX + i * (disEachResX + space),
 							offset + valueY - request[i] * ResMaxY_1 / UImaxY, disEachResX,
 							request[i] * ResMaxY_1 / UImaxY);
-					gg.setColor(Color.WHITE);
+					gg.setColor(Color.BLACK);
 					gg.setFont(new Font("TimesRoman", Font.PLAIN, 15));
 					gg.drawString(request[i] + "",
 							offset + startReqX + i * (disEachResX + space) + disEachResX / 2 - 2, offset + valueY - 2);
@@ -150,9 +149,12 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 					gg.fillRect(offset + startResAllocX + i * (disEachResX + space),
 							offset + valueY - (requestChange + processArray[j].allocation[i])* ResMaxY_1 / UImaxY, disEachResX,
 							requestChange * ResMaxY_1 / UImaxY);
+					if (processArray[j].allocation[i] == 0) {
+						System.out.println(requestChange);
+					}
 					gg.setColor(Color.BLUE);
 				}
-				gg.setColor(Color.WHITE);
+				gg.setColor(Color.BLACK);
 				gg.setFont(new Font("TimesRoman", Font.PLAIN, 15));
 				gg.drawString(processArray[j].max[i] + "",
 						offset + startResMaxX + i * (disEachResX + space) + disEachResX / 2 - 2, offset + valueY - 2);
@@ -266,7 +268,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		boolean isContinue = false;
 		while (true) {
 			if (!isSafe()) {
-				messageSub = "Input System is not Safe! Please try again!";
+				message = "Input System is not Safe! Please try again!";
 				this.repaint();
 				try {
 					Thread.sleep(delay);
@@ -278,7 +280,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 			}
 			while (true && run) {
 				if (allDone()) {
-					messageSub = "All processes are finished! Algorithm Done!";
+					message = "All processes are finished! Algorithm Done!";
 					this.repaint();
 					return;
 				}
@@ -295,7 +297,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 				changeAt = curProc;
 				while (true && run) {
 					if (processTmp.isFinished()) {
-						messageSub = "Process " + processTmp.id + " is finished!";
+						message = "Process " + processTmp.id + " is finished!";
 						try {
 							for (int j = 0; j < request.length; j++) {
 								available[j] = available[j] + processTmp.allocation[j];
@@ -313,7 +315,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 					request = curRequesting;
 					if (!isContinue)
 						request = createRandomArray(processTmp.need);
-					messageSub = "Process " + processTmp.id + " try to generate a request "
+					message = "Process " + processTmp.id + " try to generate a request "
 							+ Arrays.toString(request) + "...";
 					try {
 						this.repaint();
@@ -331,16 +333,16 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 						processTmp.allocation[j] = processTmp.allocation[j] + request[j];
 						processTmp.need[j] = processTmp.need[j] - request[j];
 					}
-
-					messageSub = "Process " + processTmp.id + " try to generate a request "
+					
+					message = "Process " + processTmp.id + " try to generate a request "
 							+ Arrays.toString(request) + "... Safe state. Make request!";
 					for (int j = 0; j < request.length; j++) {
 						available[j] = available[j] - request[j];
 					}
 					curRequesting = request;
-					Arrays.fill(request, 0);
 					try {
 						this.repaint();
+						Arrays.fill(request, 0);
 						Thread.sleep(delay);
 						if (!run) {
 							isContinue = true;
@@ -349,6 +351,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					
 					isContinue = false;
 				}
 			}
