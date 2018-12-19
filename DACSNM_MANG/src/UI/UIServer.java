@@ -33,7 +33,7 @@ public class UIServer extends JFrame implements ActionListener {
 	static JList<Object> jListLogs;
 	int startPanel = 60;
 	int endPanel = 600;
-	String lastedDirPath = "C:\\Users\\tranl\\Desktop\\DACSNM\\server";
+	String lastedDirPath = "D:\\";
 	HashMap <String, String> listAccessibleFile = new HashMap<>();
 	JLabel readingLabel;
 	JLabel writingLabel;

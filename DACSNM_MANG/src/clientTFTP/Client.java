@@ -1,18 +1,19 @@
  package clientTFTP;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 import java.util.Random;
 
 public class Client {
@@ -31,7 +32,7 @@ public class Client {
 	static String addressByName = "";
 	
 	Random rand = new Random();
-	private FileInputStream fileInputStream;
+	private InputStream fileInputStream;
 
 	public static void main(String[] args) throws IOException {
 		if (args.length != 3) {
@@ -55,6 +56,18 @@ public class Client {
 	    	directory.mkdirs();
 	    }
 		fileName = args[2];
+		if (fileName.contains("\\") || fileName.contains("/")) {
+			int index = fileName.lastIndexOf("/");
+			if (index == -1) {
+				index = fileName.lastIndexOf("\\");
+			}
+			if (index < 0) {
+				System.out.println("Wrong file path!");
+				return;
+			}
+			client.fileDir = fileName.substring(0, index);
+			fileName = fileName.substring(index + 1, fileName.length());
+		}
 		
 		if (req.equals("RRQ")) {
 			client.sendReadRequest();
@@ -82,7 +95,7 @@ public class Client {
 	public void sendReadRequest() throws UnknownHostException, SocketException, IOException {
 		InetAddress address = InetAddress.getByName(addressByName);
 		socket = new DatagramSocket(rand.nextInt(4000) + 4000);
-		byte[] requestByteArray = createRequest(OP_RRQ, fileName, "dacsnm");
+		byte[] requestByteArray = createRequest(OP_RRQ, fileName, "octet");
 		DatagramPacket packet = new DatagramPacket(requestByteArray, requestByteArray.length, address,
 				TFTP_PORT);
 		socket.send(packet);
@@ -121,7 +134,6 @@ public class Client {
 		byte[] firstAck = ack.getData();
 		if (firstAck[0] == 0 && (int) firstAck[1] == OP_ACK && firstAck[2] == 0 && firstAck[3] == 0) {
 			readFileName(ack);
-
 			return true;
 		} else {
 			return false;
@@ -131,44 +143,31 @@ public class Client {
 
 	public void readFileName(DatagramPacket packet) throws FileNotFoundException, IOException {
 		File file = new File(fileDir + fileName);		
-		byte[] fileByte = new byte[(int) file.length()];
 		try {
-			fileInputStream = new FileInputStream(file);
-			fileInputStream.read(fileByte);
-		} catch (FileNotFoundException e) {
-			System.out.println("File Not Found.");
-			e.printStackTrace();
-		} catch (IOException e1) {
-			System.out.println("Error Reading The File.");
-			e1.printStackTrace();
+			fileInputStream = new BufferedInputStream(new FileInputStream(file));
+			sendFile(fileInputStream, packet, file.length());
+		} catch (Exception e1) {
+			System.out.println("Error Reading The File");
+			return;
 		}
-		sendFile(fileByte, packet);
 	}
 
-	public void sendFile(byte[] fileByte, DatagramPacket packet) throws IOException {
-		ByteBuffer theFileBuffer = ByteBuffer.wrap(fileByte);
-		int byteLength = theFileBuffer.remaining();
-		int amountOfPackets = byteLength / DATA_LENGTH;
-		int j = 0;
-		int k = -1;
-		int dataOffset = 0;
+	public void sendFile(InputStream fileInputStream, DatagramPacket packet, Long fileSize) throws IOException {
+		byte[] buffer = new byte[DATA_LENGTH];
+		long amountOfPackets = fileSize/DATA_LENGTH;
+		int read = 0;
 		int firstBlockNumber = 0;
 		int secondBlockNumber = 0;
 		int chekPercent = 0;
 		int percent = 0;
+
 		do {
+			read = fileInputStream.read(buffer);
 			byte[] dataStream;
-			if (fileByte.length - (dataOffset) >= DATA_LENGTH) {
-				dataStream = new byte[DATA_LENGTH];
-			} else {
-				dataStream = new byte[fileByte.length - (dataOffset)];
+				dataStream = new byte[read];
+			for (int i = 0; i < read; i++) {
+				dataStream[i] = buffer[i];
 			}
-			for (int i = dataOffset; i < DATA_LENGTH + dataOffset && i < fileByte.length; i++) {
-				dataStream[j] = fileByte[i];
-				j++;
-			}
-			j = 0;
-			dataOffset += DATA_LENGTH;
 			secondBlockNumber++;
 			if (secondBlockNumber == 256) {
 				firstBlockNumber++;
@@ -177,17 +176,19 @@ public class Client {
 			DatagramPacket dataPacket = createPacket(packet, dataStream, firstBlockNumber, secondBlockNumber);
 			socket.send(dataPacket);
 			packet = receivedAck(packet);
-			k++;
-			
-			if (chekPercent >= amountOfPackets/200) {
-				chekPercent = 0;
-				System.out.print("#");
-				if (percent%5 == 0) {
-					System.out.println();
-				}
-				percent ++;
+			byte[] packetInput = new byte[packet.getData().length];
+			packetInput = packet.getData();
+			if (packetInput[1] == OP_ERROR) {
+				error(packetInput);
+				return;
 			}
-		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && k < amountOfPackets);
+			chekPercent++;
+			if (chekPercent >= amountOfPackets / 100) {
+				chekPercent = 0;
+				System.out.println(percent + "%");
+				percent++;
+			}
+		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && read == buffer.length);
 		System.out.println("Upload file done!");
 	}
 
@@ -263,10 +264,11 @@ public class Client {
 			packetInput = packet.getData();
 			if (packetInput[1] == OP_ERROR) {
 				error(packetInput);
+				return;
 			} else {
 				if (System.currentTimeMillis() - curTime > 500) {
 					curTime = System.currentTimeMillis();
-					System.out.print("#");
+					System.out.println("#");
 				}
 				if (packetInput[1] == OP_DATAPACKET && packet.getLength() == PACKET_SIZE) {
 					DatagramPacket ack = new DatagramPacket(createAck(packetInput[2], packetInput[3]), 4, address,
@@ -287,7 +289,7 @@ public class Client {
 					socket.send(ack);
 					file.close();
 					endOfFile = false;
-					System.out.println("Down load done!");
+					System.out.println("\nDownload finish success!");
 				}
 			}
 		}

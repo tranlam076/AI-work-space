@@ -1,12 +1,14 @@
 
 package serverTFTP;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -32,18 +34,20 @@ public class ServerThread extends Thread {
 	private DatagramPacket firstPacket;
 	private String fileDir = "C:\\TFTPServer\\";
 	private String fileName;
-	private FileInputStream fileInputStream;
+	private InputStream fileInputStream;
 	UIServer uiServer;
 
-	public ServerThread(int socketNo, DatagramPacket packet, UIServer uiServer) throws SocketException, FileNotFoundException {
+	public ServerThread(int socketNo, DatagramPacket packet, UIServer uiServer)
+			throws SocketException, FileNotFoundException {
 		this.firstPacket = packet;
 		this.uiServer = uiServer;
 		socket = new DatagramSocket(socketNo);
 		File directory = new File(fileDir);
-	    if (! directory.exists()){
-	    	directory.mkdirs();
-	    }
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
 	}
+
 	public ServerThread(String name) throws SocketException, FileNotFoundException {
 		super(name);
 	}
@@ -71,7 +75,6 @@ public class ServerThread extends Thread {
 			address = packet.getAddress();
 			defaultPort = packet.getPort();
 			readFileName(packet);
-
 		} else if (opcode[0] == 0 && opcode[1] == OP_WRQ) {
 			System.out.println("write request");
 			address = packet.getAddress();
@@ -86,7 +89,7 @@ public class ServerThread extends Thread {
 		}
 	}
 
-	public void readFileName(DatagramPacket packet) throws FileNotFoundException, IOException {
+	public void readFileName(DatagramPacket packet) {
 		byte[] inDataStream = packet.getData();
 		int i = 2;
 		while (inDataStream[i] != 0) {
@@ -105,74 +108,67 @@ public class ServerThread extends Thread {
 			createError(1, "File not found");
 			return;
 		}
-		
+
 		File file = new File(uiServer.getFilePath(fileName));
 		if (inDataStream[1] != OP_WRQ) {
 			if (!file.exists()) {
 				System.out.println("ERROR CODE 1 - FILE NOT FOUND");
 				createError(1, "File not found");
 			} else {
-				System.out.println(file.length());				
-				byte[] fileByte = new byte[(int) file.length()];
+				System.out.println(file.length());
 				try {
-					fileInputStream = new FileInputStream(file);
-					fileInputStream.read(fileByte);
-					sendFile(fileByte, packet);
-				} catch (FileNotFoundException e) {
-					System.out.println("File Not Found.");
-					e.printStackTrace();
-				} catch (IOException e1) {
-					System.out.println("Error Reading The File.");
-					e1.printStackTrace();
+					fileInputStream = new BufferedInputStream(new FileInputStream(file));
+					sendFile(fileInputStream, packet, file.length());
+				} catch (Exception e1) {
+					System.out.println("Error Reading The File");
+					createError(0, "Not defined, see error message");
+					return;
 				}
 			}
 		}
 	}
-	
-	public void createError(int errorCode, String errMessage) throws IOException {
-		byte[] error = new byte[DATA_LENGTH];
-		int position = 0;
-		error[position] = 0;
-		position++;
-		error[position] = OP_ERROR;
-		position++;
-		error[position] = 0;
-		position++;
-		error[position] = (byte) errorCode;
-		position++;
-		for (int i = 0; i < errMessage.length(); i++) {
-			error[position] = (byte) errMessage.charAt(i);
+
+	public void createError(int errorCode, String errMessage) {
+		try {
+			byte[] error = new byte[DATA_LENGTH];
+			int position = 0;
+			error[position] = 0;
 			position++;
+			error[position] = OP_ERROR;
+			position++;
+			error[position] = 0;
+			position++;
+			error[position] = (byte) errorCode;
+			position++;
+			for (int i = 0; i < errMessage.length(); i++) {
+				error[position] = (byte) errMessage.charAt(i);
+				position++;
+			}
+			error[position] = 0;
+			DatagramPacket errorPacket = new DatagramPacket(error, error.length, address, defaultPort);
+			socket.send(errorPacket);
+		} catch (Exception e) {
+			System.out.println("Some thing went wrong.");
+			return;
 		}
-		error[position] = 0;
-		DatagramPacket errorPacket = new DatagramPacket(error, error.length, address, defaultPort);
-		socket.send(errorPacket);
 	}
 
-	public void sendFile(byte[] fileByte, DatagramPacket packet) throws IOException {
-		ByteBuffer theFileBuffer = ByteBuffer.wrap(fileByte);
-		int byteLength = theFileBuffer.remaining();
-		int amountOfPackets = byteLength / DATA_LENGTH;
-		int j = 0;
-		int k = -1;
-		int dataOffset = 0;
+	public void sendFile(InputStream fileInputStream, DatagramPacket packet, Long fileSize) throws IOException {
+		byte[] buffer = new byte[DATA_LENGTH];
+		long amountOfPackets = fileSize/DATA_LENGTH;
+		int read = 0;
 		int firstBlockNumber = 0;
 		int secondBlockNumber = 0;
 		int chekPercent = 0;
 		int percent = 0;
+
 		do {
+			read = fileInputStream.read(buffer);
 			byte[] dataStream;
-			if (fileByte.length - (dataOffset) >= DATA_LENGTH) {
-				dataStream = new byte[DATA_LENGTH];
-			} else {
-				dataStream = new byte[fileByte.length - (dataOffset)];
+				dataStream = new byte[read];
+			for (int i = 0; i < read; i++) {
+				dataStream[i] = buffer[i];
 			}
-			for (int i = dataOffset; i < DATA_LENGTH + dataOffset && i < fileByte.length; i++) {
-				dataStream[j] = fileByte[i];
-				j++;
-			}
-			j = 0;
-			dataOffset += DATA_LENGTH;
 			secondBlockNumber++;
 			if (secondBlockNumber == 256) {
 				firstBlockNumber++;
@@ -181,18 +177,23 @@ public class ServerThread extends Thread {
 			DatagramPacket dataPacket = createPacket(packet, dataStream, firstBlockNumber, secondBlockNumber);
 			socket.send(dataPacket);
 			packet = receivedAck(packet);
-			k++;
-			System.out.println(k + "/" + amountOfPackets);
-			chekPercent ++;
-			if (chekPercent >= amountOfPackets/100) {
+			byte[] packetInput = new byte[packet.getData().length];
+			packetInput = packet.getData();
+			if (packetInput[1] == OP_ERROR) {
+				error(packetInput);
+				return;
+			}
+			chekPercent++;
+			if (chekPercent >= amountOfPackets / 100) {
 				chekPercent = 0;
 				uiServer.updatePercent(fileName, percent);
-				percent ++;
-				
+				percent++;
 			}
-		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && k < amountOfPackets);
+		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && read == buffer.length);
 		uiServer.updatePercent(null, 0);
 		uiServer.updateLogger("RRQ", firstPacket.getAddress() + ":" + firstPacket.getPort(), fileName, fileDir);
+		System.out.println("Send file success");
+
 	}
 
 	public DatagramPacket createPacket(DatagramPacket packet, byte[] theFile, int firstBlockNumber,
@@ -223,7 +224,8 @@ public class ServerThread extends Thread {
 	public boolean isReceivedAck(DatagramPacket packet, int firstBlockNumber, int secondBlockNumber)
 			throws IOException {
 		byte[] inDataStream = packet.getData();
-		if ((int) inDataStream[0] == 0 && (int) inDataStream[1] == OP_ACK && (byte) (inDataStream[2] & 0xff) == (byte) firstBlockNumber
+		if ((int) inDataStream[0] == 0 && (int) inDataStream[1] == OP_ACK
+				&& (byte) (inDataStream[2] & 0xff) == (byte) firstBlockNumber
 				&& (byte) (inDataStream[3] & 0xff) == (byte) secondBlockNumber) {
 			return true;
 		} else {
@@ -259,6 +261,11 @@ public class ServerThread extends Thread {
 	public void receiveFile() throws UnknownHostException, SocketException, IOException {
 		InetAddress address = firstPacket.getAddress();
 		boolean endOfFile = true;
+		File checkExist = new File(fileDir + fileName);
+		if (checkExist.exists()) {
+			createError(6, "File already exists");
+			return;
+		}
 		OutputStream file = new BufferedOutputStream(new FileOutputStream(fileDir + fileName));
 		uiServer.updateWritingFile(fileName);
 		while (endOfFile) {
@@ -296,6 +303,7 @@ public class ServerThread extends Thread {
 		}
 		uiServer.updateLogger("WRQ", firstPacket.getAddress() + ":" + firstPacket.getPort(), fileName, fileDir);
 		uiServer.updateWritingFile(null);
+		System.out.println("Receive file success");
 	}
 
 	public void error(byte[] byteArray) {
