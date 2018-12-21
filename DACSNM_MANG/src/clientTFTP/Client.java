@@ -78,6 +78,11 @@ public class Client {
 	}
 
 	public void sendWriteRequest() throws SocketException, IOException {
+		File file = new File(fileDir + fileName);	
+		if (!file.exists()) {
+			System.out.println("File not found!");
+			return;
+		}
 		InetAddress address = InetAddress.getByName(addressByName);
 		socket = new DatagramSocket(rand.nextInt(4000) + 4000);
 		byte[] ackArray = new byte[4];
@@ -94,7 +99,7 @@ public class Client {
 
 	public void sendReadRequest() throws UnknownHostException, SocketException, IOException {
 		InetAddress address = InetAddress.getByName(addressByName);
-		socket = new DatagramSocket(rand.nextInt(4000) + 4000);
+		socket = new DatagramSocket(rand.nextInt(4000) + 6000);
 		byte[] requestByteArray = createRequest(OP_RRQ, fileName, "octet");
 		DatagramPacket packet = new DatagramPacket(requestByteArray, requestByteArray.length, address,
 				TFTP_PORT);
@@ -145,22 +150,20 @@ public class Client {
 		File file = new File(fileDir + fileName);		
 		try {
 			fileInputStream = new BufferedInputStream(new FileInputStream(file));
-			sendFile(fileInputStream, packet, file.length());
+			sendFile(fileInputStream, packet);
 		} catch (Exception e1) {
-			System.out.println("Error Reading The File");
 			return;
 		}
 	}
 
-	public void sendFile(InputStream fileInputStream, DatagramPacket packet, Long fileSize) throws IOException {
+	public void sendFile(InputStream fileInputStream, DatagramPacket packet) throws IOException {
+		System.out.println("Uploading...");
 		byte[] buffer = new byte[DATA_LENGTH];
-		long amountOfPackets = fileSize/DATA_LENGTH;
 		int read = 0;
+		int percent = 0;
 		int firstBlockNumber = 0;
 		int secondBlockNumber = 0;
-		int chekPercent = 0;
-		int percent = 0;
-
+		long curTime = System.currentTimeMillis();
 		do {
 			read = fileInputStream.read(buffer);
 			byte[] dataStream;
@@ -181,15 +184,18 @@ public class Client {
 			if (packetInput[1] == OP_ERROR) {
 				error(packetInput);
 				return;
+			}		
+			if (System.currentTimeMillis() - curTime > 300) {
+				curTime = System.currentTimeMillis();
+				if (percent % 30 == 0) {
+					System.out.println();
+				}
+				System.out.print("#");
+				percent ++;
 			}
-			chekPercent++;
-			if (chekPercent >= amountOfPackets / 100) {
-				chekPercent = 0;
-				System.out.println(percent + "%");
-				percent++;
-			}
-		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && read == buffer.length);
-		System.out.println("Upload file done!");
+		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && read == DATA_LENGTH);
+		System.out.println("\nUpload file done!");
+		fileInputStream.close();
 	}
 
 	public DatagramPacket createPacket(DatagramPacket packet, byte[] theFile, int firstBlockNumber,
@@ -250,13 +256,13 @@ public class Client {
 	}
 	
 	public void receiveFile() throws UnknownHostException, SocketException, IOException {
-		InetAddress address = InetAddress.getByName("localhost");
+		InetAddress address = InetAddress.getByName(addressByName);
 		boolean endOfFile = true;
 		OutputStream file = new BufferedOutputStream(new FileOutputStream(fileDir + fileName));
 		long curTime = System.currentTimeMillis();
 		while (endOfFile) {
 			byte[] readByteArray = new byte[PACKET_SIZE];
-			DatagramPacket packet = new DatagramPacket(readByteArray, readByteArray.length, address, TFTP_PORT);
+			DatagramPacket packet = new DatagramPacket(readByteArray, readByteArray.length);
 			socket.receive(packet);
 			TFTP_PORT = packet.getPort();
 
@@ -298,6 +304,6 @@ public class Client {
 	public void error(byte[] byteArray) {
 		String errorCode = new String(byteArray, 3, 1);
 		String errorText = new String(byteArray, 4, byteArray.length - 4);
-		System.err.println("Error: " + errorCode + " " + errorText);
+		System.out.println("Error: " + errorCode + " " + errorText);
 	}
 }

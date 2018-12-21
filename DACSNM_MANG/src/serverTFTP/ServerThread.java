@@ -55,16 +55,15 @@ public class ServerThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			System.out.println("recieved Packet");
 			socket.setSoTimeout(10000);
-			firstReq(firstPacket);
+			readFirstRequest(firstPacket);
 		} catch (IOException e) {
 			System.err.println(e);
 		}
 		socket.close();
 	}
 
-	public void firstReq(DatagramPacket packet) throws IOException {
+	public void readFirstRequest(DatagramPacket packet) throws IOException {
 		byte[] opcode = new byte[2];
 		byte[] inDataStream = packet.getData();
 		for (int i = 0; i < 2; i++) {
@@ -153,9 +152,10 @@ public class ServerThread extends Thread {
 		}
 	}
 
-	public void sendFile(InputStream fileInputStream, DatagramPacket packet, Long fileSize) throws IOException {
+	public void sendFile(InputStream fileInputStream, DatagramPacket packet, long fileSize) throws IOException {
 		byte[] buffer = new byte[DATA_LENGTH];
 		long amountOfPackets = fileSize/DATA_LENGTH;
+		System.out.println(fileSize);
 		int read = 0;
 		int firstBlockNumber = 0;
 		int secondBlockNumber = 0;
@@ -164,6 +164,9 @@ public class ServerThread extends Thread {
 
 		do {
 			read = fileInputStream.read(buffer);
+			if (read <= 0) {
+				return;
+			}
 			byte[] dataStream;
 				dataStream = new byte[read];
 			for (int i = 0; i < read; i++) {
@@ -187,13 +190,15 @@ public class ServerThread extends Thread {
 			if (chekPercent >= amountOfPackets / 100) {
 				chekPercent = 0;
 				uiServer.updatePercent(fileName, percent);
-				percent++;
+				if (percent < 99) {
+					percent ++;
+				}
 			}
-		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && read == buffer.length);
+		} while (isReceivedAck(packet, firstBlockNumber, secondBlockNumber) && read == DATA_LENGTH);
 		uiServer.updatePercent(null, 0);
 		uiServer.updateLogger("RRQ", firstPacket.getAddress() + ":" + firstPacket.getPort(), fileName, fileDir);
 		System.out.println("Send file success");
-
+		fileInputStream.close();
 	}
 
 	public DatagramPacket createPacket(DatagramPacket packet, byte[] theFile, int firstBlockNumber,
@@ -296,7 +301,6 @@ public class ServerThread extends Thread {
 					}
 					file.write(packetInput, 4, (packetInput.length - 4) - j);
 					socket.send(ack);
-					file.close();
 					endOfFile = false;
 				}
 			}
@@ -304,11 +308,12 @@ public class ServerThread extends Thread {
 		uiServer.updateLogger("WRQ", firstPacket.getAddress() + ":" + firstPacket.getPort(), fileName, fileDir);
 		uiServer.updateWritingFile(null);
 		System.out.println("Receive file success");
+		file.close();
 	}
 
 	public void error(byte[] byteArray) {
 		String errorCode = new String(byteArray, 3, 1);
 		String errorText = new String(byteArray, 4, byteArray.length - 4);
-		System.err.println("Error: " + errorCode + " " + errorText);
+		System.out.println("Error: " + errorCode + " " + errorText);
 	}
 }

@@ -33,7 +33,7 @@ public class UIServer extends JFrame implements ActionListener {
 	static JList<Object> jListLogs;
 	int startPanel = 60;
 	int endPanel = 600;
-	String lastedDirPath = "D:\\";
+	String lastedDirPath = "C:\\";
 	HashMap <String, String> listAccessibleFile = new HashMap<>();
 	JLabel readingLabel;
 	JLabel writingLabel;
@@ -168,12 +168,6 @@ public class UIServer extends JFrame implements ActionListener {
 				listAccessibleFile.put(fileName, filePath);
 			}
 			jListAccessFile.ensureIndexIsVisible(jListAccessFile.getModel().getSize() - 1);
-		}
-		
-		if (e.getActionCommand().equals("btnNewButton2")) {
-			System.out.println("on check");
-			updatePercent("tszljnssdknsknfdndk", 10);
-			updateLogger("WRQ", "abc", "xyz", "!@#");
 		}
 	}
 

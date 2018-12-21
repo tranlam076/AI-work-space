@@ -12,7 +12,7 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
-public class BankersAlgorithm extends JFrame implements MouseListener {
+public class BankersAlgorithmRandomRequest extends JFrame implements MouseListener {
 
 	private Process[] processArray;
 	private Process processTmp;
@@ -35,7 +35,6 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 	int mapSizeX = (X - offset * 2) / size;
 	int mapSizeY = (Y - offset * 2) / size;
 	String message = "";
-	String schedule = "Algorithm finish! Order: ";
 
 	int divX = 171;
 	int divY = 209;
@@ -58,7 +57,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 	int startAvaiX = startReqX + divX;
 	int startDiv1Y = divY * 3 - offset / 5;
 
-	public BankersAlgorithm() {
+	public BankersAlgorithmRandomRequest() {
 		this.setTitle("Banker Algorithm");
 		this.setSize(X, Y);
 		this.setDefaultCloseOperation(3);
@@ -203,7 +202,6 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 	}
 
 	private void init() {
-
 		Data data = new Data();
 		Properties prop = data.readData();
 		int UImaxYtmp = UImaxY;
@@ -269,7 +267,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		while (true) {
 			Thread.sleep(10);
 			if (!isSafe()) {
-				message = "Input System is NOT Safe! Please try again!";
+				message = "Input System is not Safe! Please try again!";
 				this.repaint();
 				try {
 					Thread.sleep(delay);
@@ -281,28 +279,19 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 			}
 			while (true && run) {
 				if (allDone()) {
-					message = schedule.substring(0,schedule.lastIndexOf("=>"));
-					run = false;
-					init();
-					go();
+					message = "All processes are finished! Algorithm Done!";
 					this.repaint();
 					return;
 				}
-				if (curProc == 0 || processArray[curProc].isFinished()) {
-					for (int i = 0; i < procNum; i++) {
-						if (arrayCompareSmallerOrEqual(processArray[i].need, available)
-								&& !processArray[i].isFinished()) {
-							curProc = i;
-						}
-					}
-				}
-
+				curProc = rand.nextInt(procNum);
+				while (processArray[curProc].isFinished()) {
+					curProc = rand.nextInt(procNum);
+				}					
 				processTmp = processArray[curProc];
 				changeAt = curProc;
 				while (true && run) {
 					if (processTmp.isFinished()) {
 						message = "Process " + processTmp.id + " is finished!";
-						schedule += " P" + processTmp.id + " =>";
 						try {
 							for (int j = 0; j < request.length; j++) {
 								available[j] = available[j] + processTmp.allocation[j];
@@ -397,12 +386,16 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 		}
 	}
 
-	private boolean allDone() {
+	private boolean allDone() throws InterruptedException {
 		for (int i = 0; i < processArray.length; i++) {
 			if (processArray[i].isFinished() == false) {
 				return false;
 			}
 		}
+		init();
+		this.repaint();
+		run = false;
+		go();
 		return true;
 	}
 
@@ -471,6 +464,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 			} else
 				break;
 		}
+
 		return res;
 	}
 
@@ -535,7 +529,7 @@ public class BankersAlgorithm extends JFrame implements MouseListener {
 	}
 
 	public static void main(String[] args) throws InterruptedException {
-		BankersAlgorithm bankersAlgorithm = new BankersAlgorithm();
+		BankersAlgorithmRandomRequest bankersAlgorithm = new BankersAlgorithmRandomRequest();
 		bankersAlgorithm.init();
 		bankersAlgorithm.go();
 	}

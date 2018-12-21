@@ -6,27 +6,27 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="check ack" key="selection"/>
+		<item value="not" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="check ack"/>
-			<item value="packetInput"/>
-			<item value="createError"/>
-			<item value="OP_ERROR"/>
-			<item value="error"/>
-			<item value="receivedAck"/>
-			<item value="exis"/>
-			<item value="infile"/>
-			<item value="out"/>
-			<item value="sendFile"/>
-			<item value="fileInputStream"/>
-			<item value="readFileName"/>
-			<item value="receiveFile"/>
-			<item value="OutputStream"/>
-			<item value="createRequest"/>
+			<item value="not"/>
+			<item value="recei"/>
+			<item value="rieve"/>
+			<item value="reive"/>
+			<item value="isRe"/>
+			<item value="allDone"/>
+			<item value="schedule"/>
+			<item value="&#x09;private boolean allDone() {"/>
+			<item value="finish"/>
+			<item value="disPannelY"/>
+			<item value="disEachProcY"/>
+			<item value="GREEN"/>
+			<item value="green"/>
+			<item value="procNum"/>
+			<item value="createRandomArray"/>
 		</list>
 		<list key="replacehistory">
 			<item value="Object"/>
